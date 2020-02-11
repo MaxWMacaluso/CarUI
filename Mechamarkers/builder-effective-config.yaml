@@ -1,0 +1,18 @@
+directories:
+  output: dist
+  buildResources: build
+appId: mechamarkers
+mac:
+  category: toolkit
+files:
+  - filter:
+      - ./index.js
+      - ./index.html
+      - ./inputgenerator.html
+      - build/**/*
+      - styles/**/*
+extraFiles:
+  - filter:
+      - detection/**/*
+      - configs/**/*
+electronVersion: 3.1.13
