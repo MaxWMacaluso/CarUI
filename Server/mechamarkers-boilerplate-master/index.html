@@ -31,6 +31,15 @@
 
   <body>
     <canvas class="canvas"></canvas>
+      <!--Speedometer -->
+      <img src= "https://images-na.ssl-images-amazon.com/images/I/81FAXirfJUL.png" id = "speedo" style="display:none"/>
+    
+      <!--radio -->
+      <img src= "https://images-na.ssl-images-amazon.com/images/I/71zmEmUMZmL._AC_SX679_.jpg" id = "radio" style="display:none"/>
+        
+      <!--screen -->
+      <img src= "https://www.driven.co.nz/media/99998043/legacy10.jpg" id = "screen" style="display:none"/>
+        
     <script>
       // Make included libraries local
       const Mechamarkers = window.Mechamarkers;
@@ -50,10 +59,15 @@
 
         // If the group doesn't exist in the config or the config is not loaded
         // undefined will be returned, you can work around this with a simple if
-        if (Mechamarkers.getGroup('panel_1')) {
-          // Let's see the position of that panel_1
-          // console.log(Mechamarkers.getGroup('panel_1').pos)
-        }
+        // if (Mechamarkers.getGroup('panel_1')) {
+        //   // Let's see the position of that panel_1
+        //   // console.log(Mechamarkers.getGroup('panel_1').pos)
+        // }
+
+        //Creates variable to be used in draw function
+        marker1_pos = Mechamarkers.getMarker(1).center;
+        marker2_pos = Mechamarkers.getMarker(2).center;
+        marker3_pos = Mechamarkers.getMarker(3).center;
 
         draw();
         // Keep this at the end. It triggers the loop to continue
@@ -63,6 +77,16 @@
       // Keep our draw code separate from our update
       function draw() {
         ctx.clearRect(-1, -1, canvas.width + 1, canvas.height + 1);
+        ctx.fillStyle = 'black';
+        //ctx.fillRect(marker11_pos.x, marker11_pos.y,40, 40) ;
+  
+        //Draws the image on canvas
+        var img1 = document.getElementById("speedo");
+        ctx.drawImage(img1,marker1_pos.x, marker1_pos.y, 300, 300);
+        var img2 = document.getElementById("radio");
+        ctx.drawImage(img2,marker2_pos.x, marker2_pos.y, 400, 200);
+        var img3 = document.getElementById("screen");
+        ctx.drawImage(img3,marker3_pos.x, marker3_pos.y, 300, 300);
       }
       
       // Onload is called when the window loads
