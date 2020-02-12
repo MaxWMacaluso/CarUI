@@ -65,9 +65,9 @@
         // }
 
         //Creates variable to be used in draw function
-        marker1_pos = Mechamarkers.getMarker(1).center;
-        marker2_pos = Mechamarkers.getMarker(2).center;
-        marker3_pos = Mechamarkers.getMarker(3).center;
+        marker11_pos = Mechamarkers.getMarker(11).center;
+        marker12_pos = Mechamarkers.getMarker(12).center;
+        marker10_pos = Mechamarkers.getMarker(10).center;
 
         draw();
         // Keep this at the end. It triggers the loop to continue
@@ -81,12 +81,12 @@
         //ctx.fillRect(marker11_pos.x, marker11_pos.y,40, 40) ;
   
         //Draws the image on canvas
-        var img1 = document.getElementById("speedo");
-        ctx.drawImage(img1,marker1_pos.x, marker1_pos.y, 300, 300);
-        var img2 = document.getElementById("radio");
-        ctx.drawImage(img2,marker2_pos.x, marker2_pos.y, 400, 200);
-        var img3 = document.getElementById("screen");
-        ctx.drawImage(img3,marker3_pos.x, marker3_pos.y, 300, 300);
+        var speedo_img = document.getElementById("speedo");
+        ctx.drawImage(speedo_img,marker11_pos.x, marker11_pos.y, 300, 300);
+        var radio_img = document.getElementById("radio");
+        ctx.drawImage(radio_img,marker12_pos.x, marker12_pos.y, 400, 200);
+        var screen_img = document.getElementById("screen");
+        ctx.drawImage(screen_img,marker10_pos.x, marker10_pos.y, 300, 300);
       }
       
       // Onload is called when the window loads
