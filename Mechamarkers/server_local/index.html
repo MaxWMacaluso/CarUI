@@ -79,8 +79,23 @@
         //If remotes present
         if (remote)
         {
+          //Point I'm projecting from
           var anchor = remote.anchor.center
-          ctx.drawImage(speedo_img, anchor.x, anchor.y, 300, 300)
+
+          //Image scale, select, and rotate
+          var scale = remote.getInput("scale") //Grabs the scale input object
+          var select = remote.getInput("select") //Grabs the select input object
+          var rotate = remote.getInput("rotate") //Grabs the scale input object
+
+          //Image size
+          //Based on current value of slider
+          var img_size = 300 * scale.val
+
+          //Image rotation
+          var img_rotation = 
+
+          //Draws the image (image, x, y, width, height)
+          ctx.drawImage(speedo_img, anchor.x, anchor.y, img_size , img_size)
         }
       }
       
