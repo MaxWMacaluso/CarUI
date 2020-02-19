@@ -21,6 +21,10 @@
   </head>
 
   <body>
+    <canvas class = "canvas"></canvas>
+
+    <img src = "https://images-na.ssl-images-amazon.com/images/I/81FAXirfJUL.png" id = "speedo" style = "display:none">
+
     <script>
       // Make included libraries local
       const Mechamarkers = window.Mechamarkers;
@@ -29,7 +33,8 @@
       let prevTime;
       
       // This function is called every animation frame (roughly 60 times a second)
-      function update() {
+      function update() 
+      {
         // Keep track of time between updates as dt (delta time)
         const currTime = Date.now();
         const dt = (currTime - prevTime) / 1000;
@@ -37,6 +42,8 @@
 
         // Update the mechamarkers library
         Mechamarkers.update(currTime);
+
+        marker11_pos = Mechamarkers.getMarker(11).center
 
         // If the group doesn't exist in the config or the config is not loaded
         // undefined will be returned, you can work around this with a simple if
@@ -48,18 +55,39 @@
         // If you wanted to use a canvas to draw stuff, I would put that code here
 
         // Keep this at the end. It triggers the loop to continue
+        draw();
         window.requestAnimationFrame(update);
+      }
+
+      function draw()
+      {
+        ctx.clearRect(-1, -1, canvas.width + 1, canvas.height + 1)
+        ctx.fillStyle = 'black'
+
+        var speedo_img = document.getElementById("speedo")
+        ctx.drawImage(speedo_img, marker11_pos.x, marker11_pos.y, 300, 300)
       }
       
       // Onload is called when the window loads
-      window.onload = () => {
+      window.onload = () => 
+      {
         prevTime = Date.now();
+
+        canvas = document.querySelector('canvas')
+        ctx = canvas.getContext('2d')
+        
         // This line initializes mechamarkers library
-        Mechamarkers.init();
+        //I ADDED CANVAS AND CTX
+        Mechamarkers.init(canvas, ctx);
+
+        //I ADDED BOTH BELOW
+        canvas.width = window.innerWidth
+        canvas.height = window.innerHeight
 
         // Begin the update loop
         update();
       }
+
     </script>
   </body>
 </html>
