@@ -43,29 +43,45 @@
         // Update the mechamarkers library
         Mechamarkers.update(currTime);
 
-        marker11_pos = Mechamarkers.getMarker(11).center
+        //Uncomment to display image
+        //marker11_pos = Mechamarkers.getMarker(11).center
+
+        //If not input group detected, will be NULL
+        var remote = null
 
         // If the group doesn't exist in the config or the config is not loaded
         // undefined will be returned, you can work around this with a simple if
-        if (Mechamarkers.getGroup('panel_1')) {
-          // Let's see the position of that panel_1
-          // console.log(Mechamarkers.getGroup('panel_1').pos)
+        if (Mechamarkers.getGroup('remote')) 
+        {
+          remote = Mechamarkers.getGroup('remote')
         }
 
         // If you wanted to use a canvas to draw stuff, I would put that code here
+        draw(remote);
 
-        // Keep this at the end. It triggers the loop to continue
-        draw();
+        //Keep this at the end. It triggers the loop to continue
         window.requestAnimationFrame(update);
       }
 
-      function draw()
+      //INPUTS:
+        //Remote is a group object that contains multiple inputs
+      function draw(remote)
       {
+        //???
         ctx.clearRect(-1, -1, canvas.width + 1, canvas.height + 1)
         ctx.fillStyle = 'black'
 
         var speedo_img = document.getElementById("speedo")
-        ctx.drawImage(speedo_img, marker11_pos.x, marker11_pos.y, 300, 300)
+        
+        //Uncomment to display image
+        //ctx.drawImage(speedo_img, marker11_pos.x, marker11_pos.y, 300, 300)
+
+        //If remotes present
+        if (remote)
+        {
+          var anchor = remote.anchor.center
+          ctx.drawImage(speedo_img, anchor.x, anchor.y, 300, 300)
+        }
       }
       
       // Onload is called when the window loads
