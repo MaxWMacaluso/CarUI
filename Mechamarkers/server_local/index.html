@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Mechamarkers</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: sans-serif;
+        font-size: 12px;
+        line-height: 1.5;
+        overflow: hidden;
+        background: rgb(66, 66, 66);
+      }
+    </style>
+    <script src="./build/app.js"></script>
+  </head>
+
+  <body>
+    <script>
+      // Make included libraries local
+      const Mechamarkers = window.Mechamarkers;
+      const Vec2 = window.Vec2;
+
+      let prevTime;
+      
+      // This function is called every animation frame (roughly 60 times a second)
+      function update() {
+        // Keep track of time between updates as dt (delta time)
+        const currTime = Date.now();
+        const dt = (currTime - prevTime) / 1000;
+        prevTime = currTime;
+
+        // Update the mechamarkers library
+        Mechamarkers.update(currTime);
+
+        // If the group doesn't exist in the config or the config is not loaded
+        // undefined will be returned, you can work around this with a simple if
+        if (Mechamarkers.getGroup('panel_1')) {
+          // Let's see the position of that panel_1
+          // console.log(Mechamarkers.getGroup('panel_1').pos)
+        }
+
+        // If you wanted to use a canvas to draw stuff, I would put that code here
+
+        // Keep this at the end. It triggers the loop to continue
+        window.requestAnimationFrame(update);
+      }
+      
+      // Onload is called when the window loads
+      window.onload = () => {
+        prevTime = Date.now();
+        // This line initializes mechamarkers library
+        Mechamarkers.init();
+
+        // Begin the update loop
+        update();
+      }
+    </script>
+  </body>
+</html>
