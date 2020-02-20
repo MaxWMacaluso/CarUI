@@ -62,30 +62,35 @@
         //Keep this at the end. It triggers the loop to continue
         window.requestAnimationFrame(update);
       }
+  
 
-      var TO_RADIANS = Math.PI/180; 
-      
-      //Helper function to do rotations
-      function drawRotatedImage(image, x, y, width, height, angle)
-      { 
-          // save the current co-ordinate system 
-          // before we screw with it
-          ctx.save(); 
-
-          // move to the middle of where we want to draw our image
-          ctx.translate(x, y);
-
-          // rotate around that point, converting our 
-          // angle from degrees to radians 
-          ctx.rotate(angle * TO_RADIANS);
-
-          // draw it up and to the left by half the width
-          // and height of the image 
-          ctx.drawImage(image, -(image.width/2), -(image.height/2), width, height);
-
-          // and restore the co-ords to how they were when we began
-          ctx.restore(); 
+      //Helper function to get degrees from radians
+      function radToDeg(radian)
+      {
+        return radian * 57.29
       }
+
+      //Helper function to do rotations
+      function drawImageRot(img, x, y, width, height, deg)
+      {
+        // Store the current context state (i.e. rotation, translation etc..)
+        ctx.save()
+
+        //Convert degrees to radian 
+        var rad = deg * Math.PI / 180;
+
+        //Set the origin to the center of the image
+        ctx.translate(x + width / 2, y + height / 2);
+
+        //Rotate the canvas around the origin
+        ctx.rotate(rad);
+
+        //draw the image    
+        ctx.drawImage(img,width / 2 * (-1),height / 2 * (-1),width,height);
+
+        // Restore canvas state as saved from above
+        ctx.restore();
+    }
 
       //INPUTS:
         //Remote is a group object that contains multiple inputs
@@ -116,13 +121,15 @@
           var img_size = 300 * scale.val
 
           //Image rotation
-          var img_rotation = rotate.val
+          var img_rotation = radToDeg(rotate.val + 3.14)
+          //var img_rotation = rotate.val + 3.14
           console.log(img_rotation)
 
           //Draws the image (image, x, y, width, height)
           //ctx.drawImage(speedo_img, anchor.x, anchor.y, img_size , img_size)
 
-          drawRotatedImage(speedo_img, anchor.x, anchor.y, img_size, img_size, img_rotation)
+          //Draws the image onto the canvas
+          drawImageRot(speedo_img, anchor.x, anchor.y, img_size, img_size, img_rotation)
         }
       }
       
