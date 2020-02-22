@@ -108,6 +108,7 @@
 
         drawSpeedometer("hello", ctx, 400, 400, 80);
 
+        drawClimate("Sure", ctx, 450, 200, 300, 100);
         // ctx.fillStyle = 'rgb(200, 0, 0)';
         // ctx.strokeRect(100,100,400,200);
         // ctx.drawImage(speedo_img, 100,100, 300, 300)
@@ -181,9 +182,35 @@
         canvas.lineTo(px, py);
         canvas.lineTo(px-(diam*.6), py+(diam*.7));
         canvas.stroke();
-
-
       }
+
+    function drawClimate(string, string2,canvas, px, py, width, height)
+    {
+      canvas.fillStyle = 'rgb(0, 0, 0)';
+      canvas.strokeRect(px,py, width,height);
+
+      canvas.beginPath();
+      canvas.arc(px +(.85*width),py+(.16*width), width/10, 0, Math.PI * 2, true); // Outer circle
+      canvas.stroke();
+
+      canvas.beginPath();
+      canvas.arc(px +(.15*width),py+(.16*width), width/10, 0, Math.PI * 2, true); // Outer circle
+      canvas.stroke();
+
+      canvas.beginPath();
+      canvas.lineTo(px +(.85*width),py+(.16*width));
+      canvas.lineTo(px+(.85*width), py+(.06*width));
+      canvas.stroke();
+
+      canvas.beginPath();
+      canvas.lineTo(px +(.15*width),py+(.16*width));
+      canvas.lineTo(px+(.05*width), py+(.16*width));
+      canvas.stroke();
+
+
+      canvas.strokeRect(px +(.3*width),py+(.08*width), width/2.5,height/2);
+
+    }
 
 
       // Onload is called when the window loads
