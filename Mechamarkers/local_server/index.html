@@ -104,7 +104,9 @@
 
 
         // ctx.fillStyle = 'rgb(200, 0, 0)';
-        drawRadio("Hello",ctx,100,100,300,100);
+        drawRadio("Channel 12",ctx,100,100,300,100);
+
+        drawSpeedometer("hello", ctx, 400, 400, 80);
 
         // ctx.fillStyle = 'rgb(200, 0, 0)';
         // ctx.strokeRect(100,100,400,200);
@@ -150,15 +152,26 @@
           canvas.strokeRect(px +(.08*width),py+(.08*width), width/2,height/2);
 
           canvas.font = '20px serif';
-          canvas.fillText('Channel 12', px +(.18*width),py+(.18*width));
+          canvas.fillText(string, px +(.18*width),py+(.18*width));
 
           canvas.beginPath();
           canvas.arc(px +(.8*width),py+(.16*width), width/10, 0, Math.PI * 2, true); // Outer circle
           canvas.stroke();
         //  canvas.strokeRect(px +(.08*width),py+(.08*width), width/2,height/2);
+      }
+
+      function drawSpeedometer(string, canvas, px, py, diam)
+      {
+        canvas.fillStyle = 'rgb(0, 0, 0)';
+        canvas.beginPath();
+        canvas.arc(px ,py, diam, 0, Math.PI * 2, true); // Outer circle
+        canvas.stroke();
+
+        
 
 
       }
+
 
       // Onload is called when the window loads
       window.onload = () =>
