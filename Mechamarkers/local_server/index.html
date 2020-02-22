@@ -102,35 +102,62 @@
 
         var speedo_img = document.getElementById("speedo")
 
+
+        // ctx.fillStyle = 'rgb(200, 0, 0)';
+        drawRadio("Hello",ctx,100,100,300,100);
+
+        // ctx.fillStyle = 'rgb(200, 0, 0)';
+        // ctx.strokeRect(100,100,400,200);
+        // ctx.drawImage(speedo_img, 100,100, 300, 300)
+
         //Uncomment to display image
         //ctx.drawImage(speedo_img, marker11_pos.x, marker11_pos.y, 300, 300)
 
+
+
         //If remotes present
-        if (remote)
-        {
-          //Point I'm projecting from
-          var anchor = remote.anchor.center
+        // if (remote)
+        // {
+        //   //Point I'm projecting from
+        //   var anchor = remote.anchor.center
+        //
+        //   //Image scale, select, and rotate
+        //   var scale = remote.getInput("scale") //Grabs the scale input object
+        //   var select = remote.getInput("select") //Grabs the select input object
+        //   var rotate = remote.getInput("rotate") //Grabs the scale input object
+        //
+        //   //Image size
+        //   //Based on current value of slider
+        //   var img_size = 300 * scale.val
+        //
+        //   //Image rotation
+        //   var img_rotation = radToDeg(rotate.val + 3.14)
+        //   //var img_rotation = rotate.val + 3.14
+        //   console.log(img_rotation)
+        //
+        //   //Draws the image (image, x, y, width, height)
+        //   //ctx.drawImage(speedo_img, anchor.x, anchor.y, img_size , img_size)
+        //
+        //   //Draws the image onto the canvas
+        //   drawImageRot(speedo_img, anchor.x, anchor.y, img_size, img_size, img_rotation)
+        // }
+      }
 
-          //Image scale, select, and rotate
-          var scale = remote.getInput("scale") //Grabs the scale input object
-          var select = remote.getInput("select") //Grabs the select input object
-          var rotate = remote.getInput("rotate") //Grabs the scale input object
+      function drawRadio(string, canvas, px, py, width, height)
+      {
+          canvas.fillStyle = 'rgb(0, 0, 0)';
+          canvas.strokeRect(px,py, width,height);
+          canvas.strokeRect(px +(.08*width),py+(.08*width), width/2,height/2);
 
-          //Image size
-          //Based on current value of slider
-          var img_size = 300 * scale.val
+          canvas.font = '20px serif';
+          canvas.fillText('Channel 12', px +(.18*width),py+(.18*width));
 
-          //Image rotation
-          var img_rotation = radToDeg(rotate.val + 3.14)
-          //var img_rotation = rotate.val + 3.14
-          console.log(img_rotation)
+          canvas.beginPath();
+          canvas.arc(px +(.8*width),py+(.16*width), width/10, 0, Math.PI * 2, true); // Outer circle
+          canvas.stroke();
+        //  canvas.strokeRect(px +(.08*width),py+(.08*width), width/2,height/2);
 
-          //Draws the image (image, x, y, width, height)
-          //ctx.drawImage(speedo_img, anchor.x, anchor.y, img_size , img_size)
 
-          //Draws the image onto the canvas
-          drawImageRot(speedo_img, anchor.x, anchor.y, img_size, img_size, img_rotation)
-        }
       }
 
       // Onload is called when the window loads
