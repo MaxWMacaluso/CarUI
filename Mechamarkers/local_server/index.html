@@ -167,7 +167,20 @@
         canvas.arc(px ,py, diam, 0, Math.PI * 2, true); // Outer circle
         canvas.stroke();
 
-        
+        canvas.font = '15px serif';
+
+        canvas.fillText(0, px-(diam*.6), py+(diam*.7), diam,1*Math.PI,1.5*Math.PI);
+        canvas.fillText(20, px-(diam*.8), py+(diam*.2), diam,1*Math.PI,1.5*Math.PI);
+        canvas.fillText(40, px-(diam*.7), py-(diam*.4), diam, 1*Math.PI, 1.5*Math.PI);
+        canvas.fillText(60, px-(diam*.12), py-(diam*.7), diam, 1*Math.PI, 1.5*Math.PI);
+        canvas.fillText(80, px+(diam*.5), py-(diam*.4), diam, 1*Math.PI, 1.5*Math.PI);
+        canvas.fillText(100, px+(diam*.55), py+(diam*.2), diam, 1*Math.PI, 1.5*Math.PI);
+        canvas.fillText(120, px+(diam*.35), py+(diam*.7), diam,1*Math.PI,1.5*Math.PI);
+
+        canvas.beginPath();
+        canvas.lineTo(px, py);
+        canvas.lineTo(px-(diam*.6), py+(diam*.7));
+        canvas.stroke();
 
 
       }
