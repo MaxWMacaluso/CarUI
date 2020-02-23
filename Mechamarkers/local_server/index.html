@@ -44,7 +44,8 @@
         Mechamarkers.update(currTime);
 
         //Uncomment to display image
-        //marker11_pos = Mechamarkers.getMarker(11).center
+        marker11_pos = Mechamarkers.getMarker(11).center
+        marker10_pos = Mechamarkers.getMarker(10).center
 
         //If not input group detected, will be NULL
         var remote = null
@@ -104,13 +105,11 @@
 
 
         // ctx.fillStyle = 'rgb(200, 0, 0)';
-        drawRadio("Channel 12",ctx,100,100,300,100);
+        drawRadio("Channel 12",ctx, marker10_pos.x, marker10_pos.y+100,300,100);
+        drawSpeedometer("hello", ctx, marker10_pos.x, marker10_pos.y, 80);
+        drawClimate("Sure", "Hello",ctx, 450, 200, 300, 100);
 
-        drawSpeedometer("hello", ctx, 400, 400, 80);
 
-        drawClimate("Sure", ctx, 450, 200, 300, 100);
-        // ctx.fillStyle = 'rgb(200, 0, 0)';
-        // ctx.strokeRect(100,100,400,200);
         // ctx.drawImage(speedo_img, 100,100, 300, 300)
 
         //Uncomment to display image
@@ -119,31 +118,32 @@
 
 
         //If remotes present
-        // if (remote)
-        // {
-        //   //Point I'm projecting from
-        //   var anchor = remote.anchor.center
-        //
-        //   //Image scale, select, and rotate
-        //   var scale = remote.getInput("scale") //Grabs the scale input object
-        //   var select = remote.getInput("select") //Grabs the select input object
-        //   var rotate = remote.getInput("rotate") //Grabs the scale input object
-        //
-        //   //Image size
-        //   //Based on current value of slider
-        //   var img_size = 300 * scale.val
-        //
-        //   //Image rotation
-        //   var img_rotation = radToDeg(rotate.val + 3.14)
-        //   //var img_rotation = rotate.val + 3.14
-        //   console.log(img_rotation)
-        //
-        //   //Draws the image (image, x, y, width, height)
-        //   //ctx.drawImage(speedo_img, anchor.x, anchor.y, img_size , img_size)
-        //
-        //   //Draws the image onto the canvas
-        //   drawImageRot(speedo_img, anchor.x, anchor.y, img_size, img_size, img_rotation)
-        // }
+        if (remote)
+        {
+          console.log("here");
+          //Point I'm projecting from
+          var anchor = remote.anchor.center
+
+          //Image scale, select, and rotate
+          var scale = remote.getInput("scale") //Grabs the scale input object
+          var select = remote.getInput("select") //Grabs the select input object
+          var rotate = remote.getInput("rotate") //Grabs the scale input object
+
+          //Image size
+          //Based on current value of slider
+          var img_size = 300 * scale.val
+
+          //Image rotation
+          var img_rotation = radToDeg(rotate.val + 3.14)
+          //var img_rotation = rotate.val + 3.14
+          console.log(img_rotation)
+
+          //Draws the image (image, x, y, width, height)
+          //ctx.drawImage(speedo_img, anchor.x, anchor.y, img_size , img_size)
+
+          //Draws the image onto the canvas
+          drawImageRot(speedo_img, anchor.x, anchor.y, img_size, img_size, img_rotation)
+        }
       }
 
       function drawRadio(string, canvas, px, py, width, height)
@@ -156,7 +156,7 @@
           canvas.fillText(string, px +(.18*width),py+(.18*width));
 
           canvas.beginPath();
-          canvas.arc(px +(.8*width),py+(.16*width), width/10, 0, Math.PI * 2, true); // Outer circle
+          canvas.arc(px +(.8*width), py+(.16*width), width/10, 0, Math.PI * 2, true); // Outer circle
           canvas.stroke();
         //  canvas.strokeRect(px +(.08*width),py+(.08*width), width/2,height/2);
       }
@@ -184,10 +184,11 @@
         canvas.stroke();
       }
 
-    function drawClimate(string, string2,canvas, px, py, width, height)
+    function drawClimate(string, string2, canvas, px, py, width, height)
     {
       canvas.fillStyle = 'rgb(0, 0, 0)';
       canvas.strokeRect(px,py, width,height);
+
 
       canvas.beginPath();
       canvas.arc(px +(.85*width),py+(.16*width), width/10, 0, Math.PI * 2, true); // Outer circle
@@ -206,7 +207,6 @@
       canvas.lineTo(px +(.15*width),py+(.16*width));
       canvas.lineTo(px+(.05*width), py+(.16*width));
       canvas.stroke();
-
 
       canvas.strokeRect(px +(.3*width),py+(.08*width), width/2.5,height/2);
 
