@@ -43,7 +43,7 @@
         // Update the mechamarkers library
         Mechamarkers.update(currTime);
 
-        //Uncomment to display image
+        //Getting center positions of mechamarkers
         marker11_pos = Mechamarkers.getMarker(11).center
         marker10_pos = Mechamarkers.getMarker(10).center
 
@@ -103,19 +103,16 @@
 
         var speedo_img = document.getElementById("speedo")
 
-
-        // ctx.fillStyle = 'rgb(200, 0, 0)';
+        //Draw graphics
         drawRadio("Channel 12",ctx, marker10_pos.x, marker10_pos.y+100,300,100);
         drawSpeedometer("hello", ctx, marker10_pos.x, marker10_pos.y, 80);
         drawClimate("67", "85",ctx, 450, 200, 300, 100);
 
-
+        //test to see if the local server is working. will draw the speedometer
         // ctx.drawImage(speedo_img, 100,100, 300, 300)
 
         //Uncomment to display image
         //ctx.drawImage(speedo_img, marker11_pos.x, marker11_pos.y, 300, 300)
-
-
 
         //If remotes present
         if (remote)
@@ -147,6 +144,7 @@
         }
       }
 
+      //Draw the radio.
       function drawRadio(string, canvas, px, py, width, height)
       {
           canvas.fillStyle = 'rgb(0, 0, 0)';
@@ -167,6 +165,7 @@
         //  canvas.strokeRect(px +(.08*width),py+(.08*width), width/2,height/2);
       }
 
+      //Draw the speedometer
       function drawSpeedometer(string, canvas, px, py, diam)
       {
         canvas.fillStyle = 'rgb(0, 0, 0)';
@@ -190,11 +189,11 @@
         canvas.stroke();
       }
 
+    //Draw the climate control
     function drawClimate(string, string2, canvas, px, py, width, height)
     {
       canvas.fillStyle = 'rgb(0, 0, 0)';
       canvas.strokeRect(px,py, width,height);
-
 
       canvas.beginPath();
       canvas.arc(px +(.85*width),py+(.16*width), width/10, 0, Math.PI * 2, true); // Outer circle
