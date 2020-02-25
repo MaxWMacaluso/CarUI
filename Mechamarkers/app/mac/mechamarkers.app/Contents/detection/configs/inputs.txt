@@ -1,1 +1,0 @@
-{"groups":[{"name":"track-toggle","anchorID":6,"detectWindow":250,"inputs":[{"name":"toggle","type":"TOGGLE","actorID":5,"detectWindow":250,"relativePosition":{"distance":30.92685373455594,"angle":-1.9609805243925393}}],"markerSize":20},{"name":"track-grabber","anchorID":56,"detectWindow":"150","inputs":[],"markerSize":20}]}
