@@ -21,50 +21,60 @@
   </head>
 
   <body>
-    <canvas class = "canvas"></canvas>
+    <canvas class="canvas"></canvas>
 
-    <img src = "https://images-na.ssl-images-amazon.com/images/I/81FAXirfJUL.png" id = "speedo" style = "display:none !important"/>
-    <img src = "https://previews.123rf.com/images/dariy/dariy1612/dariy161200020/69684345-old-radio-isolated-on-white-background-style-50-ies-of-the-19th-century.jpg" id = "radio" style = "display:none !important"/>
+    <img src = "https://images-na.ssl-images-amazon.com/images/I/81FAXirfJUL.png" id = "speedo" style = "display:none">
+    <img src = "https://previews.123rf.com/images/dariy/dariy1612/dariy161200020/69684345-old-radio-isolated-on-white-background-style-50-ies-of-the-19th-century.jpg" id = "radio" style = "display:none"/>
+    <img src = "" id = "climate" style = "display:none">
 
-    <script src="https://js.leapmotion.com/leap-0.6.4.js"></script>
-    <script src="https://js.leapmotion.com/leap-plugins-0.1.12.js"></script>
+    <!-- LEAP MOTION STUFF -->
+    <!-- <script src="https://js.leapmotion.com/leap-0.6.4.js"></script>
+    <script src="https://js.leapmotion.com/leap-plugins-0.1.12.js"></script> -->
 
-    <!--for Testing leap Motion-->
+    <!-- for Testing leap Motion
     <h1>Testing Leap JS</h1>
-    <div id="output"></div>
+    <div id="output"></div> -->
     
     <script>
-      // Make included libraries local
+      //Make included libraries local
       const Mechamarkers = window.Mechamarkers;
       const Vec2 = window.Vec2;
 
+        //Creating the different .png images
+        drawRadio("Channel", 0, 0, 300, 100)
+        //drawSpeedometer("Hello", 200, 200, 100)
+        drawClimate("Test", "Max", 0, 0, 300, 100)
+
       let prevTime;
+      //Width, height, rotation
       var states = [
-        [300,300,-3],
-        [300,300,-3]
+        [300, 300, 0],
+        [300, 300, 0],
+        [300, 300, 0]
       ]
-      //----------Leap Motion Stuff-------------------------------------------------
-      function concatData(id, data) {
-        return id + ": " + data + "<br>";
-      }
 
-      var output = document.getElementById('output');
-      var frameString = "", handString ="", fingerString = "";
-      var hand, finger;
+      // //----------Leap Motion Stuff-------------------------------------------------
+      // function concatData(id, data) {
+      //   return id + ": " + data + "<br>";
+      // }
 
-      //leap.loop uses browser's requestAnimationFrame
-      var options = { enableGestures: true};
-      //main leap loop
-      Leap.loop(options, function(frame) {
-        //prints frame id and data
-        frameString = concatData("frame_id", frame.id);
-        frameString += concatData("num_hands", frame.hand.length);
-        frameString += concatData("num_fingers", frame.finger.length);
-        frameString += "<br>";
+      // var output = document.getElementById('output');
+      // var frameString = "", handString ="", fingerString = "";
+      // var hand, finger;
 
-        output.innerHTML = frameString;
-      });
-      //-------------------------End Leap motion Stuff------------------------------
+      // //leap.loop uses browser's requestAnimationFrame
+      // var options = { enableGestures: true};
+      // //main leap loop
+      // Leap.loop(options, function(frame) {
+      //   //prints frame id and data
+      //   frameString = concatData("frame_id", frame.id);
+      //   frameString += concatData("num_hands", frame.hand.length);
+      //   frameString += concatData("num_fingers", frame.finger.length);
+      //   frameString += "<br>";
+
+      //   output.innerHTML = frameString;
+      // });
+      // //-------------------------End Leap motion Stuff------------------------------
       
       // This function is called every animation frame (roughly 60 times a second)
       function update() 
@@ -105,7 +115,7 @@
         return radian * 57.29
       }
 
-      //Helper function to do rotations
+      //Helper function to do rotation and scale
       function drawImageRot(img, x, y, width, height, deg)
       {
         // Store the current context state (i.e. rotation, translation etc..)
@@ -131,12 +141,18 @@
         //Remote is a group object that contains multiple inputs
       function draw(remote, marker_11, marker_10)
       {
+        // //Creating the different .png images
+        // drawRadio("Channel", 0, 0, 300, 100)
+        // drawSpeedometer("Hello", 0, 0, 100)
+        // //drawClimate(string, string2, 0, 0, 300, 100)
+
         //???
         ctx.clearRect(-1, -1, canvas.width + 1, canvas.height + 1)
         ctx.fillStyle = 'black'
 
         var speedo_img = document.getElementById("speedo")
         var radio_img = document.getElementById("radio")
+        var climate_img = document.getElementById("climate")
        
         //Uncomment to display image
         //ctx.drawImage(speedo_img, marker11_pos.x, marker11_pos.y, 300, 300)
@@ -155,7 +171,8 @@
 
           //Image size
           //Based on current value of slider
-          var img_size = 300 * scale.val
+          var img_size_x = 300 * scale.val
+          var img_size_y = 100 * scale.val
 
           //Image rotation
           var img_rotation = radToDeg(rotate.val + 3.14)
@@ -169,22 +186,138 @@
           
           if (select.val < .5) 
           {
-            drawImageRot(speedo_img, marker_10.x, marker_10.y, img_size, img_size, img_rotation)
-            drawImageRot(radio_img, marker_11.x, marker_11.y, states[0][0], states[0][1], radToDeg(states[0][2]+ 3.14))
-            states[1][0] = img_size
-            states[1][1] = img_size
-            states[1][2] = rotate.val
+            //Edits the .png files
+            drawImageRot(climate_img, marker_10.x, marker_10.y, img_size_x, img_size_y, img_rotation)
+            drawImageRot(radio_img, marker_11.x, marker_11.y, states[0][0], states[0][1], states[0][2])
+
+            //States of the images
+            states[1][0] = img_size_x
+            states[1][1] = img_size_y
+            states[1][2] = img_rotation
           }
           else 
           {
-            drawImageRot(radio_img, marker_11.x, marker_11.y, img_size, img_size, img_rotation)
-            drawImageRot(speedo_img, marker_10.x, marker_10.y, states[1][0], states[1][1], radToDeg(states[0][2]+ 3.14))
-            states[0][0] = img_size
-            states[0][1] = img_size
-            states[0][2] = rotate.val
+            //Edits the .png files
+            drawImageRot(radio_img, marker_11.x, marker_11.y, img_size_x, img_size_y, img_rotation)
+            drawImageRot(climate_img, marker_10.x, marker_10.y, states[1][0], states[1][1], states[1][2])
+
+            //States of the images
+            states[0][0] = img_size_x
+            states[0][1] = img_size_y
+            states[0][2] = img_rotation
           }
         }
       }
+
+      //TO DRAW CUSTOM GRAPHICS on images
+      function drawRadio(string, px, py, width, height)
+      {
+          var canvas = document.querySelector('canvas')
+          var ctx = canvas.getContext('2d')
+
+          ctx.strokeStyle = "rgb(255,255,255)";
+          ctx.fillStyle='rgb(80,80,80)';
+          ctx.fillRect(px,py, width,height);
+          ctx.fillStyle='rgba(0, 0, 180)';
+          ctx.fillRect(px +(.08*width),py+(.08*width), width/2,height/2);
+          ctx.fillStyle ='#00CCFF';
+          var fontSize= px +(.08*width);
+          ctx.font = '20px arial';
+          ctx.fillText(string, px +(.16*width),py+(.18*width));
+          ctx.beginPath()
+          ctx.arc(px +(.8*width), py+(.16*width), width/10, 0, Math.PI * 2, true); // Outer circle
+          ctx.fillStyle = 'rgb(192,192,192)';
+          ctx.fill();
+          ctx.stroke();
+          ctx.strokeStyle = "rgb(255,0,0)";
+          ctx.beginPath();
+          ctx.lineTo(px +(.8*width), py+(.16*width));
+          ctx.lineTo(px+(.9*width), py+(.16*width));
+          ctx.stroke();
+        
+          var img = canvas.toDataURL()
+
+          //Set source of image equal to current value
+          document.getElementById("radio").src = img
+      }
+
+          //TO DRAW CUSTOM GRAPHICS on images
+    function drawClimate(string, string2, px, py, width, height)
+    {
+      var canvas = document.querySelector('canvas')
+      var ctx = canvas.getContext('2d')
+
+      ctx.strokeStyle = "rgb(255,255,255)";
+      ctx.fillStyle = 'rgb(120,120,120)';
+      ctx.fillRect(px,py, width,height);
+      ctx.beginPath();
+      ctx.arc(px +(.85*width),py+(.16*width), width/10, 0, Math.PI * 2, true); // Outer circle
+      var grd = ctx.createLinearGradient(px +(.85*width),py+(.32*width), px+(.85*width), py+(.02*width));
+      grd.addColorStop(0, "red");
+      grd.addColorStop(1, "blue");
+      ctx.fillStyle = grd;
+      ctx.fill();
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.arc(px +(.15*width),py+(.16*width), width/10, 0, Math.PI * 2, true); // Outer circle
+      var grd = ctx.createLinearGradient(px +(.85*width),py+(.32*width), px+(.85*width), py+(.02*width));
+      grd.addColorStop(0, "red");
+      grd.addColorStop(1, "blue");
+      ctx.fillStyle = grd;
+      ctx.fill();
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.lineTo(px +(.85*width),py+(.16*width));
+      ctx.lineTo(px+(.85*width), py+(.06*width));
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.lineTo(px +(.15*width),py+(.16*width));
+      ctx.lineTo(px+(.05*width), py+(.16*width));
+      ctx.stroke();
+      ctx.fillStyle = 'rgb(0,0,180)';
+      ctx.fillRect(px +(.3*width),py+(.08*width), width/2.5,height/2);
+      // canvas.fillStyle = "rgb(255,255,255)";
+      ctx.fillStyle ='#00CCFF';
+      ctx.font = '20px serif';
+      ctx.fillText(string, px +(.35*width) ,py+(.18*width));
+      ctx.fillText(string2, px +(.6*width) ,py+(.18*width) );
+
+      var img = canvas.toDataURL()
+      document.getElementById("climate").src = img
+    }
+
+
+      //TO DRAW CUSTOM GRAPHICS on images
+      //TODO:
+      // function drawSpeedometer(string, px, py, diam)
+      // {
+      //   var canvSped = document.getElementById("canvSped")
+      //   var ctx1 = canvSped.getContext('2d')
+
+      //   ctx1.strokeStyle = "rgb(255,255,255)";
+      //   ctx1.beginPath();
+      //   ctx1.arc(px ,py, diam, 0, Math.PI * 2, true); // Outer circle
+      //   ctx1.fillStyle = 'rgb(105,105,105)';
+      //   ctx1.fill();
+      //   ctx1.stroke();
+      //   ctx1.fillStyle = 'rgb(255,255,255)';
+      //   ctx1.font = '15px arial';
+      //   ctx1.fillText(0, px-(diam*.6), py+(diam*.7), diam,1*Math.PI,1.5*Math.PI);
+      //   ctx1.fillText(20, px-(diam*.8), py+(diam*.2), diam,1*Math.PI,1.5*Math.PI);
+      //   ctx1.fillText(40, px-(diam*.7), py-(diam*.4), diam, 1*Math.PI, 1.5*Math.PI);
+      //   ctx1.fillText(60, px-(diam*.12), py-(diam*.7), diam, 1*Math.PI, 1.5*Math.PI);
+      //   ctx1.fillText(80, px+(diam*.5), py-(diam*.4), diam, 1*Math.PI, 1.5*Math.PI);
+      //   ctx1.fillText(100, px+(diam*.55), py+(diam*.2), diam, 1*Math.PI, 1.5*Math.PI);
+      //   ctx1.fillText(120, px+(diam*.35), py+(diam*.7), diam,1*Math.PI,1.5*Math.PI);
+      //   ctx1.beginPath();
+      //   ctx1.strokeStyle = "#FF0000";
+      //   ctx1.lineTo(px, py);
+      //   ctx1.lineTo(px-(diam*.6), py+(diam*.7));
+      //   ctx1.stroke();
+
+      //   var img = canvSped.toDataURL()
+      //   document.getElementById("speedo").src = img
+      // }
       
       // Onload is called when the window loads
       window.onload = () => 
@@ -205,7 +338,6 @@
         // Begin the update loop
         update();
       }
-
     </script>
   </body>
 </html>
