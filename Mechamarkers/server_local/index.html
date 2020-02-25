@@ -23,14 +23,19 @@
   <body>
     <canvas class = "canvas"></canvas>
 
-    <img src = "https://images-na.ssl-images-amazon.com/images/I/81FAXirfJUL.png" id = "speedo" style = "display:none">
-
+    <img src = "https://images-na.ssl-images-amazon.com/images/I/81FAXirfJUL.png" id = "speedo" style = "display:none !important"/>
+    <img src = "https://previews.123rf.com/images/dariy/dariy1612/dariy161200020/69684345-old-radio-isolated-on-white-background-style-50-ies-of-the-19th-century.jpg" id = "radio" style = "display:none !important"/>
+    
     <script>
       // Make included libraries local
       const Mechamarkers = window.Mechamarkers;
       const Vec2 = window.Vec2;
 
       let prevTime;
+      var states = [
+        [300,300,-3],
+        [300,300,-3]
+      ]
       
       // This function is called every animation frame (roughly 60 times a second)
       function update() 
@@ -44,8 +49,9 @@
         Mechamarkers.update(currTime);
 
         //Uncomment to display image
-        //marker11_pos = Mechamarkers.getMarker(11).center
-
+        marker11_pos = Mechamarkers.getMarker(11).center
+        marker10_pos = Mechamarkers.getMarker(10).center
+        
         //If not input group detected, will be NULL
         var remote = null
 
@@ -57,7 +63,7 @@
         }
 
         // If you wanted to use a canvas to draw stuff, I would put that code here
-        draw(remote);
+        draw(remote, marker11_pos, marker10_pos);
 
         //Keep this at the end. It triggers the loop to continue
         window.requestAnimationFrame(update);
@@ -90,21 +96,23 @@
 
         // Restore canvas state as saved from above
         ctx.restore();
-    }
+      }
 
       //INPUTS:
         //Remote is a group object that contains multiple inputs
-      function draw(remote)
+      function draw(remote, marker_11, marker_10)
       {
         //???
         ctx.clearRect(-1, -1, canvas.width + 1, canvas.height + 1)
         ctx.fillStyle = 'black'
 
         var speedo_img = document.getElementById("speedo")
-        
+        var radio_img = document.getElementById("radio")
+       
         //Uncomment to display image
         //ctx.drawImage(speedo_img, marker11_pos.x, marker11_pos.y, 300, 300)
-
+        //ctx.drawImage(radio_img, marker10_pos.x, marker10_pos.y, 300, 300)
+        
         //If remotes present
         if (remote)
         {
@@ -122,14 +130,30 @@
 
           //Image rotation
           var img_rotation = radToDeg(rotate.val + 3.14)
-          //var img_rotation = rotate.val + 3.14
-          console.log(img_rotation)
 
-          //Draws the image (image, x, y, width, height)
           //ctx.drawImage(speedo_img, anchor.x, anchor.y, img_size , img_size)
 
-          //Draws the image onto the canvas
-          drawImageRot(speedo_img, anchor.x, anchor.y, img_size, img_size, img_rotation)
+          //Draws the image onto the canvas (DRAWS ANCHOR)
+          //drawImageRot(speedo_img, anchor.x, anchor.y, img_size, img_size, img_rotation)
+
+          var selected_img = ""
+          
+          if (select.val < .5) 
+          {
+            drawImageRot(speedo_img, marker_10.x, marker_10.y, img_size, img_size, img_rotation)
+            drawImageRot(radio_img, marker_11.x, marker_11.y, states[0][0], states[0][1], radToDeg(states[0][2]+ 3.14))
+            states[1][0] = img_size
+            states[1][1] = img_size
+            states[1][2] = rotate.val
+          }
+          else 
+          {
+            drawImageRot(radio_img, marker_11.x, marker_11.y, img_size, img_size, img_rotation)
+            drawImageRot(speedo_img, marker_10.x, marker_10.y, states[1][0], states[1][1], radToDeg(states[0][2]+ 3.14))
+            states[0][0] = img_size
+            states[0][1] = img_size
+            states[0][2] = rotate.val
+          }
         }
       }
       
