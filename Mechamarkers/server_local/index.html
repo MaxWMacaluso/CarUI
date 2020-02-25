@@ -25,6 +25,13 @@
 
     <img src = "https://images-na.ssl-images-amazon.com/images/I/81FAXirfJUL.png" id = "speedo" style = "display:none !important"/>
     <img src = "https://previews.123rf.com/images/dariy/dariy1612/dariy161200020/69684345-old-radio-isolated-on-white-background-style-50-ies-of-the-19th-century.jpg" id = "radio" style = "display:none !important"/>
+
+    <script src="https://js.leapmotion.com/leap-0.6.4.js"></script>
+    <script src="https://js.leapmotion.com/leap-plugins-0.1.12.js"></script>
+
+    <!--for Testing leap Motion-->
+    <h1>Testing Leap JS</h1>
+    <div id="output"></div>
     
     <script>
       // Make included libraries local
@@ -36,6 +43,28 @@
         [300,300,-3],
         [300,300,-3]
       ]
+      //----------Leap Motion Stuff-------------------------------------------------
+      function concatData(id, data) {
+        return id + ": " + data + "<br>";
+      }
+
+      var output = document.getElementById('output');
+      var frameString = "", handString ="", fingerString = "";
+      var hand, finger;
+
+      //leap.loop uses browser's requestAnimationFrame
+      var options = { enableGestures: true};
+      //main leap loop
+      Leap.loop(options, function(frame) {
+        //prints frame id and data
+        frameString = concatData("frame_id", frame.id);
+        frameString += concatData("num_hands", frame.hand.length);
+        frameString += concatData("num_fingers", frame.finger.length);
+        frameString += "<br>";
+
+        output.innerHTML = frameString;
+      });
+      //-------------------------End Leap motion Stuff------------------------------
       
       // This function is called every animation frame (roughly 60 times a second)
       function update() 
@@ -68,7 +97,7 @@
         //Keep this at the end. It triggers the loop to continue
         window.requestAnimationFrame(update);
       }
-  
+
 
       //Helper function to get degrees from radians
       function radToDeg(radian)
