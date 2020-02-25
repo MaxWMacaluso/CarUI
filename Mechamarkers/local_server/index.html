@@ -107,7 +107,7 @@
         // ctx.fillStyle = 'rgb(200, 0, 0)';
         drawRadio("Channel 12",ctx, marker10_pos.x, marker10_pos.y+100,300,100);
         drawSpeedometer("hello", ctx, marker10_pos.x, marker10_pos.y, 80);
-        drawClimate("Sure", "Hello",ctx, 450, 200, 300, 100);
+        drawClimate("67", "85",ctx, 450, 200, 300, 100);
 
 
         // ctx.drawImage(speedo_img, 100,100, 300, 300)
@@ -120,7 +120,7 @@
         //If remotes present
         if (remote)
         {
-          console.log("here");
+        //console.log("here");
           //Point I'm projecting from
           var anchor = remote.anchor.center
 
@@ -131,7 +131,8 @@
 
           //Image size
           //Based on current value of slider
-          var img_size = 300 * scale.val
+          var img_sizeX = 300 * scale.val
+          var img_sizeY= 100*scale.val
 
           //Image rotation
           var img_rotation = radToDeg(rotate.val + 3.14)
@@ -140,7 +141,7 @@
 
           //Draws the image (image, x, y, width, height)
           //ctx.drawImage(speedo_img, anchor.x, anchor.y, img_size , img_size)
-
+          drawRadio("Channel 12",ctx, marker10_pos.x, marker10_pos.y,img_sizeX,img_sizeY);
           //Draws the image onto the canvas
           drawImageRot(speedo_img, anchor.x, anchor.y, img_size, img_size, img_rotation)
         }
@@ -157,6 +158,11 @@
 
           canvas.beginPath();
           canvas.arc(px +(.8*width), py+(.16*width), width/10, 0, Math.PI * 2, true); // Outer circle
+          canvas.stroke();
+
+          canvas.beginPath();
+          canvas.lineTo(px +(.8*width), py+(.16*width));
+          canvas.lineTo(px+(.9*width), py+(.16*width));
           canvas.stroke();
         //  canvas.strokeRect(px +(.08*width),py+(.08*width), width/2,height/2);
       }
@@ -209,6 +215,10 @@
       canvas.stroke();
 
       canvas.strokeRect(px +(.3*width),py+(.08*width), width/2.5,height/2);
+      canvas.font = '20px serif';
+
+      canvas.fillText(string, px +(.35*width) ,py+(.18*width));
+      canvas.fillText(string2, px +(.6*width) ,py+(.18*width) );
 
     }
 
