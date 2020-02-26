@@ -14,23 +14,67 @@
         font-size: 12px;
         line-height: 1.5;
         overflow: hidden;
-        background: rgb(0, 0, 0);
+        background: rgb(66, 66, 66);
       }
     </style>
     <script src="./build/app.js"></script>
   </head>
 
   <body>
-    <canvas class = "canvas"></canvas>
+    <canvas class="canvas"></canvas>
 
     <img src = "https://images-na.ssl-images-amazon.com/images/I/81FAXirfJUL.png" id = "speedo" style = "display:none">
+    <img src = "https://previews.123rf.com/images/dariy/dariy1612/dariy161200020/69684345-old-radio-isolated-on-white-background-style-50-ies-of-the-19th-century.jpg" id = "radio" style = "display:none"/>
+    <img src = "" id = "climate" style = "display:none">
+
+    <!-- LEAP MOTION STUFF -->
+    <!-- <script src="https://js.leapmotion.com/leap-0.6.4.js"></script>
+    <script src="https://js.leapmotion.com/leap-plugins-0.1.12.js"></script> -->
+
+    <!-- for Testing leap Motion
+    <h1>Testing Leap JS</h1>
+    <div id="output"></div> -->
 
     <script>
-      // Make included libraries local
+      //Make included libraries local
       const Mechamarkers = window.Mechamarkers;
       const Vec2 = window.Vec2;
 
+        //Creating the different .png images
+        drawRadio("Sirius XM: 26", 0, 0, 300, 100)
+        //drawSpeedometer("Hello", 200, 200, 100)
+        drawClimate("65", "87", 0, 0, 300, 100)
+
       let prevTime;
+      //Width, height, rotation
+      var states = [
+        [300, 300, 0],
+        [300, 300, 0],
+        [300, 300, 0]
+      ]
+
+      // //----------Leap Motion Stuff-------------------------------------------------
+      // function concatData(id, data) {
+      //   return id + ": " + data + "<br>";
+      // }
+
+      // var output = document.getElementById('output');
+      // var frameString = "", handString ="", fingerString = "";
+      // var hand, finger;
+
+      // //leap.loop uses browser's requestAnimationFrame
+      // var options = { enableGestures: true};
+      // //main leap loop
+      // Leap.loop(options, function(frame) {
+      //   //prints frame id and data
+      //   frameString = concatData("frame_id", frame.id);
+      //   frameString += concatData("num_hands", frame.hand.length);
+      //   frameString += concatData("num_fingers", frame.finger.length);
+      //   frameString += "<br>";
+
+      //   output.innerHTML = frameString;
+      // });
+      // //-------------------------End Leap motion Stuff------------------------------
 
       // This function is called every animation frame (roughly 60 times a second)
       function update()
@@ -43,7 +87,7 @@
         // Update the mechamarkers library
         Mechamarkers.update(currTime);
 
-        //Getting center positions of mechamarkers
+        //Uncomment to display image
         marker11_pos = Mechamarkers.getMarker(11).center
         marker10_pos = Mechamarkers.getMarker(10).center
 
@@ -58,7 +102,7 @@
         }
 
         // If you wanted to use a canvas to draw stuff, I would put that code here
-        draw(remote);
+        draw(remote, marker11_pos, marker10_pos);
 
         //Keep this at the end. It triggers the loop to continue
         window.requestAnimationFrame(update);
@@ -71,7 +115,7 @@
         return radian * 57.29
       }
 
-      //Helper function to do rotations
+      //Helper function to do rotation and scale
       function drawImageRot(img, x, y, width, height, deg)
       {
         // Store the current context state (i.e. rotation, translation etc..)
@@ -91,170 +135,191 @@
 
         // Restore canvas state as saved from above
         ctx.restore();
-    }
+      }
 
       //INPUTS:
         //Remote is a group object that contains multiple inputs
-      function draw(remote)
+      function draw(remote, marker_11, marker_10)
       {
+        // //Creating the different .png images
+        // drawRadio("Channel", 0, 0, 300, 100)
+        // drawSpeedometer("Hello", 0, 0, 100)
+        // //drawClimate(string, string2, 0, 0, 300, 100)
+
         //???
         ctx.clearRect(-1, -1, canvas.width + 1, canvas.height + 1)
         ctx.fillStyle = 'black'
 
         var speedo_img = document.getElementById("speedo")
-
-        //Draw graphics
-
-      //  drawRadio("Channel 12",ctx, marker10_pos.x, marker10_pos.y+100,300,100);
-        drawRadio("Sirius XM 26",ctx, 300, 300,300,100);
-        drawSpeedometer("hello", ctx, 500,500, 80);
-        drawClimate("67", "85",ctx, 450, 200, 300, 100);
-
-        //test to see if the local server is working. will draw the speedometer
-        // ctx.drawImage(speedo_img, 100,100, 300, 300)
+        var radio_img = document.getElementById("radio")
+        var climate_img = document.getElementById("climate")
 
         //Uncomment to display image
-        //ctx.drawImage(speedo_img, marker11_pos.x, marker11_pos.y, 300, 300)
+        ctx.drawImage(speedo_img, marker11_pos.x, marker11_pos.y, 300, 300)
+       //ctx.drawImage(radio_img, marker10_pos.x, marker10_pos.y, 300, 100)
+        ctx.drawImage(climate_img, 400, 200, 300, 100)
 
         //If remotes present
         if (remote)
         {
-        //console.log("here");
           //Point I'm projecting from
           var anchor = remote.anchor.center
 
           //Image scale, select, and rotate
           var scale = remote.getInput("scale") //Grabs the scale input object
-          console.log("NUM:", scale.val)
           var select = remote.getInput("select") //Grabs the select input object
           var rotate = remote.getInput("rotate") //Grabs the scale input object
 
           //Image size
           //Based on current value of slider
-          var img_sizeX = 300 * scale.val
-          var img_sizeY= 100*scale.val
+          var img_size_x = 300 * scale.val
+          var img_size_y = 100 * scale.val
 
           //Image rotation
           var img_rotation = radToDeg(rotate.val + 3.14)
-          //var img_rotation = rotate.val + 3.14
-          console.log(img_rotation)
 
-          canvas.font = '20px arial';
-          //Draws the image (image, x, y, width, height)
           //ctx.drawImage(speedo_img, anchor.x, anchor.y, img_size , img_size)
 
-          drawRadio("Sirius XM 26",ctx, marker10_pos.x, marker10_pos.y,img_sizeX,img_sizeY);
-          //Draws the image onto the canvas
-          drawImageRot(speedo_img, anchor.x, anchor.y, img_size, img_size, img_rotation)
+          //Draws the image onto the canvas (DRAWS ANCHOR)
+          //drawImageRot(speedo_img, anchor.x, anchor.y, img_size, img_size, img_rotation)
+
+          var selected_img = ""
+
+          if (select.val < .5)
+          {
+            //Edits the .png files
+            drawImageRot(climate_img, marker_10.x, marker_10.y, img_size_x, img_size_y, img_rotation)
+            drawImageRot(radio_img, marker_11.x, marker_11.y, states[0][0], states[0][1], states[0][2])
+
+            //States of the images
+            states[1][0] = img_size_x
+            states[1][1] = img_size_y
+            states[1][2] = img_rotation
+          }
+          else
+          {
+            //Edits the .png files
+            drawImageRot(radio_img, marker_11.x, marker_11.y, img_size_x, img_size_y, img_rotation)
+            drawImageRot(climate_img, marker_10.x, marker_10.y, states[1][0], states[1][1], states[1][2])
+
+            //States of the images
+            states[0][0] = img_size_x
+            states[0][1] = img_size_y
+            states[0][2] = img_rotation
+          }
         }
       }
 
-      //Draw the radio.
-      function drawRadio(string, canvas, px, py, width, height)
+      //TO DRAW CUSTOM GRAPHICS on images
+      function drawRadio(string, px, py, width, height)
       {
+          var canvas = document.querySelector('canvas')
+          var ctx = canvas.getContext('2d')
 
-          canvas.strokeStyle = "rgb(255,255,255)";
-          canvas.fillStyle='rgb(80,80,80)';
-          canvas.fillRect(px,py, width,height);
-
-          canvas.fillStyle='rgba(0, 0, 180)';
-          canvas.fillRect(px +(.08*width),py+(.08*width), width/2,height/2);
-
-          canvas.fillStyle ='#00CCFF';
+          ctx.strokeStyle = "rgb(255,255,255)";
+          ctx.fillStyle='rgb(80,80,80)';
+          ctx.fillRect(px,py, width,height);
+          ctx.fillStyle='rgba(0, 0, 180)';
+          ctx.fillRect(px +(.08*width),py+(.08*width), width/2,height/2);
+          ctx.fillStyle ='#00CCFF';
           var fontSize= px +(.08*width);
+          ctx.font = '20px arial';
+          ctx.fillText(string, px +(.16*width),py+(.18*width));
+          ctx.beginPath()
+          ctx.arc(px +(.8*width), py+(.16*width), width/10, 0, Math.PI * 2, true); // Outer circle
+          ctx.fillStyle = 'rgb(192,192,192)';
+          ctx.fill();
+          ctx.stroke();
+          ctx.strokeStyle = "rgb(255,0,0)";
+          ctx.beginPath();
+          ctx.lineTo(px +(.8*width), py+(.16*width));
+          ctx.lineTo(px+(.9*width), py+(.16*width));
+          ctx.stroke();
 
-          canvas.font = '20px arial';
-          canvas.fillText(string, px +(.16*width),py+(.18*width));
+          var img = canvas.toDataURL()
 
-          canvas.beginPath()
-          canvas.arc(px +(.8*width), py+(.16*width), width/10, 0, Math.PI * 2, true); // Outer circle
-          canvas.fillStyle = 'rgb(192,192,192)';
-          canvas.fill();
-          canvas.stroke();
-
-          canvas.strokeStyle = "rgb(255,0,0)";
-          canvas.beginPath();
-          canvas.lineTo(px +(.8*width), py+(.16*width));
-          canvas.lineTo(px+(.9*width), py+(.16*width));
-          canvas.stroke();
-        //  canvas.strokeRect(px +(.08*width),py+(.08*width), width/2,height/2);
+          //Set source of image equal to current value
+          document.getElementById("radio").src = img
       }
 
-      //Draw the speedometer
-      function drawSpeedometer(string, canvas, px, py, diam)
-      {
-        canvas.strokeStyle = "rgb(255,255,255)";
-        canvas.beginPath();
-        canvas.arc(px ,py, diam, 0, Math.PI * 2, true); // Outer circle
-        canvas.fillStyle = 'rgb(105,105,105)';
-        canvas.fill();
-        canvas.stroke();
-
-        canvas.fillStyle = 'rgb(255,255,255)';
-        canvas.font = '15px arial';
-        canvas.fillText(0, px-(diam*.6), py+(diam*.7), diam,1*Math.PI,1.5*Math.PI);
-        canvas.fillText(20, px-(diam*.8), py+(diam*.2), diam,1*Math.PI,1.5*Math.PI);
-        canvas.fillText(40, px-(diam*.7), py-(diam*.4), diam, 1*Math.PI, 1.5*Math.PI);
-        canvas.fillText(60, px-(diam*.12), py-(diam*.7), diam, 1*Math.PI, 1.5*Math.PI);
-        canvas.fillText(80, px+(diam*.5), py-(diam*.4), diam, 1*Math.PI, 1.5*Math.PI);
-        canvas.fillText(100, px+(diam*.55), py+(diam*.2), diam, 1*Math.PI, 1.5*Math.PI);
-        canvas.fillText(120, px+(diam*.35), py+(diam*.7), diam,1*Math.PI,1.5*Math.PI);
-
-        canvas.beginPath();
-        canvas.strokeStyle = "#FF0000";
-        canvas.lineTo(px, py);
-        canvas.lineTo(px-(diam*.6), py+(diam*.7));
-        canvas.stroke();
-      }
-
-    //Draw the climate control
-    function drawClimate(string, string2, canvas, px, py, width, height)
+          //TO DRAW CUSTOM GRAPHICS on images
+    function drawClimate(string, string2, px, py, width, height)
     {
-      canvas.strokeStyle = "rgb(255,255,255)";
-      canvas.fillStyle = 'rgb(120,120,120)';
-      canvas.fillRect(px,py, width,height);
+      var canvas = document.querySelector('canvas')
+      var ctx = canvas.getContext('2d')
 
-      canvas.beginPath();
-      canvas.arc(px +(.85*width),py+(.16*width), width/10, 0, Math.PI * 2, true); // Outer circle
-      var grd = canvas.createLinearGradient(px +(.85*width),py+(.32*width), px+(.85*width), py+(.02*width));
+      ctx.strokeStyle = "rgb(255,255,255)";
+      ctx.fillStyle = 'rgb(120,120,120)';
+      ctx.fillRect(px,py, width,height);
+      ctx.beginPath();
+      ctx.arc(px +(.85*width),py+(.16*width), width/10, 0, Math.PI * 2, true); // Outer circle
+      var grd = ctx.createLinearGradient(px +(.85*width),py+(.32*width), px+(.85*width), py+(.02*width));
       grd.addColorStop(0, "red");
       grd.addColorStop(1, "blue");
-      canvas.fillStyle = grd;
-      canvas.fill();
-      canvas.stroke();
-
-      canvas.beginPath();
-      canvas.arc(px +(.15*width),py+(.16*width), width/10, 0, Math.PI * 2, true); // Outer circle
-      var grd = canvas.createLinearGradient(px +(.85*width),py+(.32*width), px+(.85*width), py+(.02*width));
+      ctx.fillStyle = grd;
+      ctx.fill();
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.arc(px +(.15*width),py+(.16*width), width/10, 0, Math.PI * 2, true); // Outer circle
+      var grd = ctx.createLinearGradient(px +(.85*width),py+(.32*width), px+(.85*width), py+(.02*width));
       grd.addColorStop(0, "red");
       grd.addColorStop(1, "blue");
-      canvas.fillStyle = grd;
-      canvas.fill();
-      canvas.stroke();
-
-      canvas.beginPath();
-      canvas.lineTo(px +(.85*width),py+(.16*width));
-      canvas.lineTo(px+(.85*width), py+(.06*width));
-      canvas.stroke();
-
-      canvas.beginPath();
-      canvas.lineTo(px +(.15*width),py+(.16*width));
-      canvas.lineTo(px+(.05*width), py+(.16*width));
-      canvas.stroke();
-
-      canvas.fillStyle = 'rgb(0,0,180)';
-      canvas.fillRect(px +(.3*width),py+(.08*width), width/2.5,height/2);
-
+      ctx.fillStyle = grd;
+      ctx.fill();
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.lineTo(px +(.85*width),py+(.16*width));
+      ctx.lineTo(px+(.85*width), py+(.06*width));
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.lineTo(px +(.15*width),py+(.16*width));
+      ctx.lineTo(px+(.05*width), py+(.16*width));
+      ctx.stroke();
+      ctx.fillStyle = 'rgb(0,0,180)';
+      ctx.fillRect(px +(.3*width),py+(.08*width), width/2.5,height/2);
       // canvas.fillStyle = "rgb(255,255,255)";
-      canvas.fillStyle ='#00CCFF';
 
-      canvas.font = '20px serif';
+      ctx.fillStyle ='#00CCFF';
+      ctx.font = '20px serif';
+      ctx.fillText(string, px +(.35*width) ,py+(.18*width));
+      ctx.fillText(string2, px +(.6*width) ,py+(.18*width) );
 
-      canvas.fillText(string, px +(.35*width) ,py+(.18*width));
-      canvas.fillText(string2, px +(.6*width) ,py+(.18*width) );
-
+      var img = canvas.toDataURL()
+      document.getElementById("climate").src = img
     }
 
+
+      //TO DRAW CUSTOM GRAPHICS on images
+      //TODO:
+      // function drawSpeedometer(string, px, py, diam)
+      // {
+      //   var canvSped = document.getElementById("canvSped")
+      //   var ctx1 = canvSped.getContext('2d')
+
+      //   ctx1.strokeStyle = "rgb(255,255,255)";
+      //   ctx1.beginPath();
+      //   ctx1.arc(px ,py, diam, 0, Math.PI * 2, true); // Outer circle
+      //   ctx1.fillStyle = 'rgb(105,105,105)';
+      //   ctx1.fill();
+      //   ctx1.stroke();
+      //   ctx1.fillStyle = 'rgb(255,255,255)';
+      //   ctx1.font = '15px arial';
+      //   ctx1.fillText(0, px-(diam*.6), py+(diam*.7), diam,1*Math.PI,1.5*Math.PI);
+      //   ctx1.fillText(20, px-(diam*.8), py+(diam*.2), diam,1*Math.PI,1.5*Math.PI);
+      //   ctx1.fillText(40, px-(diam*.7), py-(diam*.4), diam, 1*Math.PI, 1.5*Math.PI);
+      //   ctx1.fillText(60, px-(diam*.12), py-(diam*.7), diam, 1*Math.PI, 1.5*Math.PI);
+      //   ctx1.fillText(80, px+(diam*.5), py-(diam*.4), diam, 1*Math.PI, 1.5*Math.PI);
+      //   ctx1.fillText(100, px+(diam*.55), py+(diam*.2), diam, 1*Math.PI, 1.5*Math.PI);
+      //   ctx1.fillText(120, px+(diam*.35), py+(diam*.7), diam,1*Math.PI,1.5*Math.PI);
+      //   ctx1.beginPath();
+      //   ctx1.strokeStyle = "#FF0000";
+      //   ctx1.lineTo(px, py);
+      //   ctx1.lineTo(px-(diam*.6), py+(diam*.7));
+      //   ctx1.stroke();
+
+      //   var img = canvSped.toDataURL()
+      //   document.getElementById("speedo").src = img
+      // }
 
       // Onload is called when the window loads
       window.onload = () =>
@@ -275,7 +340,6 @@
         // Begin the update loop
         update();
       }
-
     </script>
   </body>
 </html>
