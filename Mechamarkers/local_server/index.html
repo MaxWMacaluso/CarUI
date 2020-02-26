@@ -14,7 +14,7 @@
         font-size: 12px;
         line-height: 1.5;
         overflow: hidden;
-        background: rgb(66, 66, 66);
+        background: rgb(0, 0, 0);
       }
     </style>
     <script src="./build/app.js"></script>
@@ -155,8 +155,8 @@
         var climate_img = document.getElementById("climate")
 
         //Uncomment to display image
-        ctx.drawImage(speedo_img, marker11_pos.x, marker11_pos.y, 300, 300)
-       //ctx.drawImage(radio_img, marker10_pos.x, marker10_pos.y, 300, 100)
+        //ctx.drawImage(speedo_img, marker11_pos.x, marker11_pos.y, 300, 300)
+        ctx.drawImage(radio_img, marker10_pos.x, marker10_pos.y, 300, 100)
         ctx.drawImage(climate_img, 400, 200, 300, 100)
 
         //If remotes present
@@ -224,7 +224,7 @@
           ctx.fillStyle ='#00CCFF';
           var fontSize= px +(.08*width);
           ctx.font = '20px arial';
-          ctx.fillText(string, px +(.16*width),py+(.18*width));
+          ctx.fillText(string, px +(.13*width),py+(.18*width));
           ctx.beginPath()
           ctx.arc(px +(.8*width), py+(.16*width), width/10, 0, Math.PI * 2, true); // Outer circle
           ctx.fillStyle = 'rgb(192,192,192)';
@@ -249,8 +249,10 @@
       var ctx = canvas.getContext('2d')
 
       ctx.strokeStyle = "rgb(255,255,255)";
-      ctx.fillStyle = 'rgb(120,120,120)';
+      //ctx.fillStyle = 'rgb(169,169,169)';
+      ctx.fillStyle='rgb(80,80,80)';
       ctx.fillRect(px,py, width,height);
+
       ctx.beginPath();
       ctx.arc(px +(.85*width),py+(.16*width), width/10, 0, Math.PI * 2, true); // Outer circle
       var grd = ctx.createLinearGradient(px +(.85*width),py+(.32*width), px+(.85*width), py+(.02*width));
@@ -259,14 +261,17 @@
       ctx.fillStyle = grd;
       ctx.fill();
       ctx.stroke();
+
       ctx.beginPath();
       ctx.arc(px +(.15*width),py+(.16*width), width/10, 0, Math.PI * 2, true); // Outer circle
+      //var grd = ctx.createLinearGradient(px +(.85*width),py+(.32*width), px+(.85*width), py+(.02*width));
       var grd = ctx.createLinearGradient(px +(.85*width),py+(.32*width), px+(.85*width), py+(.02*width));
       grd.addColorStop(0, "red");
       grd.addColorStop(1, "blue");
       ctx.fillStyle = grd;
       ctx.fill();
       ctx.stroke();
+
       ctx.beginPath();
       ctx.lineTo(px +(.85*width),py+(.16*width));
       ctx.lineTo(px+(.85*width), py+(.06*width));
@@ -275,7 +280,7 @@
       ctx.lineTo(px +(.15*width),py+(.16*width));
       ctx.lineTo(px+(.05*width), py+(.16*width));
       ctx.stroke();
-      ctx.fillStyle = 'rgb(0,0,180)';
+      ctx.fillStyle = 'rgb(0, 0, 180)';
       ctx.fillRect(px +(.3*width),py+(.08*width), width/2.5,height/2);
       // canvas.fillStyle = "rgb(255,255,255)";
 
