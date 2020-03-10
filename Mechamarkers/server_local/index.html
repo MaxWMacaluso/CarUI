@@ -16,69 +16,188 @@
         overflow: hidden;
         background: rgb(66, 66, 66);
       }
+
+      .canvas {
+        z-index: 2;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+      }
+
+      #climate-wrapper {
+        position: fixed;
+        top:0px;
+        left:0px;
+        width:200px;
+      }
     </style>
     <script src="./build/app.js"></script>
+    <script src="leap-0.6.4.js"></script>
   </head>
 
   <body>
-    <canvas class="canvas"></canvas>
 
-    <img src = "https://images-na.ssl-images-amazon.com/images/I/81FAXirfJUL.png" id = "speedo" style = "display:none">
-    <img src = "https://previews.123rf.com/images/dariy/dariy1612/dariy161200020/69684345-old-radio-isolated-on-white-background-style-50-ies-of-the-19th-century.jpg" id = "radio" style = "display:none"/>
-    <img src = "" id = "climate" style = "display:none">
-
-    <!-- LEAP MOTION STUFF -->
-    <!-- <script src="https://js.leapmotion.com/leap-0.6.4.js"></script>
-    <script src="https://js.leapmotion.com/leap-plugins-0.1.12.js"></script> -->
-
-    <!-- for Testing leap Motion
     <h1>Testing Leap JS</h1>
-    <div id="output"></div> -->
-    
+    <div id="output"></div>
+
+    <canvas class="canvas"></canvas>
+    <div id="climate-wrapper">
+      <svg version="1.1" id="climate" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+      viewBox="0 0 1988 1107" style="enable-background:new 0 0 1988 1107;" xml:space="preserve">
+        <style type="text/css">
+        .st0{fill:#00091C;}
+        .st1{fill:#061A2C;}
+        .st2{fill:#C1272D;}
+        .st3{font-family:'ArialMT';}
+        .st4{font-size:195.15px;}
+        .st5{fill:none;stroke:#FFFFFF;stroke-width:6;stroke-linecap:round;stroke-linejoin:round;}
+        .st6{font-size:150px;}
+        .st7{fill:none;stroke:#112335;stroke-width:2;stroke-miterlimit:10;}
+        .st8{fill:none;stroke:#00091C;stroke-miterlimit:10;}
+        .st9{fill:#E4E5E6;}
+        .st10{fill:#FFFFFF;}
+        .st11{font-size:40px;}
+        .st12{fill:#233749;}
+        .st13{fill:#545D70;}
+        </style>
+        <title>climate</title>
+        <g>
+        <g id="Layer_2_1_">
+        <path class="st0" d="M12,0h1964c6.6,0,12,5.4,12,12v1083c0,6.6-5.4,12-12,12H12c-6.6,0-12-5.4-12-12V12C0,5.4,5.4,0,12,0z"/>
+        </g>
+        <g id="Layer_4">
+        <path class="st1" d="M913.7,95h160.5c6.6,0,12,5.4,12,12v858c0,6.6-5.4,12-12,12H913.7c-6.6,0-12-5.4-12-12V107
+        C901.7,100.4,907.1,95,913.7,95z"/>
+        </g>
+        <g id="Layer_1_1_">
+        <text transform="matrix(1 0 0 1 331.58 482.87)" class="st2 st3 st4">70</text>
+        <polyline class="st5" points="416.7,236.5 443.6,209.6 470.5,236.5 "/>
+        <polyline class="st5" points="470.5,587.5 443.6,614.4 416.7,587.5 "/>
+        <text transform="matrix(1 0 0 1 548.06 430.07)" class="st2 st3 st6">°</text>
+        <line class="st7" x1="902" y1="272" x2="1086" y2="272"/>
+        <line class="st8" x1="901" y1="270.9" x2="1088" y2="270.9"/>
+        <text transform="matrix(1 0 0 1 1391.58 482.87)" class="st2 st3 st4">70</text>
+        <polyline class="st5" points="1476.7,236.5 1503.6,209.6 1530.5,236.5 "/>
+        <polyline class="st5" points="1530.5,587.5 1503.6,614.4 1476.7,587.5 "/>
+        <text transform="matrix(1 0 0 1 1608.0601 437.07)" class="st2 st3 st6">°</text>
+        <line class="st7" x1="902" y1="449" x2="1086" y2="449"/>
+        <line class="st8" x1="901" y1="447.3" x2="1088" y2="447.3"/>
+        <line class="st7" x1="902" y1="625" x2="1086" y2="625"/>
+        <line class="st8" x1="901" y1="623.7" x2="1088" y2="623.7"/>
+        <line class="st7" x1="902" y1="802" x2="1086" y2="802"/>
+        <line class="st8" x1="901" y1="801.1" x2="1088" y2="801.1"/>
+        <line class="st8" x1="903" y1="94.5" x2="1090" y2="94.5"/>
+        </g>
+        <g id="Layer_5">
+        <path class="st9" d="M897.7,447h192.5c6.6,0,12,5.4,12,12v154c0,6.6-5.4,12-12,12H897.7c-6.6,0-12-5.4-12-12V459
+        C885.7,452.4,891.1,447,897.7,447z"/>
+        </g>
+        <g id="Layer_3">
+        <path class="st0" d="M991,505.5c0-1.9-1.5-3.4-3.3-3.5c-0.3,0-0.6,0-0.8,0.1c-7.9,1.9-13.5,8.9-13.6,17c0,8.2,5.6,15.2,13.6,17
+        c1.9,0.4,3.7-0.8,4.1-2.7c0.1-0.2,0.1-0.5,0.1-0.7V505.5z"/>
+        <path class="st0" d="M993.6,569.7c0,1.9,1.5,3.4,3.3,3.5c0.3,0,0.6,0,0.8-0.1c7.9-1.9,13.5-8.9,13.6-17c0.1-8.2-5.6-15.3-13.6-17
+        c-1.8-0.4-3.7,0.7-4.1,2.5c-0.1,0.3-0.1,0.6-0.1,0.9V569.7z"/>
+        <path class="st0" d="M1024.6,536.5c1.9,0,3.4-1.5,3.5-3.3c0-0.3,0-0.6-0.1-0.8c-1.9-7.9-8.9-13.5-17-13.6c-8.2,0-15.2,5.6-17,13.6
+        c-0.4,1.9,0.8,3.7,2.7,4.1c0.2,0,0.5,0.1,0.7,0.1H1024.6z"/>
+        <path class="st0" d="M960.1,539.2c-1.9,0-3.4,1.5-3.5,3.3c0,0.3,0,0.6,0.1,0.8c1.9,7.9,8.9,13.5,17,13.6c8.2,0,15.2-5.6,17-13.6
+        c0.4-1.9-0.8-3.7-2.7-4.1c-0.2,0-0.5-0.1-0.7-0.1H960.1z"/>
+        </g>
+        <g id="Layer_6">
+        <text transform="matrix(1 0 0 1 985.92 731.38)" class="st10 st3 st11">1</text>
+        <text transform="matrix(1 0 0 1 981.02 380.38)" class="st10 st3 st11">3</text>
+        <text transform="matrix(1 0 0 1 981.38 207.38)" class="st10 st3 st11">4</text>
+        <text transform="matrix(1 0 0 1 967.01 901.52)" class="st12 st3 st11">O</text>
+        <text transform="matrix(1 0 0 1 998.12 901.52)" class="st12 st3 st11">f</text>
+        <text transform="matrix(1 0 0 1 1008.51 901.52)" class="st12 st3 st11">f</text>
+        <path class="st13" d="M1769,874.8c0,2.8-2.2,5-5,5s-5-2.2-5-5s2.2-5,5-5S1769,872.1,1769,874.8z"/>
+        <path class="st13" d="M1753.2,887l-5.5,16c-0.4,1.1-1.4,1.7-2.5,1.6l-10.2-1.2c-1-0.1-1.9,0.5-2.2,1.5l-6.7,19.3
+        c-0.3,0.9,0,1.9,0.6,2.6c1.1,1.3,3.1,1.5,4.4,0.3c0.4-0.4,0.8-0.9,0.9-1.4l5.6-13.8c0.3-1,1.2-1.5,2.2-1.4l15.1,2.1
+        c1.1,0.2,2.2-0.5,2.6-1.6l6.9-20.1c0.9-3.2-0.9-6.5-4.1-7.5C1757.5,882.5,1754.3,884.1,1753.2,887L1753.2,887z"/>
+        <polygon class="st13" points="1720,908.8 1729,899.8 1724,899.8 1724,886.8 1716,886.8 1716,899.8 1711,899.8 "/>
+        <polygon class="st13" points="1746,878.8 1737,869.8 1737,874.8 1724,874.8 1724,882.8 1737,882.8 1737,887.8 "/>
+        <path class="st13" d="M244.1,867.4h-61c-1,0-1.8,0.8-1.8,1.8l0,0v43.5c0,1,0.8,1.8,1.8,1.8l0,0h9.6c-0.1,0.4-0.2,0.9-0.3,1.4
+        c-0.6,4.3,2,9.1,4.6,11.6c0.7,0.7,1.8,0.7,2.5,0c0,0,0,0,0,0c0.7-0.7,0.7-1.8,0-2.5c-2.1-2-4-5.6-3.6-8.6c0.1-0.6,0.3-1.2,0.5-1.8
+        h11.1c-0.1,0.4-0.2,0.9-0.3,1.4c-0.6,4.3,2,9.1,4.6,11.6c0.7,0.7,1.8,0.7,2.5,0c0,0,0,0,0,0c0.7-0.7,0.7-1.8-0.1-2.5
+        c-2.1-2-4-5.6-3.6-8.6c0.1-0.6,0.3-1.2,0.5-1.8h11.1c-0.1,0.4-0.2,0.9-0.3,1.4c-0.6,4.3,2,9.1,4.6,11.6c0.7,0.7,1.8,0.7,2.5,0
+        c0,0,0,0,0,0c0.7-0.7,0.6-1.8-0.1-2.5c-2-2-4-5.6-3.6-8.6c0.1-0.6,0.3-1.2,0.5-1.8h17.9c1,0,1.8-0.8,1.8-1.8l0,0v-43.5
+        C245.9,868.1,245.1,867.4,244.1,867.4C244.1,867.4,244.1,867.4,244.1,867.4z M242.4,910.9h-13.9c0.5-0.6,1-1.1,1.5-1.7l0.5-0.6
+        c3.5-4,6.1-10.4-0.6-18.5h3.2l0,0c1-0.1,1.7-0.9,1.6-1.9c-0.1-0.9-0.8-1.6-1.6-1.6h-7.6l0,0c-1,0-1.8,0.8-1.8,1.8l0,0v7.5
+        c0,1,0.8,1.8,1.8,1.8l0,0c1,0,1.8-0.8,1.8-1.8l0,0v-3.4c4.2,5,4.4,9.5,0.6,13.8l-0.5,0.6c-1.2,1.3-2.3,2.6-3.2,4.1h-10.5
+        c0.5-0.6,1-1.1,1.5-1.7l0.5-0.6c3.5-4,6.1-10.4-0.6-18.5h3.2l0,0c1-0.1,1.7-0.9,1.6-1.9c-0.1-0.9-0.8-1.6-1.6-1.6h-7.6
+        c-0.5,0-0.9,0.2-1.2,0.5c-0.3,0.3-0.5,0.8-0.5,1.2v7.5c0,1,0.8,1.8,1.8,1.8c0,0,0,0,0,0l0,0c1,0,1.8-0.8,1.8-1.8l0,0v-3.4
+        c4.2,5,4.4,9.5,0.6,13.8l-0.5,0.6c-1.2,1.3-2.2,2.6-3.2,4.1h-10.5c0.5-0.6,1-1.1,1.5-1.7l0.5-0.6c3.2-3.7,5.8-9.5,0.7-16.7
+        c-0.4-0.6-0.9-1.2-1.4-1.8h3.2l0,0c1-0.1,1.7-0.9,1.6-1.9c-0.1-0.9-0.8-1.6-1.6-1.6h-7.6l0,0c-1,0-1.8,0.8-1.8,1.8l0,0v7.5
+        c0,1,0.8,1.8,1.8,1.8c0,0,0,0,0,0l0,0c1,0,1.8-0.8,1.8-1.8l0,0v-3.4c0.5,0.5,0.9,1.1,1.3,1.7c2.9,4.4,2.7,8.2-0.7,12.1l-0.5,0.6
+        c-1.2,1.3-2.2,2.6-3.2,4.1h-9.5v-40h57.4L242.4,910.9z"/>
+        <path class="st10" d="M485.9,898.2c-23.2-23.2-60.8-23.2-84,0c-0.3,0.3-0.4,0.7-0.4,1.1c0,0.4,0.2,0.8,0.4,1.1l22,22
+        c0.6,0.6,1.5,0.6,2.1,0c1-0.9,2-1.8,3.1-2.6c0.3,3.1,1.8,5.9,4.2,7.9c0.2,0.2,0.5,0.3,0.8,0.3c0.7,0,1.2-0.6,1.2-1.3
+        c0-0.4-0.2-0.7-0.5-1c-2.4-1.8-3.6-4.6-3.2-7.5c3.1-1.7,6.6-2.8,10.2-3.1c-0.5,1.3-0.7,2.6-0.7,4c0.1,3.3,1.7,6.5,4.3,8.6
+        c0.2,0.2,0.5,0.3,0.8,0.3c0.7,0,1.3-0.6,1.3-1.2c0-0.4-0.2-0.7-0.5-1c-2-1.7-3.2-4.1-3.3-6.6c0-1.4,0.3-2.8,1-4.1
+        c3,0.1,6,0.7,8.8,1.8c-0.2,0.8-0.2,1.5-0.2,2.3c0.1,3.3,1.7,6.5,4.3,8.6c0.2,0.2,0.5,0.3,0.8,0.3c0.4,0,0.8-0.2,1-0.5
+        c0.4-0.5,0.3-1.3-0.2-1.8c-2-1.7-3.2-4.1-3.3-6.6c0-0.4,0-0.8,0.1-1.2c2.2,1.2,4.3,2.7,6.1,4.5c0.6,0.6,1.5,0.6,2.1,0l22-22
+        c0.3-0.3,0.4-0.7,0.4-1.1C486.4,898.8,486.2,898.4,485.9,898.2z M462.8,919.2c-1.9-1.7-4-3.1-6.2-4.2c0.7-1.4,1.6-2.7,2.6-3.8
+        c1.9-2.5,3.9-5.1,3.9-8.8c-0.1-2.1-0.8-4.2-2-6l2-1.4c0.2-0.2,0.3-0.5,0.1-0.7c0-0.1-0.1-0.1-0.2-0.2l-6.8-3.3
+        c-0.2-0.1-0.4-0.1-0.5,0c-0.1,0.1-0.2,0.3-0.2,0.5l0.8,7.5c0,0.2,0.1,0.3,0.3,0.4c0.1,0,0.1,0,0.2,0c0.1,0,0.2,0,0.3-0.1l2-1.5
+        c0.9,1.3,1.4,2.9,1.5,4.6c0,2.9-1.6,5.1-3.3,7.3c-1.1,1.3-2.1,2.8-2.9,4.3c-2.5-1-5.2-1.6-7.9-1.9l0.7-1c1.9-2.5,3.9-5.1,3.9-8.8
+        c-0.1-2.1-0.8-4.2-2-6l2-1.4c0.1-0.1,0.2-0.3,0.2-0.5c0-0.2-0.1-0.3-0.3-0.4l-6.8-3.3c-0.3-0.1-0.5,0-0.7,0.2c0,0.1-0.1,0.2,0,0.3
+        l0.8,7.6c0,0.2,0.1,0.3,0.3,0.4c0.2,0.1,0.4,0.1,0.5,0l2-1.5c0.9,1.4,1.4,2.9,1.5,4.6c0,2.9-1.6,5.1-3.3,7.3
+        c-0.6,0.8-1.2,1.5-1.7,2.4c-3.6,0.1-7.1,0.8-10.5,2.2c0.6-1.1,1.4-2.1,2.1-3.1c1.9-2.5,3.9-5.1,3.9-8.8c-0.1-2.1-0.8-4.2-2-6
+        l2-1.4c0.1-0.1,0.2-0.3,0.2-0.5c0-0.2-0.1-0.3-0.3-0.4l-6.9-3.2c-0.3-0.1-0.5,0-0.7,0.2c0,0.1-0.1,0.2,0,0.3l0.8,7.5
+        c0,0.2,0.1,0.3,0.3,0.4c0.2,0.1,0.4,0,0.5,0l2-1.5c0.9,1.3,1.4,2.9,1.5,4.6c0,2.9-1.6,5.1-3.3,7.3c-1.6,1.9-2.8,4-3.6,6.3
+        c-1.6,1-3.1,2.1-4.5,3.3l-19.9-19.9c21.8-20.6,55.8-20.6,77.6,0L462.8,919.2z"/>
+        <path class="st13" d="M1537.4,874.8c0,2.8-2.2,5-5,5s-5-2.2-5-5s2.2-5,5-5S1537.4,872.1,1537.4,874.8z"/>
+        <path class="st13" d="M1521.6,887l-5.5,16c-0.4,1.1-1.4,1.7-2.5,1.6l-10.1-1.2c-1-0.1-1.9,0.5-2.2,1.5l-6.7,19.3
+        c-0.3,0.9,0,1.9,0.6,2.6c1.1,1.3,3.1,1.5,4.4,0.3c0.4-0.4,0.8-0.9,0.9-1.4l5.6-13.8c0.3-1,1.2-1.5,2.2-1.4l15.1,2.1
+        c1.1,0.2,2.2-0.5,2.6-1.6l6.9-20.1c1.1-3.1-0.6-6.5-3.7-7.6c-0.1,0-0.2-0.1-0.3-0.1l0,0C1525.8,882.3,1522.6,884,1521.6,887
+        L1521.6,887z"/>
+        <polygon class="st13" points="1488.4,908.8 1497.4,899.8 1492.4,899.8 1492.4,883.8 1484.4,883.8 1484.4,899.8 1479.4,899.8 "/>
+        <path class="st10" d="M1303.4,874.8c0,2.8-2.2,5-5,5s-5-2.2-5-5s2.2-5,5-5S1303.4,872.1,1303.4,874.8z"/>
+        <path class="st10" d="M1287.5,887l-5.5,16c-0.4,1.1-1.4,1.7-2.5,1.6l-10.1-1.2c-1-0.1-1.9,0.5-2.2,1.5l-6.7,19.3
+        c-0.3,0.9,0,1.9,0.6,2.6c1.1,1.3,3.1,1.5,4.4,0.3c0.4-0.4,0.8-0.9,0.9-1.4l5.6-13.8c0.3-1,1.2-1.5,2.2-1.4l15.1,2.1
+        c1.1,0.2,2.2-0.5,2.6-1.6l6.9-20.1c0.9-3.2-0.9-6.5-4.1-7.5C1291.8,882.6,1288.7,884.1,1287.5,887L1287.5,887z"/>
+        <polygon class="st10" points="1277.4,882.8 1268.4,873.8 1268.4,878.8 1250.4,878.8 1250.4,886.8 1268.4,886.8 1268.4,891.8 "/>
+        <path class="st13" d="M707.8,860.4c-0.1,0-2.1-0.6-4.8-1.5c-4-1.1-7.7,1-8.9,5.2c-0.8,2.7-8,28.2-9.8,34.6c-0.3,0-0.6-0.1-1-0.1
+        c-0.3-0.6-0.5-1.1-0.8-1.6c-0.9-1.4-1.4-3.1-1.3-4.8v-3.9l1,1.3c0.3,0.5,0.8,0.7,1.4,0.7c0.4,0,0.7-0.1,1-0.3
+        c0.8-0.6,0.9-1.7,0.3-2.4l-4.2-5.5c-0.6-0.8-1.7-0.9-2.4-0.3c-0.1,0.1-0.2,0.2-0.3,0.3l-4.2,5.5c-0.5,0.8-0.4,1.9,0.4,2.4
+        c0.7,0.5,1.8,0.4,2.3-0.3l1-1.3v3.9c-0.1,2.1,0.5,4.2,1.5,6c-2.8-0.3-6.3-0.7-9.9-1.1v-0.1c-0.9-1.4-1.4-3.1-1.4-4.8v-3.9l1,1.3
+        c0.3,0.5,0.8,0.7,1.4,0.7c0.4,0,0.7-0.1,1-0.3c0.8-0.6,0.9-1.7,0.3-2.4l-4.2-5.5c-0.6-0.8-1.7-0.9-2.4-0.3
+        c-0.1,0.1-0.2,0.2-0.3,0.3l-4.2,5.5c-0.5,0.8-0.4,1.9,0.4,2.4c0.7,0.5,1.8,0.4,2.3-0.3l1-1.3v3.9c0,1.5,0.2,3,0.8,4.4
+        c-3.6-0.4-7.1-0.8-10-1.1c-0.4-1-0.7-2.2-0.6-3.3v-3.9l1,1.3c0.3,0.5,0.8,0.7,1.4,0.7c0.4,0,0.7-0.1,1-0.3
+        c0.8-0.6,0.9-1.7,0.3-2.4l-4.2-5.5c-0.6-0.8-1.7-0.9-2.4-0.3c-0.1,0.1-0.2,0.2-0.3,0.3l-4.2,5.5c-0.5,0.8-0.4,1.9,0.4,2.4
+        c0.7,0.5,1.8,0.4,2.3-0.3l1-1.3v3.9c0,1,0.1,1.9,0.3,2.9c-1.5-0.1-2.7-0.3-3.2-0.3c-2.6-0.3-5.2,0.8-6.9,2.8
+        c-1.6,1.8-2.2,4.3-1.6,6.6c1,3.7,7.7,15.8,8.5,17.1c0.3,0.6,0.9,0.9,1.5,0.9h3.7c0.6,1.2,0.9,2.5,0.9,3.9c0,1,0.8,1.7,1.7,1.7
+        c1,0,1.7-0.8,1.7-1.7c0-1.3-0.2-2.6-0.6-3.9h9.5c0.6,1.2,0.9,2.5,0.9,3.9c0,1,0.8,1.7,1.7,1.7c1,0,1.7-0.8,1.7-1.7
+        c0-1.3-0.2-2.6-0.6-3.9h9.5c0.6,1.2,0.9,2.5,0.9,3.9c0,1,0.8,1.7,1.7,1.7c1,0,1.7-0.8,1.7-1.7c0-1.3-0.2-2.6-0.6-3.9h7.1
+        c0.8,0,1.5-0.5,1.7-1.2l16.5-58.5C708.9,861.8,708.6,860.8,707.8,860.4z M680.6,901.8c0.1,0.6,0.1,1.2,0.1,1.7
+        c0,1.7-0.4,3.4-1.4,4.8c-1.9,3.1-2.3,7-1.2,10.4h-9.5c-0.7-1.2-1-2.6-0.9-3.9c0-1.7,0.4-3.4,1.4-4.8c1.2-2,1.8-4.2,1.8-6.5
+        c0-0.9-0.1-1.9-0.3-2.8C674.4,901.2,678,901.6,680.6,901.8z M654.6,914.8c0-1.7,0.4-3.4,1.4-4.8c1.2-2,1.8-4.2,1.8-6.5
+        c0-1.5-0.2-2.9-0.8-4.3c3,0.3,6.5,0.7,10,1.1c0.4,1,0.6,2.1,0.6,3.2c0,1.7-0.4,3.4-1.4,4.8c-1.9,3.1-2.3,7-1.2,10.4h-9.5
+        C654.8,917.6,654.5,916.2,654.6,914.8L654.6,914.8z M643,903.3c-0.3-1.2,0-2.5,0.9-3.4c1-1.1,2.4-1.8,3.9-1.7
+        c0.8,0.1,2.6,0.3,5.1,0.5c1.8,2.9,1.8,6.6-0.1,9.5c-1.9,3.1-2.3,7-1.2,10.4h-1C648.4,914.6,643.8,905.9,643,903.3z M689.5,918.8
+        H682c-0.7-1.2-1-2.6-0.9-3.9c0-1.7,0.4-3.4,1.4-4.8c1.2-2,1.8-4.2,1.8-6.5c0-0.4,0-0.9-0.1-1.3c0.7,0.1,1.1,0.1,1.1,0.1
+        c0.8,0.1,1.6-0.4,1.9-1.2c0.1-0.3,9.2-33,10.2-36c0.5-1.9,2.1-3.6,4.7-2.8c1.2,0.3,2.3,0.7,3.2,0.9L689.5,918.8z"/>
+        <path class="st13" d="M196,896"/>
+        </g>
+        </g>
+      </svg>
+    </div>
+
+
     <script>
-      //Make included libraries local
+      // Make included libraries local
       const Mechamarkers = window.Mechamarkers;
       const Vec2 = window.Vec2;
 
-        //Creating the different .png images
-        drawRadio("Channel", 0, 0, 300, 100)
-        //drawSpeedometer("Hello", 200, 200, 100)
-        drawClimate("Test", "Max", 0, 0, 300, 100)
+      let prevTime, canvas, ctx;
 
-      let prevTime;
-      //Width, height, rotation
-      var states = [
-        [300, 300, 0],
-        [300, 300, 0],
-        [300, 300, 0]
-      ]
+      var other_thing = document.getElementById("climate");
+      other_thing.setAttribute("height", "300px");
+      other_thing.setAttribute("width", "300px");
 
-      // //----------Leap Motion Stuff-------------------------------------------------
-      // function concatData(id, data) {
-      //   return id + ": " + data + "<br>";
-      // }
-
-      // var output = document.getElementById('output');
-      // var frameString = "", handString ="", fingerString = "";
-      // var hand, finger;
-
-      // //leap.loop uses browser's requestAnimationFrame
-      // var options = { enableGestures: true};
-      // //main leap loop
-      // Leap.loop(options, function(frame) {
-      //   //prints frame id and data
-      //   frameString = concatData("frame_id", frame.id);
-      //   frameString += concatData("num_hands", frame.hand.length);
-      //   frameString += concatData("num_fingers", frame.finger.length);
-      //   frameString += "<br>";
-
-      //   output.innerHTML = frameString;
-      // });
-      // //-------------------------End Leap motion Stuff------------------------------
-      
       // This function is called every animation frame (roughly 60 times a second)
-      function update() 
-      {
+      function update() {
         // Keep track of time between updates as dt (delta time)
         const currTime = Date.now();
         const dt = (currTime - prevTime) / 1000;
@@ -87,257 +206,49 @@
         // Update the mechamarkers library
         Mechamarkers.update(currTime);
 
-        //Uncomment to display image
-        marker11_pos = Mechamarkers.getMarker(11).center
-        marker10_pos = Mechamarkers.getMarker(10).center
-        
-        //If not input group detected, will be NULL
-        var remote = null
+        var marker_pos = Mechamarkers.getMarker(28).center;
 
-        // If the group doesn't exist in the config or the config is not loaded
-        // undefined will be returned, you can work around this with a simple if
-        if (Mechamarkers.getGroup('remote')) 
-        {
-          remote = Mechamarkers.getGroup('remote')
-        }
-
-        // If you wanted to use a canvas to draw stuff, I would put that code here
-        draw(remote, marker11_pos, marker10_pos);
-
-        //Keep this at the end. It triggers the loop to continue
+        //call draw with classesArr
+        draw(marker_pos);
+        // Keep this at the end. It triggers the loop to continue
         window.requestAnimationFrame(update);
       }
 
+      // Keep our draw code separate from our update
+      function draw(marker_pos) {
+        var svg_climate = document.getElementById("climate-wrapper");
 
-      //Helper function to get degrees from radians
-      function radToDeg(radian)
-      {
-        return radian * 57.29
+        // svg_thing.setAttribute('x',something.x)
+        // svg_thing.setAttribute('y',something.y)
+
+
+        svg_climate.style.top = marker_pos.y*0.5+'px';
+        svg_climate.style.left = marker_pos.x*0.5+'px';
+
+        console.log(svg_climate.style.top);
+
+        // svg_thing.setAttributeNS(null, "cy", something.y)
+        // svg_thing.setAttributeNS(null, "cx", something.x)
       }
 
-      //Helper function to do rotation and scale
-      function drawImageRot(img, x, y, width, height, deg)
-      {
-        // Store the current context state (i.e. rotation, translation etc..)
-        ctx.save()
-
-        //Convert degrees to radian 
-        var rad = deg * Math.PI / 180;
-
-        //Set the origin to the center of the image
-        ctx.translate(x + width / 2, y + height / 2);
-
-        //Rotate the canvas around the origin
-        ctx.rotate(rad);
-
-        //draw the image    
-        ctx.drawImage(img,width / 2 * (-1),height / 2 * (-1),width,height);
-
-        // Restore canvas state as saved from above
-        ctx.restore();
-      }
-
-      //INPUTS:
-        //Remote is a group object that contains multiple inputs
-      function draw(remote, marker_11, marker_10)
-      {
-        // //Creating the different .png images
-        // drawRadio("Channel", 0, 0, 300, 100)
-        // drawSpeedometer("Hello", 0, 0, 100)
-        // //drawClimate(string, string2, 0, 0, 300, 100)
-
-        //???
-        ctx.clearRect(-1, -1, canvas.width + 1, canvas.height + 1)
-        ctx.fillStyle = 'black'
-
-        var speedo_img = document.getElementById("speedo")
-        var radio_img = document.getElementById("radio")
-        var climate_img = document.getElementById("climate")
-       
-        //Uncomment to display image
-        //ctx.drawImage(speedo_img, marker11_pos.x, marker11_pos.y, 300, 300)
-        //ctx.drawImage(radio_img, marker10_pos.x, marker10_pos.y, 300, 300)
-        
-        //If remotes present
-        if (remote)
-        {
-          //Point I'm projecting from
-          var anchor = remote.anchor.center
-
-          //Image scale, select, and rotate
-          var scale = remote.getInput("scale") //Grabs the scale input object
-          var select = remote.getInput("select") //Grabs the select input object
-          var rotate = remote.getInput("rotate") //Grabs the scale input object
-
-          //Image size
-          //Based on current value of slider
-          var img_size_x = 300 * scale.val
-          var img_size_y = 100 * scale.val
-
-          //Image rotation
-          var img_rotation = radToDeg(rotate.val + 3.14)
-
-          //ctx.drawImage(speedo_img, anchor.x, anchor.y, img_size , img_size)
-
-          //Draws the image onto the canvas (DRAWS ANCHOR)
-          //drawImageRot(speedo_img, anchor.x, anchor.y, img_size, img_size, img_rotation)
-
-          var selected_img = ""
-          
-          if (select.val < .5) 
-          {
-            //Edits the .png files
-            drawImageRot(climate_img, marker_10.x, marker_10.y, img_size_x, img_size_y, img_rotation)
-            drawImageRot(radio_img, marker_11.x, marker_11.y, states[0][0], states[0][1], states[0][2])
-
-            //States of the images
-            states[1][0] = img_size_x
-            states[1][1] = img_size_y
-            states[1][2] = img_rotation
-          }
-          else 
-          {
-            //Edits the .png files
-            drawImageRot(radio_img, marker_11.x, marker_11.y, img_size_x, img_size_y, img_rotation)
-            drawImageRot(climate_img, marker_10.x, marker_10.y, states[1][0], states[1][1], states[1][2])
-
-            //States of the images
-            states[0][0] = img_size_x
-            states[0][1] = img_size_y
-            states[0][2] = img_rotation
-          }
-        }
-      }
-
-      //TO DRAW CUSTOM GRAPHICS on images
-      function drawRadio(string, px, py, width, height)
-      {
-          var canvas = document.querySelector('canvas')
-          var ctx = canvas.getContext('2d')
-
-          ctx.strokeStyle = "rgb(255,255,255)";
-          ctx.fillStyle='rgb(80,80,80)';
-          ctx.fillRect(px,py, width,height);
-          ctx.fillStyle='rgba(0, 0, 180)';
-          ctx.fillRect(px +(.08*width),py+(.08*width), width/2,height/2);
-          ctx.fillStyle ='#00CCFF';
-          var fontSize= px +(.08*width);
-          ctx.font = '20px arial';
-          ctx.fillText(string, px +(.16*width),py+(.18*width));
-          ctx.beginPath()
-          ctx.arc(px +(.8*width), py+(.16*width), width/10, 0, Math.PI * 2, true); // Outer circle
-          ctx.fillStyle = 'rgb(192,192,192)';
-          ctx.fill();
-          ctx.stroke();
-          ctx.strokeStyle = "rgb(255,0,0)";
-          ctx.beginPath();
-          ctx.lineTo(px +(.8*width), py+(.16*width));
-          ctx.lineTo(px+(.9*width), py+(.16*width));
-          ctx.stroke();
-        
-          var img = canvas.toDataURL()
-
-          //Set source of image equal to current value
-          document.getElementById("radio").src = img
-      }
-
-          //TO DRAW CUSTOM GRAPHICS on images
-    function drawClimate(string, string2, px, py, width, height)
-    {
-      var canvas = document.querySelector('canvas')
-      var ctx = canvas.getContext('2d')
-
-      ctx.strokeStyle = "rgb(255,255,255)";
-      ctx.fillStyle = 'rgb(120,120,120)';
-      ctx.fillRect(px,py, width,height);
-      ctx.beginPath();
-      ctx.arc(px +(.85*width),py+(.16*width), width/10, 0, Math.PI * 2, true); // Outer circle
-      var grd = ctx.createLinearGradient(px +(.85*width),py+(.32*width), px+(.85*width), py+(.02*width));
-      grd.addColorStop(0, "red");
-      grd.addColorStop(1, "blue");
-      ctx.fillStyle = grd;
-      ctx.fill();
-      ctx.stroke();
-      ctx.beginPath();
-      ctx.arc(px +(.15*width),py+(.16*width), width/10, 0, Math.PI * 2, true); // Outer circle
-      var grd = ctx.createLinearGradient(px +(.85*width),py+(.32*width), px+(.85*width), py+(.02*width));
-      grd.addColorStop(0, "red");
-      grd.addColorStop(1, "blue");
-      ctx.fillStyle = grd;
-      ctx.fill();
-      ctx.stroke();
-      ctx.beginPath();
-      ctx.lineTo(px +(.85*width),py+(.16*width));
-      ctx.lineTo(px+(.85*width), py+(.06*width));
-      ctx.stroke();
-      ctx.beginPath();
-      ctx.lineTo(px +(.15*width),py+(.16*width));
-      ctx.lineTo(px+(.05*width), py+(.16*width));
-      ctx.stroke();
-      ctx.fillStyle = 'rgb(0,0,180)';
-      ctx.fillRect(px +(.3*width),py+(.08*width), width/2.5,height/2);
-      // canvas.fillStyle = "rgb(255,255,255)";
-      ctx.fillStyle ='#00CCFF';
-      ctx.font = '20px serif';
-      ctx.fillText(string, px +(.35*width) ,py+(.18*width));
-      ctx.fillText(string2, px +(.6*width) ,py+(.18*width) );
-
-      var img = canvas.toDataURL()
-      document.getElementById("climate").src = img
-    }
-
-
-      //TO DRAW CUSTOM GRAPHICS on images
-      //TODO:
-      // function drawSpeedometer(string, px, py, diam)
-      // {
-      //   var canvSped = document.getElementById("canvSped")
-      //   var ctx1 = canvSped.getContext('2d')
-
-      //   ctx1.strokeStyle = "rgb(255,255,255)";
-      //   ctx1.beginPath();
-      //   ctx1.arc(px ,py, diam, 0, Math.PI * 2, true); // Outer circle
-      //   ctx1.fillStyle = 'rgb(105,105,105)';
-      //   ctx1.fill();
-      //   ctx1.stroke();
-      //   ctx1.fillStyle = 'rgb(255,255,255)';
-      //   ctx1.font = '15px arial';
-      //   ctx1.fillText(0, px-(diam*.6), py+(diam*.7), diam,1*Math.PI,1.5*Math.PI);
-      //   ctx1.fillText(20, px-(diam*.8), py+(diam*.2), diam,1*Math.PI,1.5*Math.PI);
-      //   ctx1.fillText(40, px-(diam*.7), py-(diam*.4), diam, 1*Math.PI, 1.5*Math.PI);
-      //   ctx1.fillText(60, px-(diam*.12), py-(diam*.7), diam, 1*Math.PI, 1.5*Math.PI);
-      //   ctx1.fillText(80, px+(diam*.5), py-(diam*.4), diam, 1*Math.PI, 1.5*Math.PI);
-      //   ctx1.fillText(100, px+(diam*.55), py+(diam*.2), diam, 1*Math.PI, 1.5*Math.PI);
-      //   ctx1.fillText(120, px+(diam*.35), py+(diam*.7), diam,1*Math.PI,1.5*Math.PI);
-      //   ctx1.beginPath();
-      //   ctx1.strokeStyle = "#FF0000";
-      //   ctx1.lineTo(px, py);
-      //   ctx1.lineTo(px-(diam*.6), py+(diam*.7));
-      //   ctx1.stroke();
-
-      //   var img = canvSped.toDataURL()
-      //   document.getElementById("speedo").src = img
-      // }
-      
       // Onload is called when the window loads
-      window.onload = () => 
-      {
+      window.onload = () => {
         prevTime = Date.now();
-
-        canvas = document.querySelector('canvas')
-        ctx = canvas.getContext('2d')
-        
+        // Get canvas references for drawing
+        canvas = document.querySelector('canvas');
+        ctx = canvas.getContext('2d');
         // This line initializes mechamarkers library
-        //I ADDED CANVAS AND CTX
         Mechamarkers.init(canvas, ctx);
 
-        //I ADDED BOTH BELOW
-        canvas.width = window.innerWidth
-        canvas.height = window.innerHeight
+        // Full screne te canvas
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
 
         // Begin the update loop
         update();
       }
     </script>
   </body>
+  <script src="https://js.leapmotion.com/leap-0.6.4.min.js"></script>
+  <script src="leap_manipulation.js"></script>
 </html>
