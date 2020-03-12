@@ -206,29 +206,82 @@
         // Update the mechamarkers library
         Mechamarkers.update(currTime);
 
-        var marker_pos = Mechamarkers.getMarker(28).center;
+        //If not input group detected, will be NULL
+        var remote = null
+
+        // If the group doesn't exist in the config or the config is not loaded
+        // undefined will be returned, you can work around this with a simple if
+        if (Mechamarkers.getGroup('remote')) 
+        {
+          remote = Mechamarkers.getGroup('remote')
+        }
 
         //call draw with classesArr
-        draw(marker_pos);
+        draw(remote);
         // Keep this at the end. It triggers the loop to continue
         window.requestAnimationFrame(update);
       }
 
+      function radToDeg(radian)
+      {
+        return radian * 57.29
+      }
+
       // Keep our draw code separate from our update
-      function draw(marker_pos) {
+      function draw(remote) {
         var svg_climate = document.getElementById("climate-wrapper");
+        
+        if (remote) {
+          // svg_thing.setAttribute('x',something.x)
+          // svg_thing.setAttribute('y',something.y)
 
-        // svg_thing.setAttribute('x',something.x)
-        // svg_thing.setAttribute('y',something.y)
+          var rotate = remote.getInput("rotate") //Grabs the scale input object
+          var scale = remote.getInput("scale") //Grabs the scale input object
+          var select = remote.getInput("select") //Grabs the select input object
 
+          var img_rotation = radToDeg(rotate.val + 3.14)
 
-        svg_climate.style.top = marker_pos.y*0.5+'px';
-        svg_climate.style.left = marker_pos.x*0.5+'px';
+          var img_size_x = 300 * scale.val
+          var img_size_y = 100 * scale.val
+          
+          var marker_pos = Mechamarkers.getMarker(28).center;
 
-        console.log(svg_climate.style.top);
+          //position
+          svg_climate.style.top = marker_pos.y*0.5+'px';
+          svg_climate.style.left = marker_pos.x*0.5+'px';
 
-        // svg_thing.setAttributeNS(null, "cy", something.y)
-        // svg_thing.setAttributeNS(null, "cx", something.x)
+          //rotate
+          svg_climate.style.transform = 'rotate('+img_rotation+'deg)';
+
+          
+          //var selected_img = ""
+          
+          // if (select.val < .5) 
+          // {
+          //   //Edits the .png files
+          //   drawImageRot(climate_img, marker_10.x, marker_10.y, img_size_x, img_size_y, img_rotation)
+          //   drawImageRot(radio_img, marker_11.x, marker_11.y, states[0][0], states[0][1], states[0][2])
+
+          //   //States of the images
+          //   states[1][0] = img_size_x
+          //   states[1][1] = img_size_y
+          //   states[1][2] = img_rotation
+          // }
+          // else 
+          // {
+          //   //Edits the .png files
+          //   drawImageRot(radio_img, marker_11.x, marker_11.y, img_size_x, img_size_y, img_rotation)
+          //   drawImageRot(climate_img, marker_10.x, marker_10.y, states[1][0], states[1][1], states[1][2])
+
+          //   //States of the images
+          //   states[0][0] = img_size_x
+          //   states[0][1] = img_size_y
+          //   states[0][2] = img_rotation
+          // }
+
+          // svg_thing.setAttributeNS(null, "cy", something.y)
+          // svg_thing.setAttributeNS(null, "cx", something.x)
+        }
       }
 
       // Onload is called when the window loads
