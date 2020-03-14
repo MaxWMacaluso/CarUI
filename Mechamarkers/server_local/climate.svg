@@ -26,13 +26,13 @@
     C901.7,100.4,907.1,95,913.7,95z"/>
     </g>
     <g id="Layer_1_1_">
-    <text transform="matrix(1 0 0 1 331.58 482.87)" class="st2 st3 st4">70</text>
+    <text transform="matrix(1 0 0 1 331.58 482.87)" class="st2 st3 st4">1000</text>
     <polyline class="st5" points="416.7,236.5 443.6,209.6 470.5,236.5 "/>
     <polyline class="st5" points="470.5,587.5 443.6,614.4 416.7,587.5 "/>
     <text transform="matrix(1 0 0 1 548.06 430.07)" class="st2 st3 st6">°</text>
     <line class="st7" x1="902" y1="272" x2="1086" y2="272"/>
     <line class="st8" x1="901" y1="270.9" x2="1088" y2="270.9"/>
-    <text transform="matrix(1 0 0 1 1391.58 482.87)" class="st2 st3 st4">70</text>
+    <text transform="matrix(1 0 0 1 1391.58 482.87)" class="st2 st3 st4">1000</text>
     <polyline class="st5" points="1476.7,236.5 1503.6,209.6 1530.5,236.5 "/>
     <polyline class="st5" points="1530.5,587.5 1503.6,614.4 1476.7,587.5 "/>
     <text transform="matrix(1 0 0 1 1608.0601 437.07)" class="st2 st3 st6">°</text>

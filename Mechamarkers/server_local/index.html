@@ -39,12 +39,14 @@
       let prevTime, canvas, ctx;
 
       //Set the size for the svg's
-      var svg_climate = document.getElementById("climate-wrapper")
-      svg_climate.setAttribute("height", "300px")
-      svg_climate.setAttribute("width", "300px")
+      window.addEventListener("load", function() {
+        var svg_climate = document.getElementById("climate-wrapper")
+        svg_climate.setAttribute("height", "300px")
+        svg_climate.setAttribute("width", "300px")
+      });
 
       // Keyboard input ------------------------------------------------------------------
-            document.addEventListener('keydown', function(event) 
+      document.addEventListener('keydown', function(event) 
       {
           if (event.keyCode == 37) 
           {
