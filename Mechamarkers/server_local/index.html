@@ -32,38 +32,68 @@
 
     <script>
       
-      // Make included libraries local
-      const Mechamarkers = window.Mechamarkers;
-      const Vec2 = window.Vec2;
+      //Make included libraries local
+      const Mechamarkers = window.Mechamarkers
+      const Vec2 = window.Vec2
 
-      let prevTime, canvas, ctx;
+      let prevTime, canvas, ctx
 
-      //Set the size for the svg's
-      window.addEventListener("load", function() {
-        var svg_climate = document.getElementById("climate-wrapper")
-        svg_climate.setAttribute("height", "300px")
-        svg_climate.setAttribute("width", "300px")
-      });
+      //NOTE: Right now keeping as reference, may delete later
+      //However, there is also an issue that the SVG within the object might not have loaded by the time we reach 
+      //the script element. So we have to make sure we don't try to get the element before the HTML window has loaded
+      // window.addEventListener("load", function() 
+      // {
+      //   //Get the svg object
+      //   var svg_climate = document.getElementById('climate-wrapper').contentDocument
+        
+      //   //Change location
+      //   svg_climate.style.top = 500+'px'
+      //   svg_climate.style.left = 500+'px'
+      // });
 
-      // Keyboard input ------------------------------------------------------------------
+      // Keyboard input (set climate text) ------------------------------------------------------------------
+      //To set numbers for the svg
+      var left_num = 68
+      var right_num = 68
+
       document.addEventListener('keydown', function(event) 
       {
+          //Get the svg object
+          var svg_climate = document.getElementById('climate-wrapper').contentDocument
+        
+          //Get left/right number
+          var left_text = svg_climate.getElementById('left_val')
+          var right_text = svg_climate.getElementById('right_val')
+
+          //Left
           if (event.keyCode == 37) 
           {
-              // svg_climate.style.top = 200+'px'
-              // svg_climate.style.left = 200+'px'
-              svg_climate.setAttribute("height", "300px");
-              alert('Left was pressed')
+              left_num--
+              left_text.textContent = String(left_num)
           }
+
+          //Right
           else if (event.keyCode == 39) 
           {
-              // svg_climate.style.top = 0+'px'
-              // svg_climate.style.left = 0+'px'
-              svg_climate.setAttribute("height", "300px");
-              alert('Right was pressed')
+              left_num++
+              left_text.textContent = String(left_num)
+          }
+
+          //Down
+          if (event.keyCode == 40) 
+          {
+              right_num--
+              right_text.textContent = String(right_num)
+          }
+
+          //Up
+          if (event.keyCode == 38) 
+          {
+              right_num++
+              right_text.textContent = String(right_num)
           }
       });
-      // ---------------------------------------------------------------------------------
+      // (set climate text) ---------------------------------------------------------------------------------
 
       //This function is called every animation frame (roughly 60 times a second)
       function update() 
