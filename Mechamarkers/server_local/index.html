@@ -64,7 +64,7 @@
           remote = Mechamarkers.getGroup('remote')
         }
 
-        //call draw with classesArr
+        //call draw()
         draw(remote);
         
         // Keep this at the end. It triggers the loop to continue
@@ -82,26 +82,24 @@
       {
         var svg_climate = document.getElementById("climate-wrapper")
         
-        if (remote) {
-          // svg_climate.setAttribute('x',something.x)
-          // svg_climate.setAttribute('y',something.y)
+        //If remote is present
+        if (remote) 
+        {
+          //Grabs respective input from remote input group object
+          var rotate = remote.getInput("rotate") 
+          var scale = remote.getInput("scale") 
+          var select = remote.getInput("select")
 
-          var rotate = remote.getInput("rotate") //Grabs the scale input object
-          var scale = remote.getInput("scale") //Grabs the scale input object
-          var select = remote.getInput("select") //Grabs the select input object
-
+          //Calculate desired rotation, size, and position
           var img_rotation = radToDeg(rotate.val + 3.14)
-
           var img_size_x = 300 * scale.val
           var img_size_y = 100 * scale.val
-          
           var marker_pos = Mechamarkers.getMarker(28).center
 
-          //Change position
+          //Set position, rotation
+          //TODO: Change size
           svg_climate.style.top = marker_pos.y*0.5+'px';
           svg_climate.style.left = marker_pos.x*0.5+'px';
-
-          //Rotate
           svg_climate.style.transform = 'rotate('+img_rotation+'deg)'
 
           
@@ -151,6 +149,7 @@
         // Begin the update loop
         update();
       }
+    
     </script>
   
 </body>
