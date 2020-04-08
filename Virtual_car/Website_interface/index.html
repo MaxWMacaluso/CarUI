@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title> Virtual Car | Team Matrix </title>
+    <link rel = "stylesheet" href = "style.css"> <!-- All of the CSS is now in style.css -->
+  </head>
+
+  <body>
+    
+    <!-- Link to file that contains climate and radio svg -->
+    <object type = "image/svg+xml" data = "svg/climate.svg" id = "climate_svg"> Your browser does not support SVG </object>
+    <!-- <object type = "image/svg+xml" data = "svg/radio.svg" id = "radio-wrapper"> Your browser does not support SVG </object> -->
+    <!-- <object type = "image/svg+xml" data = "something.svg" id = "something-wrapper"> Your browser does not support SVG </object> -->
+
+    <script>
+
+      var svg = document.getElementById("climate_svg")
+      var element = svg.getElementById('left_val')
+      var element_val = element.textContent
+      console.log(element_val)
+      
+      document.addEventListener('keydown', function(event) {
+        if (event.keyCode == 38) 
+        {
+          var inc_button_map = new Map()
+          inc_button_map.set(38, 'left_val')
+          var dec_button_map = new Map()
+          svg = alter_svg(svg, 38, inc_button_map, dec_button_map)
+        }
+      })
+    </script>
+
+    <script src="interactive_svg.js"></script> <!-- File that runs all JS commands -->  
+
+  </body>
+</html>
