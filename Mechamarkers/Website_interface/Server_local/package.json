@@ -12,16 +12,16 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "@babel/core": "^7.5.5",
-    "@babel/preset-env": "^7.5.5",
-    "babel-loader": "^8.0.6",
+    "@babel/core": "^7.9.0",
+    "@babel/preset-env": "^7.9.5",
+    "babel-loader": "^8.1.0",
     "http-server": "^0.12.1",
     "leapjs": "^0.6.4",
-    "mathjs": "^6.2.1",
+    "mathjs": "^6.6.2",
     "ramda": "^0.26.1",
-    "socket.io-client": "^2.2.0",
-    "webpack": "^4.39.1",
-    "webpack-cli": "^3.3.6"
+    "socket.io-client": "^2.3.0",
+    "webpack": "^4.42.1",
+    "webpack-cli": "^3.3.11"
   },
   "babel": {
     "presets": [

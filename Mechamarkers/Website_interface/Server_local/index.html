@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 
 <html>
-  
+
   <head>
-    
+
     <meta charset="UTF-8">
-    
+
     <title> Mechamarkers </title>
-    
+
     <!-- All of the CSS is now in style.css -->
     <link rel = "stylesheet" href = "style.css">
 
@@ -22,7 +22,7 @@
   <body>
 
     <h1> Testing Leap JS </h1>
-    
+
     <div id = "output"> </div>
 
     <canvas class = "canvas"> </canvas>
@@ -31,7 +31,7 @@
     <object type = "image/svg+xml" data = "climate.svg" id = "climate-wrapper"> Your browser does not support SVG </object>
 
     <script>
-      
+
       //Make included libraries local
       const Mechamarkers = window.Mechamarkers
       const Vec2 = window.Vec2
@@ -39,13 +39,13 @@
       let prevTime, canvas, ctx
 
       //NOTE: Right now keeping as reference, may delete later
-      //However, there is also an issue that the SVG within the object might not have loaded by the time we reach 
+      //However, there is also an issue that the SVG within the object might not have loaded by the time we reach
       //the script element. So we have to make sure we don't try to get the element before the HTML window has loaded
-      // window.addEventListener("load", function() 
+      // window.addEventListener("load", function()
       // {
       //   //Get the svg object
       //   var svg_climate = document.getElementById('climate-wrapper').contentDocument
-        
+
       //   //Change location
       //   svg_climate.style.top = 500+'px'
       //   svg_climate.style.left = 500+'px'
@@ -55,40 +55,60 @@
       //To set numbers for the svg
       var left_num = 68
       var right_num = 68
+      var low= "low";
 
-      document.addEventListener('keydown', function(event) 
+      document.addEventListener('keydown', function(event)
       {
           //Get the svg object
           var svg_climate = document.getElementById('climate-wrapper').contentDocument
-        
+
           //Get left/right number
           var left_text = svg_climate.getElementById('left_val')
           var right_text = svg_climate.getElementById('right_val')
 
           //Left
-          if (event.keyCode == 37) 
+          if (event.keyCode == 37)
           {
+
               left_num--
               left_text.textContent = String(left_num)
+
+              if (left_num<61)
+              {
+                  left_num=61;
+              }
+
           }
 
           //Right
-          else if (event.keyCode == 39) 
+          else if (event.keyCode == 39)
           {
+            if (left_num>89)
+            {
+                left_num=89;
+            }
               left_num++
               left_text.textContent = String(left_num)
           }
 
           //Down
-          if (event.keyCode == 40) 
+          if (event.keyCode == 40)
           {
+            if (right_num<61)
+            {
+                right_num=61;
+            }
               right_num--
               right_text.textContent = String(right_num)
           }
 
           //Up
-          if (event.keyCode == 38) 
+          if (event.keyCode == 38)
           {
+            if (right_num>89)
+            {
+                right_num=89;
+            }
               right_num++
               right_text.textContent = String(right_num)
           }
@@ -96,7 +116,7 @@
       // (set climate text) ---------------------------------------------------------------------------------
 
       //This function is called every animation frame (roughly 60 times a second)
-      function update() 
+      function update()
       {
         //Keep track of time between updates as dt (delta time)
         const currTime = Date.now();
@@ -111,14 +131,14 @@
 
         // If the group doesn't exist in the config or the config is not loaded
         // undefined will be returned, you can work around this with a simple if
-        if (Mechamarkers.getGroup('remote')) 
+        if (Mechamarkers.getGroup('remote'))
         {
           remote = Mechamarkers.getGroup('remote')
         }
 
         //call draw()
         draw(remote);
-        
+
         // Keep this at the end. It triggers the loop to continue
         window.requestAnimationFrame(update);
       }
@@ -130,16 +150,16 @@
       }
 
       // Keep our draw code separate from our update
-      function draw(remote) 
+      function draw(remote)
       {
         var svg_climate = document.getElementById("climate-wrapper")
-        
+
         //If remote is present
-        if (remote) 
+        if (remote)
         {
           //Grabs respective input from remote input group object
-          var rotate = remote.getInput("rotate") 
-          var scale = remote.getInput("scale") 
+          var rotate = remote.getInput("rotate")
+          var scale = remote.getInput("scale")
           var select = remote.getInput("select")
 
           //Calculate desired rotation, size, and position
@@ -154,10 +174,10 @@
           svg_climate.style.left = marker_pos.x*0.5+'px';
           svg_climate.style.transform = 'rotate('+img_rotation+'deg)'
 
-          
+
           //var selected_img = ""
-          
-          // if (select.val < .5) 
+
+          // if (select.val < .5)
           // {
           //   //Edits the .png files
           //   drawImageRot(climate_img, marker_10.x, marker_10.y, img_size_x, img_size_y, img_rotation)
@@ -168,7 +188,7 @@
           //   states[1][1] = img_size_y
           //   states[1][2] = img_rotation
           // }
-          // else 
+          // else
           // {
           //   //Edits the .png files
           //   drawImageRot(radio_img, marker_11.x, marker_11.y, img_size_x, img_size_y, img_rotation)
@@ -201,11 +221,11 @@
         // Begin the update loop
         update();
       }
-    
+
     </script>
-  
+
 </body>
-  
+
 <!-- Moved to top -->
 <!-- <script src="https://js.leapmotion.com/leap-0.6.4.min.js"></script>
 <script src="leap_manipulation.js"></script> -->
