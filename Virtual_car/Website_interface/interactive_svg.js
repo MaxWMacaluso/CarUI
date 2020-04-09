@@ -12,7 +12,7 @@ function alter_svg(svg, input_button, inc_button_map, dec_button_map)
     {
         //Grab the desired id from the svg object
         var value = inc_button_map.get(input_button)
-        var element = svg.getElementById(value)
+        var element = document.getElementById(value)
 
         //Store current value of element in element_val
         var element_val = element.textContent
@@ -33,7 +33,8 @@ function alter_svg(svg, input_button, inc_button_map, dec_button_map)
         if (dec_button_map.has(input_button))
         {
             //Grab the desired id from the svg object
-            var element = svg.getElementById(dec_button_map.get(input_button))
+            var value = dec_button_map.get(input_button)
+            var element = document.getElementById(value)
 
             //Store current value of element in element_val
             var element_val = element.textContent

@@ -27,9 +27,9 @@
 
     <!-- Link to file that contains climate and radio svg -->
     
-    <!-- <object type = "image/svg+xml" data = "climate.svg" id = "climate-wrapper"> Your browser does not support SVG </object> -->
+    <object type = "image/svg+xml" data = "climate.svg" id = "climate-wrapper"> Your browser does not support SVG </object>
     
-    <object type = "image/svg+xml" data = "radio.svg" id = "radio-wrapper"> Your browser does not support SVG </object>
+    <!-- <object type = "image/svg+xml" data = "radio.svg" id = "radio-wrapper"> Your browser does not support SVG </object> -->
     
     <!-- <object type = "image/svg+xml" data = "something.svg" id = "something-wrapper"> Your browser does not support SVG </object> -->
 
@@ -58,11 +58,11 @@
       
       //FOR CLIMATE.SVG
       //To set numbers for the svg
-      // var left_num = 68
-      // var right_num = 68
+      var left_num = 68
+      var right_num = 68
 
       //FOR RADIO.SVG
-      var num = 28
+      // var num = 28
 
       console.log("HERE1")
       document.addEventListener('keydown', function(event) 
@@ -71,59 +71,59 @@
 
           //FOR CLIMATE.SVG
           //Get the svg object
-          //var svg_climate = document.getElementById('climate-wrapper').contentDocument
+          var svg_climate = document.getElementById('climate-wrapper').contentDocument
 
           //FOR CLIMATE.SVG
           //Get left/right number
-          //var left_text = svg_climate.getElementById('left_val')
-          //var right_text = svg_climate.getElementById('right_val')
+          var left_text = svg_climate.getElementById('left_val')
+          var right_text = svg_climate.getElementById('right_val')
 
           //FOR RADIO.SVG
           //Get the svg object
-          var svg_radio = document.getElementById('radio-wrapper').contentDocument
+          // var svg_radio = document.getElementById('radio-wrapper').contentDocument
 
           //FOR RADIO.SVG
-          var volume_text = svg_radio.getElementById('volume_val')
+          // var volume_text = svg_radio.getElementById('volume_val')
           // console.log("Hi")
 
           //Left
           if (event.keyCode == 37) 
           {
               //FOR RADIO.SVG
-              num--
-              volume_text.textContent = String(num)
+              // num--
+              // volume_text.textContent = String(num)
 
               //FOR CLIMATE.SVG
-              // left_num--
-              // left_text.textContent = String(left_num)
+              left_num--
+              left_text.textContent = String(left_num)
           }
 
           //Right
           else if (event.keyCode == 39) 
           {
               //FOR RADIO.SVG
-              num++
-              volume_text.textContent = String(num)
+              // num++
+              // volume_text.textContent = String(num)
 
               //FOR CLIME.SVG
-              //left_num++
-              //left_text.textContent = String(left_num)
+              left_num++
+              left_text.textContent = String(left_num)
           }
 
           //FOR CLIMATE.SVG
-          // //Down
-          // if (event.keyCode == 40) 
-          // {
-          //     right_num--
-          //     right_text.textContent = String(right_num)
-          // }
+          //Down
+          if (event.keyCode == 40) 
+          {
+              right_num--
+              right_text.textContent = String(right_num)
+          }
 
-          // //Up
-          // if (event.keyCode == 38) 
-          // {
-          //     right_num++
-          //     right_text.textContent = String(right_num)
-          // }
+          //Up
+          if (event.keyCode == 38) 
+          {
+              right_num++
+              right_text.textContent = String(right_num)
+          }
       });
       // (set climate text) ---------------------------------------------------------------------------------
 
@@ -165,10 +165,10 @@
       function draw(remote) 
       {
         //FOR CLIMATE.SVG
-        //var svg_climate = document.getElementById("climate-wrapper")
+        var svg_climate = document.getElementById("climate-wrapper")
 
         //FOR RADIO.SVG
-        var svg_radio = document.getElementById("radio-wrapper")
+        // var svg_radio = document.getElementById("radio-wrapper")
         
         //If remote is present
         if (remote) 
@@ -187,14 +187,14 @@
           //FOR CLIMATE.SVG
           //Set position, rotation
           //TODO: Change size
-          // svg_climate.style.top = marker_pos.y*0.5+'px';
-          // svg_climate.style.left = marker_pos.x*0.5+'px';
-          // svg_climate.style.transform = 'rotate('+img_rotation+'deg)'
+          svg_climate.style.top = marker_pos.y*0.5+'px';
+          svg_climate.style.left = marker_pos.x*0.5+'px';
+          svg_climate.style.transform = 'rotate('+img_rotation+'deg)'
 
           //FOR RADIO.SVG
-          svg_radio.style.top = marker_pos.y*0.5+'px';
-          svg_radio.style.left = marker_pos.x*0.5+'px';
-          svg_radio.style.transform = 'rotate('+img_rotation+'deg)'
+          // svg_radio.style.top = marker_pos.y*0.5+'px';
+          // svg_radio.style.left = marker_pos.x*0.5+'px';
+          // svg_radio.style.transform = 'rotate('+img_rotation+'deg)'
 
           
           //var selected_img = ""
