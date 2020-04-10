@@ -9,7 +9,7 @@
 
   <body>
     <!-- SVG FILES -->
-    <svg version="1.1" id="climate_svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
+    <svg version="1.1" id="climate_svg" display="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
     y="0px" viewBox="0 0 290 301.6" style="enable-background:new 0 0 290 301.6;" xml:space="preserve">
     <style type="text/css">
     .st0{fill:url(#SVGID_1_);stroke:#231F20;stroke-width:2;stroke-miterlimit:10;}
@@ -86,7 +86,8 @@
     C92,164.1,93.5,159.4,91.7,155.1z"/>
       </svg>
 
-    <svg version="1.1" id="radio_svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+
+    <svg version="1.1" id="radio_svg" display="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
     viewBox="0 0 640 480" style="enable-background:new 0 0 640 480;" xml:space="preserve">
     <style type="text/css">
     .st0{fill:url(#SVGID_1_);}
@@ -122,11 +123,11 @@
     <text transform="matrix(1 0 0 1 176.3994 63.7661)" class="st2 st3">FM</text>
     </g>
     <rect x="438.1" y="125" class="st4" width="154.9" height="105"/>
-    <text transform="matrix(1 0 0 1 438.1084 203.4004)" class="st2 st5" id="val">28<id="volume"></text>
+    <text transform="matrix(1 0 0 1 438.1084 203.4004)" class="st2 st5" id="volume_val">28</text>
     <rect x="334.4" y="12.3" class="st1" width="114.8" height="66.6"/>
     <text transform="matrix(1 0 0 1 334.4141 65.3237)" class="st2 st3">XM</text>
     <rect x="23.4" y="127.1" class="st1" width="262.6" height="71.9"/>
-    <text transform="matrix(1 0 0 1 23.4426 168.8473)" class="st2 st6">12:30 am <id="time"></text>
+    <text transform="matrix(1 0 0 1 23.4426 168.8473)" class="st2 st6">12:30 am </text>
     <path class="st7" d="M216.5,68.5"/>
     <path class="st1" d="M161.4,9c-0.4,21.8-0.8,43.6-1.1,65.4"/>
     <path class="st7" d="M146.5,0.3v58.2c0,8.5-6.2,15.5-13.8,15.5H-2"/>
@@ -144,9 +145,9 @@
     <rect x="62.1" y="257.4" class="st1" width="122.2" height="94.6"/>
     <text transform="matrix(1 0 0 1 62.0654 286.001)"><tspan x="0" y="0" class="st2 st11">Album </tspan><tspan x="0" y="46.8" class="st2 st11">Cover</tspan></text>
     <rect x="224.8" y="249.3" class="st1" width="382.2" height="61.7"/>
-    <text transform="matrix(1 0 0 1 224.751 269.8086)"><tspan x="0" y="0" class="st2 st12">Never gonna Give you up</tspan><tspan x="0" y="33.6" class="st2 st12">Rick Astley</tspan><id="Song/Artist"></text>
+    <text transform="matrix(1 0 0 1 224.751 269.8086)"><tspan x="0" y="0" class="st2 st12">Never gonna Give you up</tspan><tspan x="0" y="33.6" class="st2 st12">Rick Astley</tspan></text>
     <rect x="223.6" y="319" class="st4" width="213.5" height="32.7"/>
-    <text transform="matrix(1 0 0 1 223.6348 342.416)" class="st2 st13">0:23/3:06<id="song_Duration"></text>
+    <text transform="matrix(1 0 0 1 223.6348 342.416)" class="st2 st13">0:23/3:06</text>
     <g>
     <path d="M580,422.5c-1.5-2-4.3-2.5-6.3-1c-1,0.7-1.6,1.8-1.8,3s0.1,2.4,0.8,3.4l10.9,15l-10.9,15c-1.5,2-1,4.9,1,6.3
     c0.8,0.6,1.7,0.9,2.7,0.9c1.4,0,2.8-0.6,3.7-1.9l14.6-20.1c0.1-0.2,0.1-0.4,0-0.6L580,422.5z"/>
@@ -173,6 +174,7 @@
     <path d="M208,466h-21c-6.6,0-12-5.4-12-12v-21c0-6.6,5.4-12,12-12h21c6.6,0,12,5.4,12,12v21C220,460.6,214.6,466,208,466z"/>
     </g>
       </svg>
+
 
     <svg version="1.1" id="old_climate_svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
     viewBox="0 0 1988 1107" style="enable-background:new 0 0 1988 1107;" xml:space="preserve">
@@ -318,18 +320,20 @@
       //TO CHANGE VISIBILITY (comment out one you want)---------------------------------------
       var climate_svg = document.getElementById("climate_svg")
       climate_svg.style.display = "none"
-
+      //
       // var radio_svg = document.getElementById("radio_svg")
       // radio_svg.style.display = "none"
 
-      // var old_climate_svg = document.getElementById("old_climate_svg")
-      // old_climate_svg.style.display = "none"
+     // var old_climate_svg = document.getElementById("old_climate_svg")
+     //  old_climate_svg.style.display = "none"
 
       //--------------------------------------------------------------------------------------
 
       //SVG_MAP - (mapped_key : val_arr)------------------------------------------------------
         //val_arr = [img, element_to_change, to_inc]
       var svg_map = new Map()
+
+      //OLD_CLIMATE.svg
       var val_arr1 = [old_climate_svg, "left_val", true]
       var val_arr2 = [old_climate_svg, "left_val", false]
       svg_map.set(81, val_arr1)
@@ -338,11 +342,14 @@
       var val_arr4 = [old_climate_svg, "right_val", false]
       svg_map.set(87, val_arr3)
       svg_map.set(83, val_arr4)
-      var val_arr5 = [climate_svg, "volume", true]
-      var val_arr6 = [climate_svg, "volume",false]
-      svg_map.set(38, val_arr5)
-      svg_map.set(40, val_arr6)
 
+      //RADIO.svg
+      var val_arr5 = [radio_svg, "volume_val", true]
+      var val_arr6 = [radio_svg, "volume_val", false]
+      svg_map.set(69, val_arr5)
+      svg_map.set(68, val_arr6)
+
+      //old_climate_svg.style.display = "none"
       //--------------------------------------------------------------------------------------
 
       //Register keyboard input---------------------------------------------------------------
@@ -354,7 +361,10 @@
             //Svg's are val_arr[0]
           alterSVG(svg_map, event.keyCode)
         }
-      })
+      }
+
+
+      //old_climate_svg.style.display = "none"
       //--------------------------------------------------------------------------------------
 
     </script>
