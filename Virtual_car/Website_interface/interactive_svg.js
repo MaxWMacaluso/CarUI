@@ -17,17 +17,26 @@ function alterSVG(input_svg_map, button_pressed)
 
     if (to_inc)
     {
+      element_content++;
         //Increase
-        element_content++
+        if (element_content>89)
+        {
+          element_content=90;
+
+
+        }
+
     }
 
     else
     {
+        element_content--;
         //Decrease
-        element_content--
+        if (element_content<61)
+        {
+          element_content=60;
+        }
     }
-
-    
 
     //Converting back to string and equating to new value
     element_content = String(element_content)
