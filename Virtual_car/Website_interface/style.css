@@ -1,0 +1,18 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+  font-family: sans-serif;
+  font-size: 12px;
+  line-height: 1.5;
+  overflow: hidden;
+  background: rgb(80, 80, 80);
+}
+
+
+
+h1 {
+  color: red;
+}
