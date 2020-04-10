@@ -313,45 +313,42 @@
 
     <script>
 
-      //TO CHANGE VISIBILITY (comment out one you want)
+      //TO CHANGE VISIBILITY (comment out one you want)---------------------------------------
       var climate_svg = document.getElementById("climate_svg")
       climate_svg.style.display = "none"
+      
       var radio_svg = document.getElementById("radio_svg")
       radio_svg.style.display = "none"
-      // var old_climate_svg = document.getElementById("old_climate_svg")
-      // old_climate_svg.style.display = "none"
-
-      //Intpus: 
-        //svg - svg image that is going to be altered
-        //input_key - keyboard button pressed
-        //inc_button_map - map (input_button : element_to_change) that contains all elements to be increased
-        //dec_button_map - map (input_button : element_to_change) that contains all elements to be decreased
-    //Outputs: 
-        //Outputs altered svg object
-
-      //Map - (input_button : key_arr)
-        //key_arr = [img, element_to_change, to_inc]
-      var svg_map = new Map()
-      var key_arr1 = ["old_climate_svg", "left_val", true]
-      var key_arr2 = ["old_climate_svg", "left_val", false]
-      svg_map.set(81, key_arr1)
-      svg_map.set(65, key_arr2)
-      var key_arr3 = ["old_climate_svg", "right_val", true]
-      var key_arr4 = ["old_climate_svg", "right_val", false]
-      svg_map.set(87, key_arr3)
-      svg_map.set(83, key_arr4)
       
-      //Register keyboard input
+      var old_climate_svg = document.getElementById("old_climate_svg")
+      // old_climate_svg.style.display = "none"
+  
+      //--------------------------------------------------------------------------------------
+
+      //SVG_MAP - (mapped_key : val_arr)------------------------------------------------------
+        //val_arr = [img, element_to_change, to_inc]
+      var svg_map = new Map()
+      var val_arr1 = [old_climate_svg, "left_val", true]
+      var val_arr2 = [old_climate_svg, "left_val", false]
+      svg_map.set(81, val_arr1)
+      svg_map.set(65, val_arr2)
+      var val_arr3 = [old_climate_svg, "right_val", true]
+      var val_arr4 = [old_climate_svg, "right_val", false]
+      svg_map.set(87, val_arr3)
+      svg_map.set(83, val_arr4)
+      //--------------------------------------------------------------------------------------
+      
+      //Register keyboard input---------------------------------------------------------------
       document.addEventListener('keydown', function(event) {
-        if (event.keyCode == 38) 
+        //If event.keyCode is in domain of svg_map
+        if (svg_map.has(event.keyCode)) 
         {
-          //var svg = document.getElementById("old_climate_svg")
-          var inc_button_map = new Map()
-          inc_button_map.set(38, 'left')
-          var dec_button_map = new Map()
-          old_climate_svg = alter_svg(old_climate_svg, 38, inc_button_map, dec_button_map)
+          //Arrays are pass by reference, so will alter vars declared above
+            //Svg's are val_arr[0]
+          alterSVG(svg_map, event.keyCode)
         }
       })
+      //--------------------------------------------------------------------------------------
 
     </script>
 
