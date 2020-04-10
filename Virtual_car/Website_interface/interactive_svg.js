@@ -22,8 +22,6 @@ function alterSVG(input_svg_map, button_pressed)
         if (element_content>89)
         {
           element_content=90;
-
-
         }
 
     }
