@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+
+<html>
+  
+  <head>
+    
+    <meta charset="UTF-8">
+    
+    <title> Virtual Car | Team Matrix </title>
+    
+    <!-- All of the CSS is now in style.css -->
+    <link rel = "stylesheet" href = "style.css">
+
+    <!-- For leap -->
+    <script src = "./build/app.js"> </script>
+    <script src = "leap-0.6.4.js"> </script>
+    <script src = "https://js.leapmotion.com/leap-0.6.4.min.js"> </script>
+    <script src = "leap_manipulation.js"> </script>
+
+  </head>
+
+  <body>
+    
+    <div id = "output"> </div>
+
+    <canvas class = "canvas"> </canvas>
+
+    <!-- Link to file that contains climate and radio svg -->
+    
+    <object type = "image/svg+xml" data = "climate.svg" id = "climate-wrapper"> Your browser does not support SVG </object>
+    
+    <!-- <object type = "image/svg+xml" data = "radio.svg" id = "radio-wrapper"> Your browser does not support SVG </object> -->
+    
+    <!-- <object type = "image/svg+xml" data = "something.svg" id = "something-wrapper"> Your browser does not support SVG </object> -->
+
+    <script>
+      
+      //Make included libraries local
+      const Mechamarkers = window.Mechamarkers
+      const Vec2 = window.Vec2
+
+      let prevTime, canvas, ctx
+
+      //NOTE: Right now keeping as reference, may delete later
+      //However, there is also an issue that the SVG within the object might not have loaded by the time we reach 
+      //the script element. So we have to make sure we don't try to get the element before the HTML window has loaded
+      // window.addEventListener("load", function() 
+      // {
+      //   //Get the svg object
+      //   var svg_climate = document.getElementById('climate-wrapper').contentDocument
+        
+      //   //Change location
+      //   svg_climate.style.top = 500+'px'
+      //   svg_climate.style.left = 500+'px'
+      // });
+
+      // Keyboard input (set climate text) ------------------------------------------------------------------
+      
+      //FOR CLIMATE.SVG
+      //To set numbers for the svg
+      var left_num = 68
+      var right_num = 68
+
+      //FOR RADIO.SVG
+      // var num = 28
+
+      console.log("HERE1")
+      document.addEventListener('keydown', function(event) 
+      {
+        console.log("HERE2")
+
+          //FOR CLIMATE.SVG
+          //Get the svg object
+          var svg_climate = document.getElementById('climate-wrapper').contentDocument
+
+          //FOR CLIMATE.SVG
+          //Get left/right number
+          var left_text = svg_climate.getElementById('left_val')
+          var right_text = svg_climate.getElementById('right_val')
+
+          //FOR RADIO.SVG
+          //Get the svg object
+          // var svg_radio = document.getElementById('radio-wrapper').contentDocument
+
+          //FOR RADIO.SVG
+          // var volume_text = svg_radio.getElementById('volume_val')
+          // console.log("Hi")
+
+          //Left
+          if (event.keyCode == 37) 
+          {
+              //FOR RADIO.SVG
+              // num--
+              // volume_text.textContent = String(num)
+
+              //FOR CLIMATE.SVG
+              left_num--
+              left_text.textContent = String(left_num)
+          }
+
+          //Right
+          else if (event.keyCode == 39) 
+          {
+              //FOR RADIO.SVG
+              // num++
+              // volume_text.textContent = String(num)
+
+              //FOR CLIME.SVG
+              left_num++
+              left_text.textContent = String(left_num)
+          }
+
+          //FOR CLIMATE.SVG
+          //Down
+          if (event.keyCode == 40) 
+          {
+              right_num--
+              right_text.textContent = String(right_num)
+          }
+
+          //Up
+          if (event.keyCode == 38) 
+          {
+              right_num++
+              right_text.textContent = String(right_num)
+          }
+      });
+      // (set climate text) ---------------------------------------------------------------------------------
+
+      //This function is called every animation frame (roughly 60 times a second)
+      function update() 
+      {
+        //Keep track of time between updates as dt (delta time)
+        const currTime = Date.now();
+        const dt = (currTime - prevTime) / 1000;
+        prevTime = currTime;
+
+        //Update the mechamarkers library
+        Mechamarkers.update(currTime);
+
+        //If not input group detected, will be NULL
+        var remote = null
+
+        // If the group doesn't exist in the config or the config is not loaded
+        // undefined will be returned, you can work around this with a simple if
+        if (Mechamarkers.getGroup('remote')) 
+        {
+          remote = Mechamarkers.getGroup('remote')
+        }
+
+        //call draw()
+        draw(remote);
+        
+        // Keep this at the end. It triggers the loop to continue
+        window.requestAnimationFrame(update);
+      }
+
+      //Helper function
+      function radToDeg(radian)
+      {
+        return radian * 57.29
+      }
+
+      // Keep our draw code separate from our update
+      function draw(remote) 
+      {
+        //FOR CLIMATE.SVG
+        var svg_climate = document.getElementById("climate-wrapper")
+
+        //FOR RADIO.SVG
+        // var svg_radio = document.getElementById("radio-wrapper")
+        
+        //If remote is present
+        if (remote) 
+        {
+          //Grabs respective input from remote input group object
+          var rotate = remote.getInput("rotate") 
+          var scale = remote.getInput("scale") 
+          var select = remote.getInput("select")
+
+          //Calculate desired rotation, size, and position
+          var img_rotation = radToDeg(rotate.val + 3.14)
+          var img_size_x = 300 * scale.val
+          var img_size_y = 100 * scale.val
+          var marker_pos = Mechamarkers.getMarker(28).center
+
+          //FOR CLIMATE.SVG
+          //Set position, rotation
+          //TODO: Change size
+          svg_climate.style.top = marker_pos.y*0.5+'px';
+          svg_climate.style.left = marker_pos.x*0.5+'px';
+          svg_climate.style.transform = 'rotate('+img_rotation+'deg)'
+
+          //FOR RADIO.SVG
+          // svg_radio.style.top = marker_pos.y*0.5+'px';
+          // svg_radio.style.left = marker_pos.x*0.5+'px';
+          // svg_radio.style.transform = 'rotate('+img_rotation+'deg)'
+
+          
+          //var selected_img = ""
+          
+          // if (select.val < .5) 
+          // {
+          //   //Edits the .png files
+          //   drawImageRot(climate_img, marker_10.x, marker_10.y, img_size_x, img_size_y, img_rotation)
+          //   drawImageRot(radio_img, marker_11.x, marker_11.y, states[0][0], states[0][1], states[0][2])
+
+          //   //States of the images
+          //   states[1][0] = img_size_x
+          //   states[1][1] = img_size_y
+          //   states[1][2] = img_rotation
+          // }
+          // else 
+          // {
+          //   //Edits the .png files
+          //   drawImageRot(radio_img, marker_11.x, marker_11.y, img_size_x, img_size_y, img_rotation)
+          //   drawImageRot(climate_img, marker_10.x, marker_10.y, states[1][0], states[1][1], states[1][2])
+
+          //   //States of the images
+          //   states[0][0] = img_size_x
+          //   states[0][1] = img_size_y
+          //   states[0][2] = img_rotation
+          // }
+
+          // svg_thing.setAttributeNS(null, "cy", something.y)
+          // svg_thing.setAttributeNS(null, "cx", something.x)
+        }
+      }
+
+      // Onload is called when the window loads
+      window.onload = () => {
+        prevTime = Date.now();
+        // Get canvas references for drawing
+        canvas = document.querySelector('canvas');
+        ctx = canvas.getContext('2d');
+        // This line initializes mechamarkers library
+        Mechamarkers.init(canvas, ctx);
+
+        // Full screne te canvas
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        // Begin the update loop
+        update();
+      }
+    
+    </script>
+  
+</body>
+  
+<!-- Moved to top -->
+<!-- <script src="https://js.leapmotion.com/leap-0.6.4.min.js"></script>
+<script src="leap_manipulation.js"></script> -->
+
+  </html>
