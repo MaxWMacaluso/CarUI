@@ -333,12 +333,12 @@
       //OLD_CLIMATE.svg
       var val_arr1 = [old_climate_svg, "left_val", true]
       var val_arr2 = [old_climate_svg, "left_val", false]
-      svg_map.set(81, val_arr1)
-      svg_map.set(65, val_arr2)
+      svg_map.set(81, val_arr1) //left up
+      svg_map.set(65, val_arr2) //left down
       var val_arr3 = [old_climate_svg, "right_val", true]
       var val_arr4 = [old_climate_svg, "right_val", false]
-      svg_map.set(87, val_arr3)
-      svg_map.set(83, val_arr4)
+      svg_map.set(87, val_arr3) //right up
+      svg_map.set(83, val_arr4) //right down
 
       //RADIO.svg
       var val_arr5 = [radio_svg, "volume_val", true]
@@ -369,8 +369,8 @@
     <script src="interactive_svg.js"></script> <!-- File that runs all JS commands -->  
 
     <!-- Link JS scripts for LEAP -->
-    <script src="/LEAP_JS/Gestures.js"></script> <!-- File that runs all JS commands -->
     <script src="LEAP_JS/leap-0.6.4.js"></script> <!-- File that runs all JS commands -->
+    <script src="LEAP_JS/Gestures.js"></script> <!-- File that runs all JS commands -->
     <!-- <script src="LEAP_JS/leap_manipulation.js"></script> --> <!-- For reference -->
 
   </body>
