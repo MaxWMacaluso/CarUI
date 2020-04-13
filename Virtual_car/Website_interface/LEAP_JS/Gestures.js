@@ -1,3 +1,9 @@
+var CircleL_count = 0
+var CircleR_count = 0
+var SwipeL_count = 0
+var SwipeR_count = 0
+var upKey = 81
+var downKey = 65
 //main loop that is continually checking for gestures
 var controller = Leap.loop({enableGestures: true}, function(frame){
     //if a gestures is recognized 
@@ -16,7 +22,7 @@ var controller = Leap.loop({enableGestures: true}, function(frame){
                         // var circleProgress = gesture.progress;
                         // var completeCircles = Math.floor(circleProgress);
                         // console.log("Circle Update: " + completeCircles);
-                } else if (circle.state == 'update') {
+                } else if (circle.state == 'update' & circle.duration > .5) {
                     direction = circle.pointable.direction;
                     //if pointable exists
                     if (direction) {
@@ -24,8 +30,18 @@ var controller = Leap.loop({enableGestures: true}, function(frame){
                         clockwise = Leap.vec3.dot(direction, normal) > 0;
                         if (clockwise) {
                             console.log("Clockwise")
+                            CircleL_count +=1
+                            if (svg_map.has(upKey) & CircleL_count%6 == 0) 
+                            {
+                              alterSVG(svg_map, upKey)
+                            }
                         } else {
                             console.log("Counter-Clockwise")
+                            CircleR_count +=1
+                            if (svg_map.has(downKey) & CircleR_count%6 ==0) 
+                            {
+                              alterSVG(svg_map, downKey)
+                            }
                         }
                     }
                 } else if (circle.state == 'stop') {
@@ -42,20 +58,40 @@ var controller = Leap.loop({enableGestures: true}, function(frame){
                 //Classify swipe as either horizontal or vertical
                 var isHorizontal = Math.abs(gesture.direction[0]) > Math.abs(gesture.direction[1]);
                 //Classify as right-left or up-down
-                if(isHorizontal){
+                if(isHorizontal & gesture.duration > .5){
                     if(gesture.direction[0] > 0){
                         swipeDirection = "right";
+                        if (SwipeR_count%2 == 0 & upKey == 81) {
+                            upKey = 87
+                            downKey = 83
+                        }
                     } else {
                         swipeDirection = "left";
+                        if (SwipeL_count%2 == 0 & downKey == 83){
+                            upKey = 81
+                            downKey= 65
+                        }
                     }
-                } else { //vertical
+                    console.log(swipeDirection)
+                } else if(gesture.duration > .5) { //vertical
                     if(gesture.direction[1] > 0){
                         swipeDirection = "up";
+                        // SwipeU_count +=1
+                        // if (svg_map.has(87) & SwipeU_count%5 == 0) 
+                        // {
+                        //   alterSVG(svg_map, 87)
+                        // }
                     } else {
                         swipeDirection = "down";
-                    }                  
+                        // SwipeD_count +=1
+                        // if (svg_map.has(83) & SwipeD_count%5 == 0) 
+                        // {
+                        //   alterSVG(svg_map, 83)
+                        // }
+                    }
+                    console.log(swipeDirection)                  
                 }
-                console.log(swipeDirection)
+
                 break;
             }
         });
