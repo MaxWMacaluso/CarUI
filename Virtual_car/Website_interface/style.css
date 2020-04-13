@@ -1,16 +1,17 @@
+/* Effect everything 
 * {
     margin: 0;
     padding: 0;
-}
-
-/* body {
-  font-family: sans-serif;
-  font-size: 12px;
-  line-height: 1.5;
-  overflow: hidden;
-  background: rgb(80, 80, 80);
-}
-
-h1 {
-  color: red;
 } */
+
+/* Effect the svg images */
+#climate_svg, #old_climate_svg, #radio_svg {
+  float: left;
+  width: 30%;
+  padding: 5px;
+}
+
+/* Effects body */
+body {
+  background-color: lightblue;
+}
