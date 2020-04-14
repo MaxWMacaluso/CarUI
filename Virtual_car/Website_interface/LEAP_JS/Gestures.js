@@ -22,7 +22,7 @@ var controller = Leap.loop({enableGestures: true}, function(frame){
                         // var circleProgress = gesture.progress;
                         // var completeCircles = Math.floor(circleProgress);
                         // console.log("Circle Update: " + completeCircles);
-                } else if (circle.state == 'update' & circle.duration > .5) {
+                } else if (circle.state == 'update' & circle.duration > .7) {
                     direction = circle.pointable.direction;
                     //if pointable exists
                     if (direction) {
@@ -31,14 +31,14 @@ var controller = Leap.loop({enableGestures: true}, function(frame){
                         if (clockwise) {
                             console.log("Clockwise")
                             CircleL_count +=1
-                            if (svg_map.has(upKey) & CircleL_count%6 == 0) 
+                            if (svg_map.has(upKey) & CircleL_count%8 == 0) 
                             {
                               alterSVG(svg_map, upKey)
                             }
                         } else {
                             console.log("Counter-Clockwise")
                             CircleR_count +=1
-                            if (svg_map.has(downKey) & CircleR_count%6 ==0) 
+                            if (svg_map.has(downKey) & CircleR_count%8 ==0) 
                             {
                               alterSVG(svg_map, downKey)
                             }
@@ -58,7 +58,7 @@ var controller = Leap.loop({enableGestures: true}, function(frame){
                 //Classify swipe as either horizontal or vertical
                 var isHorizontal = Math.abs(gesture.direction[0]) > Math.abs(gesture.direction[1]);
                 //Classify as right-left or up-down
-                if(isHorizontal & gesture.duration > .4){
+                if(isHorizontal & gesture.duration > .6){
                     if(gesture.direction[0] > 0){
                         swipeDirection = "right";
                         if (SwipeR_count%2 == 0 & upKey == 81) {
