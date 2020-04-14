@@ -58,7 +58,7 @@ var controller = Leap.loop({enableGestures: true}, function(frame){
                 //Classify swipe as either horizontal or vertical
                 var isHorizontal = Math.abs(gesture.direction[0]) > Math.abs(gesture.direction[1]);
                 //Classify as right-left or up-down
-                if(isHorizontal & gesture.duration > .5){
+                if(isHorizontal & gesture.duration > .4){
                     if(gesture.direction[0] > 0){
                         swipeDirection = "right";
                         if (SwipeR_count%2 == 0 & upKey == 81) {
