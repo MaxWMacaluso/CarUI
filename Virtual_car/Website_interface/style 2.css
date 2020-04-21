@@ -1,0 +1,37 @@
+/* Effect everything 
+* {
+    margin: 0;
+    padding: 0;
+} */
+
+/* Effect the svg images */
+#car_svg {
+  /* Position */
+  position: fixed;
+  left: 34%;
+  top: 14%;
+  
+  /* Size */
+  width: 33%;
+}
+
+/* Background car interior */
+#car_interior {
+  /* Position */
+  position: fixed;
+  left: 10%;
+  top: 5%;
+  z-index: -1;
+  
+  /* Size */
+  height:90%;
+  width:80%;
+  
+  /* Border */
+  border: 3px solid #000000;
+}
+
+/* Effects body */
+body {
+  background-color: #daf5f4;
+}
