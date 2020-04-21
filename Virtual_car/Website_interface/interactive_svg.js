@@ -33,3 +33,16 @@ function alterSVG(input_svg_map, button_pressed)
 
     //function returns undefined by default
 }
+
+function highlight(input_svg_map, button_pressed, bin)
+{
+    var val_arr = input_svg_map.get(button_pressed)
+    if (bin == 0)
+    {
+        document.getElementById(val_arr[1]).style.fill = "#fada5e";
+    }
+    if (bin == 1)
+    {
+        document.getElementById(val_arr[1]).style.fill = "#c1272d";
+    }
+}
