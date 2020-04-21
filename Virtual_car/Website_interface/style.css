@@ -4,14 +4,28 @@
     padding: 0;
 } */
 
+/* Background car interior */
+#car_interior {
+  position: fixed;
+  left: 0;
+  top: 0;
+  height:100%;
+  width:100%;
+  z-index: -1;
+}
+
 /* Effect the svg images */
-#old_climate_svg, #radio_svg {
-  float: left;
-  width: 45%;
-  padding: 5px;
+#car_svg {
+  position: fixed;
+  left: 30%;
+  top: 5%;
+  width: 35%;
 }
 
 /* Effects body */
 body {
-  background-color: lightblue;
+  background-image: url("imgs/car_interior.jpeg");
+  background-repeat: no-repeat;
+  background-position: bottom center;
+  background-size: 100% 100%;
 }
