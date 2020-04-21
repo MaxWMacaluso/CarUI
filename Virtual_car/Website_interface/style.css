@@ -4,28 +4,34 @@
     padding: 0;
 } */
 
-/* Background car interior */
-#car_interior {
-  position: fixed;
-  left: 0;
-  top: 0;
-  height:100%;
-  width:100%;
-  z-index: -1;
-}
-
 /* Effect the svg images */
 #car_svg {
+  /* Position */
   position: fixed;
-  left: 30%;
+  left: 34%;
+  top: 14%;
+  
+  /* Size */
+  width: 33%;
+}
+
+/* Background car interior */
+#car_interior {
+  /* Position */
+  position: fixed;
+  left: 10%;
   top: 5%;
-  width: 35%;
+  z-index: -1;
+  
+  /* Size */
+  height:90%;
+  width:80%;
+  
+  /* Border */
+  border: 3px solid #000000;
 }
 
 /* Effects body */
 body {
-  background-image: url("imgs/car_interior.jpeg");
-  background-repeat: no-repeat;
-  background-position: bottom center;
-  background-size: 100% 100%;
+  background-color: #daf5f4;
 }
