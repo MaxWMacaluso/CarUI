@@ -8,11 +8,11 @@
 #car_svg {
   /* Position */
   position: fixed;
-  left: 34%;
-  top: 14%;
+  left: -1%;
+  top: 1%;
   
   /* Size */
-  width: 33%;
+  width: 105%;
 }
 
 /* Background car interior */
