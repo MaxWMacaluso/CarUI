@@ -3,3 +3,6 @@ How we pushed to Heroku (specific file vs whole branch):
 
 Link to website:
 	https://the-best-team-matrix.herokuapp.com/
+
+Link to WordPress:
+	https://hmicar.wordpress.com/team-matrix/
