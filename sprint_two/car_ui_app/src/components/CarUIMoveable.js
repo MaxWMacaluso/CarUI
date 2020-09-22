@@ -5,6 +5,8 @@ import Moveable from "react-moveable";
 export default class CarUIMoveable extends Component { //<h1>{moveableTarget}</h1>;
   constructor(props){
     super(props);
+    this.resetState = this.resetState.bind(this);
+    this.resetStates = this.resetStates.bind(this);
     this.state = {
       target: null,
       frame: {
@@ -16,9 +18,9 @@ export default class CarUIMoveable extends Component { //<h1>{moveableTarget}</h
     }
   }
 
-  componentDidMount(){
+  resetState() {
     this.setState({
-      target: document.querySelector(".target"),
+      target: document.querySelector("." + this.props.moveableTarget + ""),
       frame: {
         translate: [0,0],
         scale: [1,1],
@@ -26,6 +28,26 @@ export default class CarUIMoveable extends Component { //<h1>{moveableTarget}</h
         transformOrigin: "50% 50%"
       }
     });
+  }
+  resetStates(tempTarget) {
+    this.setState({
+      target: document.querySelector("." + tempTarget + ""),
+      frame: {
+        translate: this.state.frame.translate,
+        scale: this.state.frame.scale,
+        rotate: this.state.frame.rotate,
+        transformOrigin: this.state.frame.transformOrigin
+      }
+    });
+  }
+
+  componentDidMount(){
+    this.resetState();
+  }
+
+  componentDidUpdate(prevProps){
+    // this.target = document.querySelector(".jim")
+    console.log("updating!")
   }
 
   render() {
@@ -92,10 +114,10 @@ export default class CarUIMoveable extends Component { //<h1>{moveableTarget}</h
                 this.state.frame.rotate = beforeRotate;
             }}
             onRender={({ target }) => {
-                const { translate, rotate, transformOrigin } = this.state.frame;
-                target.style.transformOrigin = transformOrigin;
-                target.style.transform = `translate(${translate[0]}px, ${translate[1]}px)`
-                    +  ` rotate(${rotate}deg)`;
+                const { translate, rotate, scale, transformOrigin } = this.state.frame;
+                this.state.target.style.transformOrigin = transformOrigin;
+                this.state.target.style.transform = `translate(${translate[0]}px, ${translate[1]}px)`
+                    +  ` rotate(${rotate}deg)`+ ` scale(${scale[0]}, ${scale[1]})`;;
             }}
         />
     </div>;
