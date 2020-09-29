@@ -1,0 +1,23 @@
+{
+  "name": "node-postgres",
+  "version": "1.0.0",
+  "description": "Connect carUI web-app (React) to Postgres DB using NodeJS and Express",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MaxWMacaluso/Team-Matrix.git"
+  },
+  "author": "Team Matrix",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MaxWMacaluso/Team-Matrix/issues"
+  },
+  "homepage": "https://github.com/MaxWMacaluso/Team-Matrix#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "pg": "^8.3.3"
+  }
+}
