@@ -77,6 +77,8 @@ export default class carUIPage extends Component {
     }
   }
 
+//             <img className="moveable_koala1" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Leo.svg/360px-Leo.svg.png"/>
+            // <img className="moveable_koala2" src="../../App_icon_4.svg"/>
 
   render() {
     return (
@@ -84,8 +86,6 @@ export default class carUIPage extends Component {
         <div></div>
             <CarUIMoveable id = "carUIMoveable" ref = {this.moveableComponentReference} moveableTarget="target" />
             <button onClick = {console.log('hi')}>click </button>
-            <img className="moveable_koala1" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Leo.svg/360px-Leo.svg.png"/>
-            <img className="moveable_koala2" src="../../App_icon_4.svg"/>
             <img className="moveable_koala3" src="https://www.treehugger.com/thmb/pzsLSvqKfyLxIvqIogiWba54u3c=/768x0/filters:no_upscale():max_bytes(150000):strip_icc()/__opt__aboutcom__coeus__resources__content_migration__mnn__images__2019__05__koala-0f87652acc244db2ba7d2e231c868f16.jpg"/>
             <img className="moveable_koala4" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Cutest_Koala.jpg/1117px-Cutest_Koala.jpg"/>
 

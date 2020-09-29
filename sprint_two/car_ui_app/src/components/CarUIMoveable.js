@@ -7,6 +7,9 @@ export default class CarUIMoveable extends Component { //<h1>{moveableTarget}</h
     super(props);
     this.resetState = this.resetState.bind(this);
     this.resetStates = this.resetStates.bind(this);
+    this.frameFromStyle = this.frameFromStyle.bind(this);
+    this.extract = this.extract.bind(this);
+
     this.state = {
       target: null,
       frame: {
@@ -15,6 +18,7 @@ export default class CarUIMoveable extends Component { //<h1>{moveableTarget}</h
         scale: [1,1],
         transformOrigin: "50% 50%"
       }
+
     }
   }
 
@@ -30,15 +34,74 @@ export default class CarUIMoveable extends Component { //<h1>{moveableTarget}</h
     });
   }
   resetStates(tempTarget) {
+    console.log('Old frame: ');
+    console.log(this.state.frame);
     this.setState({
       target: document.querySelector("." + tempTarget + ""),
-      frame: {
-        translate: this.state.frame.translate,
-        scale: this.state.frame.scale,
-        rotate: this.state.frame.rotate,
-        transformOrigin: this.state.frame.transformOrigin
-      }
+      frame: this.frameFromStyle(tempTarget)
     });
+  }
+
+  extract(inputString, matchString) {
+    var output = {};
+    var variables = matchString.match(/\${.*?}/g)
+    var split = matchString.split(/\${.*?}/g)
+    for (var i = 0; i < variables.length; i++) {
+      variables[i] = variables[i].replace("${", "").replace("}", "")
+    }
+    console.log(inputString)
+
+    for (var i = 0; i < split.length; i++) {
+      console.log()
+      var beginIndex = inputString.indexOf(split[i])+split[i].length;
+      inputString = inputString.substring(beginIndex);
+      var endIndex = 0;
+      try {
+        endIndex = inputString.indexOf(split[i+1])
+      } catch
+      {
+        endIndex = inputString.length;
+      }
+      output[variables[i]] = inputString.substring(0, endIndex);
+    }
+    return output;
+  }
+
+  frameFromStyle(tempTarget) {
+    var frame = null;
+    try {
+      console.log('Trying')
+      var transformOrigin = document.querySelector("." + tempTarget + "").style.transformOrigin;
+      var transform = document.querySelector("." + tempTarget + "").style.transform;
+      if (transform == NaN || transform == ""){
+        throw 'Style.transform does not exist!'
+      }
+      console.log("What is transform?")
+      console.log(transform)
+
+      var transformValues = this.extract(transform, "translate(${translateX}px, ${translateY}px)"
+          +  " rotate(${rotate}deg)"+ " scale(${scaleX}, ${scaleY})")
+      console.log('Results of transform values');
+      console.log(transformValues)
+      frame = {
+        translate: [parseInt(transformValues["translateX"]), parseInt(transformValues["translateY"])],
+        scale: [parseFloat(transformValues["scaleX"]), parseFloat(transformValues["scaleY"])],
+        rotate: parseFloat(transformValues["rotate"]),
+        transformOrigin: transformOrigin
+      }
+      console.log('New frame: ')
+      console.log(frame)
+      // throw 'ee'
+    } catch(e) {
+      console.log(`Caught ${e}`)
+      frame = {
+        translate: [0,0],
+        scale: [1,1],
+        rotate: 0,
+        transformOrigin: "50% 50%"
+      }
+    }
+    return frame;
   }
 
   componentDidMount(){
