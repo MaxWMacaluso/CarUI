@@ -1,8 +1,28 @@
 const express = require('express')
+const fileUpload = require('express-fileupload');
 const app = express()
 const port = 3001
 
 const app_model = require('./car_app_model')
+
+//File Upload stuff
+app.use(fileUpload());
+//Upload Endpoint
+app.post('/upload', (req, res) => {
+  if (req.files == null) {
+    return res.status(400).json({msg: 'No file uploaded' });
+  }
+  const file = req.files.file;
+  file.mv(`${__dirname}/image_uploads/${file.name}`, err => {
+    if(err) {
+      console.log(err)
+      return res.status(500).send(err);
+    }
+
+    res.json({fileName: file.name, filePath: `/image_uploads/${file.name}`})
+  })
+})
+
 
 app.use(express.json())
 app.use(function (req, res, next) {

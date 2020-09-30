@@ -18,6 +18,7 @@
   "homepage": "https://github.com/MaxWMacaluso/Team-Matrix#readme",
   "dependencies": {
     "express": "^4.17.1",
+    "express-fileupload": "^1.2.0",
     "pg": "^8.3.3"
   }
 }

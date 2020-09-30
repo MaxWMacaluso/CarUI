@@ -38,6 +38,8 @@
 //Experiment-----------------------------
 
 import React, {useState, useEffect} from 'react';
+import FileUpload from './components/FileUpload';
+
 function App() {
   const [imgs, setImgs] = useState(false);
   useEffect(() => {
@@ -96,6 +98,8 @@ function App() {
       <button onClick={createImg}>Add image</button>
       <br />
       <button onClick={deleteImg}>Delete image</button>
+      <br/><br/><br/>
+      <FileUpload/>
     </div>
   );
 }
