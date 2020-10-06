@@ -45,6 +45,7 @@ function App() {
   useEffect(() => {
     getImg();
   }, []);
+
   function getImg() {
     fetch('http://localhost:3001')
       .then(response => {
@@ -56,17 +57,17 @@ function App() {
   }
 
   function createImg() {
-    let img_name = prompt('Enter image name');
-    let pos_x = prompt('Enter pos x');
-    let pos_y = prompt('Enter pos y');
-    let rotation = prompt('Enter rotation');
-    let scale = prompt('Enter scale');
-    fetch('http://localhost:3001/img_data', {
+    let img_id = prompt('Enter image id');
+    let img_source = prompt('Enter image source');
+    let img_transform = prompt('Enter image transform');
+    let img_transform_origin = prompt('Enter transform origin');
+    let profile_id = prompt('Enter profile id');
+    fetch('http://localhost:3001/image', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({img_name, pos_x, pos_y, rotation, scale}),
+      body: JSON.stringify({img_id, img_source, img_transform, img_transform_origin, profile_id}),
     })
       .then(response => {
         return response.text();
@@ -78,8 +79,8 @@ function App() {
   }
 
   function deleteImg() {
-    let img_name = prompt('Enter image name');
-    fetch('http://localhost:3001/img_data/${img_name}', {
+    let img_id = prompt('Enter image id');
+    fetch('http://localhost:3001/image/${img_id}', {
       method: 'DELETE',
     })
       .then(response => {
@@ -103,4 +104,5 @@ function App() {
     </div>
   );
 }
+
 export default App;

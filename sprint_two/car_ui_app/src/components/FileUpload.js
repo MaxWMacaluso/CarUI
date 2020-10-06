@@ -2,7 +2,7 @@
 //See tutorial at https://www.youtube.com/watch?v=b6Oe2puTdMQ&t=755s&ab_channel=TraversyMedia
 
 import React, {useState} from 'react';
-import axios from 'axios'
+import axios from '../../node_modules/axios'
 
 const FileUpload = () => {
   const [file, setFile] = useState('')

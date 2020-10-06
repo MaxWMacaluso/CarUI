@@ -43,7 +43,7 @@ app.get('/', (req, res) => {
   })
 })
 
-app.post('/img_data', (req, res) => {
+app.post('/image', (req, res) => {
   app_model.createImg(req.body)
   .then(response => {
     res.status(200).send(response);
@@ -53,7 +53,7 @@ app.post('/img_data', (req, res) => {
   })
 })
 
-app.delete('/img_data/:img_name', (req, res) => {
+app.delete('/image/:img_id', (req, res) => {
   app_model.deleteImg(req.params.id)
   .then(response => {
     res.status(200).send(response);
