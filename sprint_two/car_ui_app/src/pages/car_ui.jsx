@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom'
 import { Link, useLocation, BrowserRouter as Router } from "react-router-dom";
 import CarUIMoveable from '../components/CarUIMoveable'; //'./' is current folder
 import FileUpload from '../components/FileUpload';
-import { useParams } from "react-router";
+import { useParams, RouteComponentProps } from "react-router";
 
 // var value = "target"
 //
@@ -26,8 +26,22 @@ function CarUIPage () {
   const [end, setEnd] =  useState(null);
 
   const [imgs, setImgs] = useState(false);
+  const [localCopy, setLocalCopy] = useState(null);
   const location = useLocation();
-  let { profile_id } = useParams();
+
+  function getQueryParams() {
+    var temp = location.search;
+    temp = temp.split("?")[1]
+    temp = temp.split(/=|\&/g);
+    var queryParams = {};
+    for (var i = 0; i < temp.length; i +=2) {
+      queryParams[temp[i]] = temp[i+1]
+    }
+    return queryParams
+  }
+
+  const queryParams = getQueryParams();
+  console.log(queryParams)
   const [tick, setTick] = useState(false);
 
   useEffect(() => {
@@ -41,8 +55,8 @@ function CarUIPage () {
     console.log(location);
     // var profile_id = location.search.query.profile_id;
     // console.l
-    console.log(`http://localhost:3001/images-by-profile${location.search}`)
-        fetch(`http://localhost:3001/images-by-profile${location.search}`)
+    console.log(`http://localhost:3001/images-by-profile?profile_id=${queryParams.profile_id}`)
+        fetch(`http://localhost:3001/images-by-profile?profile_id=${queryParams.profile_id}`)
           .then(response => {
             return response.text();
           })
@@ -57,22 +71,62 @@ function CarUIPage () {
             data = JSON.parse(data)
             // data =[{"name":"test1"},{"name":"test2"}];
             console.log(typeof data);
-            setImgs(data.map((d) => <div><li key={d.img_source}>{d.img_source}</li><img/></div>));
+            setLocalCopy(data);
+            setImgs(data.map((d) => <div><li key={d.img_source}>{d.img_source}</li><img id = "placedImage" className={"moveable"+d.img_id} src = {d.img_source} style = {{transform: d.img_transform, transformOrigin: d.img_transform_origin}} /></div>));
 
             // setImgs(<div><div dangerouslySetInnerHTML={{__html: newImageLines}} ></div><h2>Here</h2></div>);
           });
   }
 
-  function FormatImages() {
-    if (!imgs) {
-      return <h1> Help </h1>
+  function save() {
+    if (localCopy == null) {
+      return;
     }
-    var newImageLines = ''
-    for (var row of imgs) {
-      newImageLines += `<img id = "placedImage" className="moveable_${row.img_id}" src = "${row.img_source}" style = ""/>`
+    for (var i = 0; i < localCopy.length; i++) {
+      localCopy[i].img_transform = document.querySelector(".moveable" + localCopy[i].img_id + "").style.transform;
+      localCopy[i].img_transform_origin = document.querySelector(".moveable" + localCopy[i].img_id + "").style.transformOrigin;
     }
-    return <div><div dangerouslySetInnerHTML={{__html: newImageLines}} ></div><h2>Here</h2></div>
-;
+    console.log(localCopy)
+    fetch('http://localhost:3000/update-image-transforms', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(localCopy)
+
+    })
+    .then(response => {
+            return response.text();
+    })
+    .then(data => {
+            alert(data);
+            getImg();
+    });
+  }
+
+  function addImage () {
+    let img_source = prompt('Enter image source');
+    let img_transform = `translate(0px, 0px)`+  ` rotate(0deg)`+ ` scale(1, 1)`
+    let img_transform_origin = "50% 50%";
+    let profile_id = queryParams.profile_id;
+    if (img_source != null) {
+    fetch('http://localhost:3001/image', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: {
+        images: JSON.stringify({img_source, img_transform, img_transform_origin, profile_id})
+      },
+    })
+    .then(response => {
+            return response.text();
+    })
+    .then(data => {
+            alert(data);
+            getImg();
+    });
+  }
   }
 
   function changeTarget(newTarget, delay = 0) {
@@ -105,12 +159,13 @@ function CarUIPage () {
 
     return (
         <div onMouseDown = {handleClick} onClick = {finishClick}>
+        <button onClick = {save}> save </button>
         <div id = "canvas"></div>
             <CarUIMoveable id = "carUIMoveable" ref = {moveableComponentReference} moveableTarget="target" />
             {imgs ? imgs : "No iamges here!"}
-            <button onClick = {console.log('hi')}>click </button>
-            <img id = "placedImage" className="moveable_koala3" src="https://www.treehugger.com/thmb/pzsLSvqKfyLxIvqIogiWba54u3c=/768x0/filters:no_upscale():max_bytes(150000):strip_icc()/__opt__aboutcom__coeus__resources__content_migration__mnn__images__2019__05__koala-0f87652acc244db2ba7d2e231c868f16.jpg"/>
-            <img id = "placedImage" className="moveable_koala4" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Cutest_Koala.jpg/1117px-Cutest_Koala.jpg"/>
+            <button onClick = {addImage}>click </button>
+            {/*<img id = "placedImage" className="moveable_koala3" src="https://www.treehugger.com/thmb/pzsLSvqKfyLxIvqIogiWba54u3c=/768x0/filters:no_upscale():max_bytes(150000):strip_icc()/__opt__aboutcom__coeus__resources__content_migration__mnn__images__2019__05__koala-0f87652acc244db2ba7d2e231c868f16.jpg"/>
+            <img id = "placedImage" className="moveable_koala4" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Cutest_Koala.jpg/1117px-Cutest_Koala.jpg"/>*/}
 
                   <br/><br/><br/>
                   <FileUpload/>

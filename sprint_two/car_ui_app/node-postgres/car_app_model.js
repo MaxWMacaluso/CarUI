@@ -33,12 +33,37 @@ const createImg = (body) => {
   return new Promise(function(resolve, reject) {
     const { img_source, img_transform, img_transform_origin, profile_id } = body
     console.log(body);
-    // pool.query('', [image_source], (error, results) => {
+    // pool.query("SELECT * FROM image;", (error, results) => {
+    // pool.query("ALTER TABLE image ALTER COLUMN img_transform TYPE varchar(500);", (error, results) => {
     pool.query('INSERT INTO image (img_source, img_transform, img_transform_origin, profile_id) VALUES ($1, $2, $3, $4) RETURNING *', [ img_source, img_transform, img_transform_origin, profile_id], (error, results) => {
       if (error) {
         reject(error)
       }
-      resolve('A new image has been added added: ${results.rows[0]}')
+      // console.log(results.rows);
+
+      resolve('A new image has been added added: ${results.rows}')
+    })
+  })
+}
+
+const updateImageTransforms = (body) => {
+  return new Promise(function(resolve, reject) {
+    var images = body
+    console.log(body);
+    var updateString = "";
+    for (var i = 0; i < images.length; i++) {
+      updateString += `UPDATE image SET img_transform = '${images[i].img_transform}', img_transform_origin = '${images[i].img_transform_origin}' WHERE img_id = ${images[i].img_id};`
+    }
+
+    console.log(updateString)
+
+    // pool.query("ALTER TABLE image ALTER COLUMN img_source TYPE varchar(1000);", (error, results) => {
+    pool.query(updateString, (error, results) => {
+      if (error) {
+        reject(error)
+      }
+
+      resolve('Updated! ${results.rows}')
     })
   })
 }
@@ -82,4 +107,5 @@ module.exports = {
   getImg,
   createImg,
   deleteImg,
+  updateImageTransforms
 }

@@ -93,6 +93,16 @@ app.post('/image', (req, res) => {
   })
 })
 
+app.post('/update-image-transforms', (req, res) => {
+  app_model.updateImageTransforms(req.body)
+  .then(response => {
+    res.status(200).send(response);
+  })
+  .catch(error => {
+    res.status(500).send(error);
+  })
+})
+
 app.delete('/image/:img_id', (req, res) => {
   app_model.deleteImg(req.params.id)
   .then(response => {
