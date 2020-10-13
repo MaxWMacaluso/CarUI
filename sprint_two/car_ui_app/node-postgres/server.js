@@ -84,6 +84,7 @@ app.get('/profile', (req, res) => {
 })
 
 app.post('/image', (req, res) => {
+  console.log(req);
   app_model.createImg(req.body)
   .then(response => {
     res.status(200).send(response);

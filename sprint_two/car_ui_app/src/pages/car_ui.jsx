@@ -109,15 +109,14 @@ function CarUIPage () {
     let img_transform = `translate(0px, 0px)`+  ` rotate(0deg)`+ ` scale(1, 1)`
     let img_transform_origin = "50% 50%";
     let profile_id = queryParams.profile_id;
+    console.log({img_source, img_transform, img_transform_origin, profile_id})
     if (img_source != null) {
-    fetch('http://localhost:3001/image', {
+    fetch('http://localhost:3000/image', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: {
-        images: JSON.stringify({img_source, img_transform, img_transform_origin, profile_id})
-      },
+      body: JSON.stringify({img_source, img_transform, img_transform_origin, profile_id})
     })
     .then(response => {
             return response.text();

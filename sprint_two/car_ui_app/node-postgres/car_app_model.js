@@ -32,12 +32,12 @@ const getImg = (body) => {
 const createImg = (body) => {
   return new Promise(function(resolve, reject) {
     const { img_source, img_transform, img_transform_origin, profile_id } = body
-    console.log(body);
     // pool.query("SELECT * FROM image;", (error, results) => {
     // pool.query("ALTER TABLE image ALTER COLUMN img_transform TYPE varchar(500);", (error, results) => {
     pool.query('INSERT INTO image (img_source, img_transform, img_transform_origin, profile_id) VALUES ($1, $2, $3, $4) RETURNING *', [ img_source, img_transform, img_transform_origin, profile_id], (error, results) => {
       if (error) {
         reject(error)
+        console.log(error);
       }
       // console.log(results.rows);
 
@@ -51,6 +51,8 @@ const updateImageTransforms = (body) => {
     var images = body
     console.log(body);
     var updateString = "";
+    // updateString +=     "ALTER TABLE image ALTER COLUMN img_transform TYPE varchar(500);"
+
     for (var i = 0; i < images.length; i++) {
       updateString += `UPDATE image SET img_transform = '${images[i].img_transform}', img_transform_origin = '${images[i].img_transform_origin}' WHERE img_id = ${images[i].img_id};`
     }
