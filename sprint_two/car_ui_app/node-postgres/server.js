@@ -13,18 +13,20 @@ app.post('/upload', (req, res) => {
     return res.status(400).json({msg: 'No file uploaded' });
   }
   const file = req.files.file;
-  file.mv(`${__dirname}/image_uploads/${file.name}`, err => {
+  file.mv(`${__dirname}/uploads/${file.name}`, err => {
     if(err) {
       console.log(err)
       return res.status(500).send(err);
     }
 
-    res.json({fileName: file.name, filePath: `/image_uploads/${file.name}`})
+    res.json({fileName: file.name, filePath: `/public/uploads/${file.name}`})
   })
 })
 
+var path = require('path');
 
 app.use(express.json())
+app.use(express.static('./public'));
 app.use(function (req, res, next) {
   //res.setHeader('Access-Control-Allow-Origin', '*'); //I added, allows all connections
   res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000'); //Maybe don't need
@@ -33,8 +35,46 @@ app.use(function (req, res, next) {
   next();
 });
 
-app.get('/', (req, res) => {
-  app_model.getImg()
+app.get('/images-by-profile', (req, res) => {
+  // console.log(req);
+  console.log("Request.profileId = ")
+  console.log(req.query.profile_id)
+  app_model.getImg({profile_id : req.query.profile_id})
+  .then(response => {
+    console.log('hi')
+    res.status(200).send(response);
+  })
+  .catch(error => {
+    res.status(500).send(error);
+  })
+})
+
+app.get('/image', (req, res) => {
+  // console.log(req);
+  console.log("Request.profileId = ")
+  console.log(req.query.profile_id)
+  app_model.getImg({profile_id : req.query.profile_id})
+  .then(response => {
+    console.log('hi')
+    res.status(200).send(response);
+  })
+  .catch(error => {
+    res.status(500).send(error);
+  })
+})
+
+app.post('/profile', (req, res) => {
+  app_model.createProfile(req.body)
+  .then(response => {
+    res.status(200).send(response);
+  })
+  .catch(error => {
+    res.status(500).send(error);
+  })
+})
+
+app.get('/profile', (req, res) => {
+  app_model.getProfile(req.body)
   .then(response => {
     res.status(200).send(response);
   })

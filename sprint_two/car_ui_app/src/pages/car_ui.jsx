@@ -1,8 +1,9 @@
 import React, {Component} from "react";
 import ReactDOM from 'react-dom'
 
-import { Link } from "react-router-dom";
+import { Link, useLocation, BrowserRouter as Router } from "react-router-dom";
 import CarUIMoveable from '../components/CarUIMoveable'; //'./' is current folder
+import FileUpload from '../components/FileUpload';
 
 // var value = "target"
 //
@@ -23,12 +24,26 @@ export default class carUIPage extends Component {
     this.changeTarget = this.changeTarget.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.finishClick = this.finishClick.bind(this);
+    // this.grabProfileImages = function () {
+    //       // let profile_id = (useLocation().search).get("profile_id")
+    //       console.log(`http://localhost:3001/images-by-profile?profile_id=${profile_id}`)
+    //       fetch(`http://localhost:3001/images-by-profile?profile_id=${profile_id}`)
+    //         .then(response => {
+    //           return response.text();
+    //         })
+    //         .then(data => {
+    //           console.log(data);
+    //         });
+    // }
+
+    this.images = this.grabProfileImages();
 
 
     this.moveableComponentReference = React.createRef();
     this.begin = null;
     this.end = null;
   }
+
 
 
 
@@ -83,22 +98,28 @@ export default class carUIPage extends Component {
   render() {
     return (
         <div onMouseDown = {this.handleClick} onClick = {this.finishClick}>
-        <div></div>
+        <div id = "canvas"></div>
             <CarUIMoveable id = "carUIMoveable" ref = {this.moveableComponentReference} moveableTarget="target" />
             <button onClick = {console.log('hi')}>click </button>
-            <img className="moveable_koala3" src="https://www.treehugger.com/thmb/pzsLSvqKfyLxIvqIogiWba54u3c=/768x0/filters:no_upscale():max_bytes(150000):strip_icc()/__opt__aboutcom__coeus__resources__content_migration__mnn__images__2019__05__koala-0f87652acc244db2ba7d2e231c868f16.jpg"/>
-            <img className="moveable_koala4" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Cutest_Koala.jpg/1117px-Cutest_Koala.jpg"/>
+            <img id = "placedImage" className="moveable_koala3" src="https://www.treehugger.com/thmb/pzsLSvqKfyLxIvqIogiWba54u3c=/768x0/filters:no_upscale():max_bytes(150000):strip_icc()/__opt__aboutcom__coeus__resources__content_migration__mnn__images__2019__05__koala-0f87652acc244db2ba7d2e231c868f16.jpg"/>
+            <img id = "placedImage" className="moveable_koala4" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Cutest_Koala.jpg/1117px-Cutest_Koala.jpg"/>
 
-            <Link to="/upload_img">Upload Image</Link>
-            <Link to="/edit_img">Edit Existing Image</Link>
-            <h2>Edit Existing Image</h2>
-            <ul>
-                <li>Size, position, rotation</li>
-                <li>Delete</li>
-                <li>Replace</li>
-            </ul>
+                  <br/><br/><br/>
+                  <FileUpload/>
+
+
+
             <Link to="/">Back to Profile Page</Link>
         </div>
     );
 };
 }
+//
+// <Link to="/upload_img">Upload Image</Link>
+// <Link to="/edit_img">Edit Existing Image</Link>
+// <h2>Edit Existing Image</h2>
+// <ul>
+//     <li>Size, position, rotation</li>
+//     <li>Delete</li>
+//     <li>Replace</li>
+// </ul>

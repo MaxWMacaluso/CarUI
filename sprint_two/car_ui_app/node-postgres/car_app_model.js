@@ -12,26 +12,57 @@ const pool = new Pool({
   }
 });
 
-const getImg = () => {
+const getImg = (body) => {
   return new Promise(function(resolve, reject) {
-    pool.query('SELECT * FROM image', (error, results) => {
+    var { profile_id } = body
+    if (profile_id === 'null' ) {
+      profile_id = '1 OR 1 = 1'
+    }
+    pool.query(`SELECT * FROM image WHERE profile_id = ${profile_id}`, (error, results) => {
       if (error) {
         reject(error)
       }
       //console.log(results)
       resolve(results.rows);
+      console.log(results.rows);
     })
-  }) 
+  })
 }
 
 const createImg = (body) => {
   return new Promise(function(resolve, reject) {
-    const { img_id, img_source, img_transform, img_transform_origin, profile_id } = body
-    pool.query('INSERT INTO image (img_id, img_source, img_transform, img_transform_origin, profile_id) VALUES ($1, $2, $3, $4, $5) RETURNING *', [img_id, img_source, img_transform, img_transform_origin, profile_id], (error, results) => {
+    const { img_source, img_transform, img_transform_origin, profile_id } = body
+    console.log(body);
+    // pool.query('', [image_source], (error, results) => {
+    pool.query('INSERT INTO image (img_source, img_transform, img_transform_origin, profile_id) VALUES ($1, $2, $3, $4) RETURNING *', [ img_source, img_transform, img_transform_origin, profile_id], (error, results) => {
       if (error) {
         reject(error)
       }
       resolve('A new image has been added added: ${results.rows[0]}')
+    })
+  })
+}
+
+const createProfile = (body) => {
+  return new Promise(function(resolve, reject) {
+    const { profile_id, profile_name, profile_last_updated , profile_password_hashed } = body
+    pool.query('INSERT INTO profile (profile_name, profile_last_updated , profile_password_hashed ) VALUES ($1, $2, $3) RETURNING *', [ profile_name, profile_last_updated , profile_password_hashed], (error, results) => {
+      if (error) {
+        reject(error)
+      }
+      resolve('A new image has been added added: ${results.rows[0]}')
+    })
+  })
+}
+
+const getProfile = (body) => {
+  return new Promise(function(resolve, reject) {
+    pool.query(`SELECT TOP 1 * FROM Profile WHERE profile_name = '${body.profile_name}'`, (error, results) => {
+      if (error) {
+        reject(error)
+      }
+      //console.log(results)
+      resolve(results.rows);
     })
   })
 }

@@ -14,3 +14,16 @@ a {
   color: #333;
   text-decoration: none;
 }
+
+#placedImage {
+  position: absolute;
+  top: 30px;
+  left: 30px;
+}
+
+#canvas {
+  height: 1080px;
+  width: 1080px;
+  background-image : url('localhost:3001/image_uploads/tesla_model_3_int.png')
+  /*  */
+}
