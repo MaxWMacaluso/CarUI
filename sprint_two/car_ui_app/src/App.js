@@ -8,7 +8,7 @@ import {BrowserRouter as Router, Route, Switch, Link, Redirect} from "react-rout
 //Pages
 import profilesPage from './pages/profiles' //Done
 import createProfilesPage from './pages/create_profile' //Done
-import carUIPage from './pages/car_ui'
+import CarUIPage from './pages/car_ui'
 import uploadImgPage from './pages/upload_img'
 import editImgPage from './pages/edit_img'
 
@@ -21,7 +21,7 @@ function App() {
       <Switch>
         <Route exact path="/" component={profilesPage}/>
         <Route exact path="/create_profile" component={createProfilesPage}/>
-        <Route exact path="/car_ui" component={carUIPage}/>
+        <Route exact path="/car_ui" component={CarUIPage}/>
         <Route exact path="/upload_img" component={uploadImgPage}/>
         <Route exact path="/edit_img" component={editImgPage}/>
 
