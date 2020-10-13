@@ -1,48 +1,36 @@
-import React, {Component} from 'react';
+import React, {useState, useEffect} from 'react';
 import Moveable from "react-moveable";
 
 
-export default class CarUIMoveable extends Component { //<h1>{moveableTarget}</h1>;
-  constructor(props){
-    super(props);
-    this.resetState = this.resetState.bind(this);
-    this.resetStates = this.resetStates.bind(this);
-    this.frameFromStyle = this.frameFromStyle.bind(this);
-    this.extract = this.extract.bind(this);
-
-    this.state = {
-      target: null,
-      frame: {
-        translate: [0,0],
-        rotate: 0,
-        scale: [1,1],
-        transformOrigin: "50% 50%"
-      }
-
-    }
-  }
-
-  resetState() {
-    this.setState({
-      target: document.querySelector("." + this.props.moveableTarget + ""),
-      frame: {
-        translate: [0,0],
-        scale: [1,1],
-        rotate: 0,
-        transformOrigin: "50% 50%"
-      }
+function CarUIMoveable ({moveableTarget}) { //<h1>{moveableTarget}</h1>;
+    const [target, setTarget] = useState(document.querySelector("." + moveableTarget + ""));
+    const [frame, setFrame] = useState({
+      translate: [0,0],
+      rotate: 0,
+      scale: [1,1],
+      transformOrigin: "50% 50%"
     });
+
+
+  function resetState() {
+    setTarget(document.querySelector("." + moveableTarget + ""));
+    setFrame({
+        translate: [0,0],
+        scale: [1,1],
+        rotate: 0,
+        transformOrigin: "50% 50%"
+      });
+
   }
-  resetStates(tempTarget) {
+
+  function resetStates(tempTarget) {
     console.log('Old frame: ');
-    console.log(this.state.frame);
-    this.setState({
-      target: document.querySelector("." + tempTarget + ""),
-      frame: this.frameFromStyle(tempTarget)
-    });
+    console.log(frame);
+    setTarget(document.querySelector("." + tempTarget + ""))
+    setFrame(frameFromStyle(tempTarget));
   }
 
-  extract(inputString, matchString) {
+  function extract(inputString, matchString) {
     var output = {};
     var variables = matchString.match(/\${.*?}/g)
     var split = matchString.split(/\${.*?}/g)
@@ -67,7 +55,7 @@ export default class CarUIMoveable extends Component { //<h1>{moveableTarget}</h
     return output;
   }
 
-  frameFromStyle(tempTarget) {
+  function frameFromStyle(tempTarget) {
     var frame = null;
     try {
       console.log('Trying')
@@ -104,21 +92,20 @@ export default class CarUIMoveable extends Component { //<h1>{moveableTarget}</h
     return frame;
   }
 
-  componentDidMount(){
-    this.resetState();
-  }
+  useEffect(() => {
+    setTarget(document.querySelector("." + moveableTarget + ""));
+    
+    // resetState();
+  });
 
-  componentDidUpdate(prevProps){
-    // this.target = document.querySelector(".jim")
-    console.log("updating!")
-  }
 
-  render() {
+
+
     // put 1 below:  <div className="target">Target</div>
 
-    return <div className="container">
+    return (<div className="container">
         <Moveable
-            target={this.state.target}
+            target={target}
 
             //Scaleable
             scalable={true}
@@ -139,50 +126,51 @@ export default class CarUIMoveable extends Component { //<h1>{moveableTarget}</h
             throttleRotate={0}
             rotationPosition={"top"}
             onScaleStart={({ set, dragStart }) => {
-                set(this.state.frame.scale);
-                dragStart && dragStart.set(this.state.frame.translate);
+                set(frame.scale);
+                dragStart && dragStart.set(frame.translate);
             }}
             onScale={({ target, scale, drag }) => {
                 const beforeTranslate = drag.beforeTranslate;
 
-                this.state.frame.translate = beforeTranslate;
-                this.state.frame.scale = scale;
-                this.state.target.style.transform
+                frame.translate = beforeTranslate;
+                frame.scale = scale;
+                target.style.transform
                     = `translate(${beforeTranslate[0]}px, ${beforeTranslate[1]}px)`
                     + ` scale(${scale[0]}, ${scale[1]})`;
             }}
             onScaleEnd={({ lastEvent }) => {
                 if (lastEvent) {
-                    this.state.frame.translate = lastEvent.drag.beforeTranslate;
-                    this.state.frame.scale = lastEvent.scale;
+                    frame.translate = lastEvent.drag.beforeTranslate;
+                    frame.scale = lastEvent.scale;
                 }
             }}
             onDragOriginStart={({ dragStart }) => {
-                dragStart && dragStart.set(this.state.frame.translate);
+                dragStart && dragStart.set(frame.translate);
             }}
             onDragOrigin={({ target, drag, transformOrigin }) => {
-                this.state.frame.translate = drag.beforeTranslate;
-                this.state.frame.transformOrigin = transformOrigin;
+                frame.translate = drag.beforeTranslate;
+                frame.transformOrigin = transformOrigin;
             }}
             onDragStart={({ set }) => {
-                set(this.state.frame.translate);
+                set(frame.translate);
             }}
             onDrag={({ target, beforeTranslate }) => {
-                this.state.frame.translate = beforeTranslate;
+                frame.translate = beforeTranslate;
             }}
             onRotateStart={({ set }) => {
-                set(this.state.frame.rotate);
+                set(frame.rotate);
             }}
             onRotate={({ beforeRotate }) => {
-                this.state.frame.rotate = beforeRotate;
+                frame.rotate = beforeRotate;
             }}
             onRender={({ target }) => {
-                const { translate, rotate, scale, transformOrigin } = this.state.frame;
-                this.state.target.style.transformOrigin = transformOrigin;
-                this.state.target.style.transform = `translate(${translate[0]}px, ${translate[1]}px)`
+                const { translate, rotate, scale, transformOrigin } = frame;
+                target.style.transformOrigin = transformOrigin;
+                target.style.transform = `translate(${translate[0]}px, ${translate[1]}px)`
                     +  ` rotate(${rotate}deg)`+ ` scale(${scale[0]}, ${scale[1]})`;;
             }}
         />
-    </div>;
+    </div>);
 }
-}
+
+export default CarUIMoveable;
