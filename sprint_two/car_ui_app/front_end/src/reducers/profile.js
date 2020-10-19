@@ -1,5 +1,6 @@
 import { UPDATE_PROFILE } from '../utils/constants';
 
+//POSSIBLE ERROR
 const profileReducer = (state = {}, action) => {
   switch (action.type) 
   {
