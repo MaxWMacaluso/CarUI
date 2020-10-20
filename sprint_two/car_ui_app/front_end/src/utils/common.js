@@ -5,6 +5,7 @@ import { initiateGetProfile } from '../actions/profile';
 import { signIn } from '../actions/auth';
 import { history } from '../router/appRouter';
 
+//Returns a bool
 export const validateFields = (fieldsToValidate) => {
   return fieldsToValidate.every((field) => Object.values(field)[0] !== '');
 };

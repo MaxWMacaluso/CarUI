@@ -87,7 +87,7 @@ function CarUIPage () {
       localCopy[i].img_transform_origin = document.querySelector(".moveable" + localCopy[i].img_id + "").style.transformOrigin;
     }
     console.log(localCopy)
-    fetch('http://localhost:3000/update-image-transforms', {
+    fetch('http://localhost:3001/update-image-transforms', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -111,7 +111,7 @@ function CarUIPage () {
     let profile_id = queryParams.profile_id;
     console.log({img_source, img_transform, img_transform_origin, profile_id})
     if (img_source != null) {
-    fetch('http://localhost:3000/image', {
+    fetch('http://localhost:3001/image', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

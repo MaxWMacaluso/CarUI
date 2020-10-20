@@ -2,9 +2,9 @@
 
 CREATE TABLE profile(
     profile_id BIGSERIAL PRIMARY KEY NOT NULL,
-    profile_name VARCHAR(50) NOT NULL,
-    profile_last_updated VARCHAR(50),
-    profile_password_hashed VARCHAR(50) NOT NULL,
+    profile_name VARCHAR(150) NOT NULL,
+    profile_last_updated VARCHAR(150),
+    profile_password_hashed VARCHAR(150) NOT NULL,
     unique(profile_name)
 );
 

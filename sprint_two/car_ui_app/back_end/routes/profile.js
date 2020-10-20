@@ -1,4 +1,3 @@
-
 const express = require('express');
 const authMiddleware = require('../middleware/auth');
 const { pool } = require('../db/connect');
@@ -16,16 +15,16 @@ Router.post('/profile', authMiddleware, async (req, res) => {
     
     if (isInvalidFieldProvided) 
     {
-      return res.status(400).send({update_error: 'Invalid field.'});
+      return res.status(400).send({update_error: 'Invalid field'});
     }
     
-    const result = await pool.query('UPDATE profile SET profile_name=$1 where profile_id=$2 RETURNING profile_id,profile_name', [profile_name, req.user.profile_id]);
+    const result = await pool.query('UPDATE profile SET profile_name=$1 WHERE profile_id=$2 RETURNING profile_id,profile_name', [profile_name, req.user.profile_id]);
     
     res.send(result.rows[0]);
   } 
   catch (error) 
   {
-    res.status(400).send({update_error: 'Error while updating profile..Try again later.'});
+    res.status(400).send({update_error: 'Error while updating profile.. Try again later'});
   }
 });
 
@@ -36,7 +35,7 @@ Router.get('/profile', authMiddleware, async (req, res) => {
   } 
   catch (error) 
   {
-    res.status(400).send({update_error: 'Error while getting profile data..Try again later.'});
+    res.status(400).send({update_error: 'Error while getting profile data.. Try again later'});
   }
 });
 

@@ -9,6 +9,7 @@ import { resetErrors } from '../actions/errors';
 import { validateFields } from '../utils/common';
 import { Link } from 'react-router-dom';
 
+//Eveyrthing below are methods to Login class
 class Login extends React.Component {
     state = {
         profile_name: '',
@@ -32,12 +33,12 @@ componentWillUnmount()
 handleLogin = (event) => {
     event.preventDefault();
     const {profile_name, password} = this.state;
-    const fieldsToValidate = [{ profile_name }, { password }];
+    const fieldsToValidate = [{profile_name}, {password}];
     const allFieldsEntered = validateFields(fieldsToValidate);
     
     if (!allFieldsEntered) 
     {
-      this.setState({error_msg: { signin_error: 'Please enter all the fields.' }});
+      this.setState({error_msg: { signin_error: 'Please enter all the fields'}});
     } 
     //Login successful
     else 
@@ -48,24 +49,18 @@ handleLogin = (event) => {
 };
 
 handleInputChange = (event) => {
-    const { profile_name, value } = event.target;
-    this.setState({
-        [profile_name]: value
-    });
+  const {name, value} = event.target;
+  this.setState({[name]: value});
 };
 
 render() {
-    const { error_msg } = this.state;
+    const {error_msg} = this.state;
     return (
       <div className="login-page">
         <h1>Login or Create Create an Account!</h1>
         <div className="login-form">
           <Form onSubmit={this.handleLogin}>
-            {error_msg && error_msg.signin_error && (
-              <p className="error_msg centered-message">
-                {error_msg.signin_error}
-              </p>
-            )}
+            {error_msg && error_msg.signin_error && (<p className="error_msg centered-message">{error_msg.signin_error}</p>)}
             <Form.Group controlId="profile_name">
               <Form.Label>Profile Name</Form.Label>
               <Form.Control

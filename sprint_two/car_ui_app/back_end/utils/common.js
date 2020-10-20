@@ -9,14 +9,14 @@ const isInvalidField = (receivedFields, validFieldsToUpdate) => {
 
 //async await syntax instead of promises syntax
 const validateUser = async (profile_name, password) => {
-  const result = await pool.query('SELECT profile_id,  profile_name, password FROM profile WHERE profile_name = $1', [profile_name]);
-  const user = result.rows[0];
+  const result = await pool.query('SELECT profile_id, profile_name, profile_password_hashed FROM profile WHERE profile_name = $1', [profile_name]);
+  const user = result.rows[0]; //ASK ABOUT THIS LINE
   if (user) 
   {
-    const isMatch = await bcrypt.compare(password, user.password);
+    const isMatch = await bcrypt.compare(password, user.profile_password_hashed);
     if (isMatch) 
     {
-      delete user.password;
+      delete user.profile_password_hashed;
       return user;
     } 
     //Password doesn't match

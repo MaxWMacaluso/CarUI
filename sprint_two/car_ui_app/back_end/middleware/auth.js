@@ -7,7 +7,7 @@ const authMiddleware = async function (req, res, next)
   {
     const token = req.header('Authorization').split(' ')[1];
     const decoded = jwt.verify(token, process.env.secret);
-    const result = await pool.query('SELECT p.profile_id,p.profile_name,t.access_token from profile p inner join tokens t on b.profile_id=t.profile_id WHERE t.access_token=$1 and t.profile_id=$2',[token, decoded.profile_id]);
+    const result = await pool.query('SELECT p.profile_id,p.profile_name,t.access_token from profile p inner join tokens t on b.profile_id=t.profile_id WHERE t.access_token=$1 AND t.profile_id=$2',[token, decoded.profile_id]);
     const user = result.rows[0];
     if (user) 
     {
@@ -17,7 +17,7 @@ const authMiddleware = async function (req, res, next)
     } 
     else 
     {
-      throw new Error('Error while authentication');
+      throw new Error('Error with authentication');
     }
   } 
   catch (error) 

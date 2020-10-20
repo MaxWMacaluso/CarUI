@@ -77,15 +77,7 @@ class Register extends React.Component {
             <h2>Register User</h2>
             <div className="login-form">
             <Form onSubmit={this.registerUser}>
-                {error_msg && error_msg.signup_error ? (
-                <p className="error_msg centered-message">
-                    {error_msg.signup_error}
-                </p>
-                ) : (
-                is_submitted && (
-                    <p className="success_msg centered-message">{success_msg}</p>
-                )
-                )}
+                {error_msg && error_msg.signup_error ? (<p className="error_msg centered-message">{error_msg.signup_error}</p>) : (is_submitted && (<p className="success_msg centered-message">{success_msg}</p>))}
                 <Form.Group controlId="profile_name">
                 <Form.Label>Profile name</Form.Label>
                 <Form.Control

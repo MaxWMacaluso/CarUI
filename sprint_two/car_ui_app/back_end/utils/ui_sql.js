@@ -1,3 +1,5 @@
+const {pool} = require('../db/connect');
+
 const getImg = (body) => {
     return new Promise(function(resolve, reject) {
       var { profile_id } = body

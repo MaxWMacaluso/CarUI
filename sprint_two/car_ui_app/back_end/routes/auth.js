@@ -10,7 +10,7 @@ const Router = express.Router();
 Router.post('/signup', async (req, res) => {
   try 
   {
-    const {profile_name, password } = req.body;
+    const {profile_name, password} = req.body;
     const validFieldsToUpdate = ['profile_name', 'password'];
     const receivedFields = Object.keys(req.body);
 
@@ -18,7 +18,7 @@ Router.post('/signup', async (req, res) => {
 
     if (isInvalidFieldProvided) 
     {
-        return res.status(400).send({signup_error: 'Invalid field.'});
+        return res.status(400).send({signup_error: 'Invalid field'});
     }
     
     //Ensuring no duplicate profiles are created
@@ -26,16 +26,16 @@ Router.post('/signup', async (req, res) => {
     const count = result.rows[0].count;
     if (count > 0) 
     {
-      return res.status(400).send({signup_error: 'User with this profile_name already exists.'});
+      return res.status(400).send({signup_error: 'User with this profile name already exists'});
     }
 
     const hashedPassword = await bcrypt.hash(password, 8);
-    await pool.query('INSERT INTO profile(profile_name, password) values($1,$2)', [profile_name, hashedPassword]);
+    await pool.query('INSERT INTO profile(profile_name, profile_password_hashed) values($1,$2)', [profile_name, hashedPassword]);
     res.status(201).send();
   } 
   catch (error) 
   {
-    res.status(400).send({signup_error: 'Error while signing up..Try again later.'});
+    res.status(400).send({signup_error: 'Error while signing up.. Try again later'});
   }
 });
 
@@ -48,9 +48,9 @@ Router.post('/signin', async (req, res) => {
     
     if (!user) 
     {
-      res.status(400).send({sigin_error: 'Profile Name and password dont match'});
+      res.status(400).send({sigin_error: 'Profile name and password do not match'});
     }
-
+    
     const token = await generateAuthToken(user);
     const result = await pool.query('INSERT INTO tokens(access_token, profile_id) values($1,$2) returning *', [token, user.profile_id]);
 
@@ -73,7 +73,7 @@ Router.post('/logout', authMiddleware, async (req, res) => {
   try 
   {
     const {profile_id, access_token} = req.user;
-    await pool.query('DELETE FROM tokens where profile_id=$1 and access_token=$2', [profile_id, access_token]);
+    await pool.query('DELETE FROM tokens WHERE profile_id=$1 AND access_token=$2', [profile_id, access_token]);
     res.send();
   } 
   catch (error) 
