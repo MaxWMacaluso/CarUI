@@ -42,14 +42,15 @@ Router.use(function (req, res, next) {
 
 Router.get('/images-by-profile', (req, res) => {
   // console.log(req);
-  console.log("Request.profileId = ")
-  console.log(req.query.profile_id)
-  ui_sql.getImg({profile_id : req.query.profile_id})
+  console.log("Request.access token = ")
+  console.log(req.query.access_token)
+  ui_sql.getImg({access_token : req.query.access_token})
   .then(response => {
     console.log('hi')
     res.status(200).send(response);
   })
   .catch(error => {
+    console.log(error);
     res.status(500).send(error);
   })
 })

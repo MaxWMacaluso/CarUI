@@ -17,18 +17,25 @@ import editImgPage from '../pages/edit_img'
 import notFoundPage from '../pages/404'; //Done
 import Header from '../components/Header';
 import Profile from '../components/Profile';
+import Login from '../components/Login';
 import Logout from '../components/Logout';
 
 export const history = createBrowserHistory();
 
 const AppRouter = ({ auth }) => {
+  const user_token = localStorage.getItem('user_token');;
+  // if (_.isEmpty(auth.token) && !_.isEmpty(localStorage.getItem('user_token'))) {
+  //   auth.token = localStorage.getItem('user_token');
+  // }
+  // {!_.isEmpty(user_token) && <Header />}
   return (
     <Router history={history}>
       <div>
-        {!_.isEmpty(auth.token) && <Header />}
+      {!_.isEmpty(auth.token) && <Header />}
+
         <div className="container">
         <Switch>
-            <Route exact path="/" component={profilesPage}/>
+            <Route exact path="/" component={Login}/>
             <Route path="/register_user" component={createProfilePage}/>
             <Route path="/profile" component={Profile} />
             <Route path="/logout" component={Logout} />
@@ -46,9 +53,14 @@ const AppRouter = ({ auth }) => {
   );
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state) => {
+  if (_.isEmpty(state.auth.token) && !_.isEmpty(localStorage.getItem('user_token'))) {
+    state.auth.token = localStorage.getItem('user_token');
+  }
+  return ({
   auth: state.auth
 });
+}
 
 export default connect(mapStateToProps)(AppRouter);
 

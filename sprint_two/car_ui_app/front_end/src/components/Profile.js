@@ -5,6 +5,8 @@ import { Form, Button } from 'react-bootstrap';
 import { initiateUpdateProfile } from '../actions/profile';
 import { validateFields } from '../utils/common';
 import { resetErrors } from '../actions/errors';
+import { initiateGetProfile } from '../actions/profile';
+
 
 class Profile extends React.Component {
   state = {
@@ -13,30 +15,35 @@ class Profile extends React.Component {
     is_submitted: false
   };
 
-  componentDidMount() 
+  componentDidMount()
   {
     const { profile } = this.props;
-    if (!_.isEmpty(profile)) 
+
+    if (_.isEmpty(profile)) {
+      this.props.dispatch(initiateGetProfile());
+    }
+
+    if (!_.isEmpty(profile))
     {
       const {profile_name} = profile;
-      this.setState({profile_name,});
+      this.setState({profile_name});
     }
   }
 
-  componentDidUpdate(prevProps) 
+  componentDidUpdate(prevProps)
   {
-    if (!_.isEqual(prevProps.errors, this.props.errors)) 
+    if (!_.isEqual(prevProps.errors, this.props.errors))
     {
       this.setState({error_msg: this.props.errors});
     }
-    if (!_.isEqual(prevProps.profile, this.props.profile)) 
+    if (!_.isEqual(prevProps.profile, this.props.profile))
     {
       const { profile_name} = this.props.profile;
       this.setState({ profile_name});
     }
   }
 
-  componentWillUnmount() 
+  componentWillUnmount()
   {
     this.props.dispatch(resetErrors());
   }
@@ -49,11 +56,11 @@ class Profile extends React.Component {
     const fieldsToValidate = [{ profile_name }];
 
     const allFieldsEntered = validateFields(fieldsToValidate);
-    if (!allFieldsEntered) 
+    if (!allFieldsEntered)
     {
       this.setState({error_msg: { update_error: 'Please enter all the fields.'}});
-    } 
-    else 
+    }
+    else
     {
       this.setState({ is_submitted: true, error_msg: '' });
       this.props.dispatch(initiateUpdateProfile(profileData));
@@ -94,6 +101,8 @@ class Profile extends React.Component {
             Submit
           </Button>
         </Form>
+        <h1>You are currently logged in! Click <a href = "/logout">here</a> to log out and <a href = "/car_ui">here</a> to go to the car_ui page</h1>
+
       </div>
     );
   }

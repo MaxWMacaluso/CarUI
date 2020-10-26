@@ -40,9 +40,16 @@ function CarUIPage () {
     return queryParams
   }
 
-  const queryParams = getQueryParams();
+  var queryParams = null;
+  try {
+    queryParams = getQueryParams();
+  }catch (e) {
+
+  }
   console.log(queryParams)
   const [tick, setTick] = useState(false);
+  const user_token = localStorage.getItem('user_token');
+
 
   useEffect(() => {
     if (tick == 0) {
@@ -55,8 +62,8 @@ function CarUIPage () {
     console.log(location);
     // var profile_id = location.search.query.profile_id;
     // console.l
-    console.log(`http://localhost:3001/images-by-profile?profile_id=${queryParams.profile_id}`)
-        fetch(`http://localhost:3001/images-by-profile?profile_id=${queryParams.profile_id}`)
+    console.log(`http://localhost:3001/images-by-profile?access_token=${user_token}`)
+        fetch(`http://localhost:3001/images-by-profile?access_token=${user_token}`)
           .then(response => {
             return response.text();
           })
@@ -108,15 +115,15 @@ function CarUIPage () {
     let img_source = prompt('Enter image source');
     let img_transform = `translate(0px, 0px)`+  ` rotate(0deg)`+ ` scale(1, 1)`
     let img_transform_origin = "50% 50%";
-    let profile_id = queryParams.profile_id;
-    console.log({img_source, img_transform, img_transform_origin, profile_id})
+    // let profile_id = queryParams.profile_id;
+    console.log({img_source, img_transform, img_transform_origin, user_token})
     if (img_source != null) {
     fetch('http://localhost:3001/image', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({img_source, img_transform, img_transform_origin, profile_id})
+      body: JSON.stringify({img_source, img_transform, img_transform_origin, user_token})
     })
     .then(response => {
             return response.text();

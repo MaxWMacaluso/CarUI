@@ -17,15 +17,15 @@ class Login extends React.Component {
         error_msg: ''
 };
 
-componentDidUpdate(prevProps) 
+componentDidUpdate(prevProps)
 {
-  if (!_.isEqual(prevProps.errors, this.props.errors)) 
+  if (!_.isEqual(prevProps.errors, this.props.errors))
   {
     this.setState({ error_msg: this.props.errors });
   }
 }
 
-componentWillUnmount() 
+componentWillUnmount()
 {
   this.props.dispatch(resetErrors());
 }
@@ -35,15 +35,15 @@ handleLogin = (event) => {
     const {profile_name, password} = this.state;
     const fieldsToValidate = [{profile_name}, {password}];
     const allFieldsEntered = validateFields(fieldsToValidate);
-    
-    if (!allFieldsEntered) 
+
+    if (!allFieldsEntered)
     {
       this.setState({error_msg: { signin_error: 'Please enter all the fields'}});
-    } 
+    }
     //Login successful
-    else 
+    else
     {
-      this.setState({ error_msg: { signin_error: '' }}); 
+      this.setState({ error_msg: { signin_error: '' }});
       this.props.dispatch(initiateLogin(profile_name, password));
     }
 };

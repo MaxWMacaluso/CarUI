@@ -13,7 +13,7 @@ export const signOut = () => ({type: SIGN_OUT});
 //POSSIBLE ERROR
 export const initiateLogin = (profile_name, password) => {
   return async (dispatch) => {
-    try 
+    try
     {
       const result = await axios.post(`${BASE_API_URL}/signin`, {profile_name, password});
       const user = result.data;
@@ -21,8 +21,8 @@ export const initiateLogin = (profile_name, password) => {
       dispatch(signIn(user));
       dispatch(initiateGetProfile(user.profile_name));
       history.push('/profile');
-    } 
-    catch (error) 
+    }
+    catch (error)
     {
       console.log('Error ', error);
       error.response && dispatch(getErrors(error.response.data));
@@ -32,15 +32,25 @@ export const initiateLogin = (profile_name, password) => {
 
 export const initiateLogout = () => {
   return async (dispatch) => {
-    try 
+    try
     {
       setAuthHeader();
-      await post(`${BASE_API_URL}/logout`, true, true);
+      await post(`${BASE_API_URL}/logout`, true, true)
+      // Begin Peter edit
+      // await post(`${BASE_API_URL}/logout2`, {
+      //   method: 'POST',
+      //   headers: {
+      //     'Content-Type': 'application/json'
+      //   },
+      //   body: {access_token: localStorage.getItem('user_token')}
+      //
+      // })
+      // End Peter edit
       removeAuthHeader();
       localStorage.removeItem('user_token');
       return dispatch(signOut());
-    } 
-    catch (error) 
+    }
+    catch (error)
     {
       error.response && dispatch(getErrors(error.response.data));
     }
@@ -51,12 +61,12 @@ export const initiateLogout = () => {
 //Sends back object '{success: true}  as a result of API call
 export const registerNewUser = (data) => {
   return async (dispatch) => {
-    try 
+    try
     {
       await axios.post(`${BASE_API_URL}/signup`, data);
       return { success: true };
-    } 
-    catch (error) 
+    }
+    catch (error)
     {
       console.log('Error ', error);
       error.response && dispatch(getErrors(error.response.data));

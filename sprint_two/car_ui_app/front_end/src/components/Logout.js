@@ -2,15 +2,18 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { initiateLogout } from '../actions/auth';
 
-class Logout extends React.Component 
+class Logout extends React.Component
 {
-  componentDidMount() 
+  async componentDidMount()
   {
     const { history, dispatch } = this.props;
-    dispatch(initiateLogout()).then(() => history.push('/'));
+    dispatch(initiateLogout())
+    await initiateLogout()
+    history.push('/')
+    // dispatch(initiateLogout()).then(() => history.push('/'));
   }
 
-  render() 
+  render()
   {
     return null;
   }
