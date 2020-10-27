@@ -20,7 +20,7 @@ export const initiateLogin = (profile_name, password) => {
       localStorage.setItem('user_token', user.token);
       dispatch(signIn(user));
       dispatch(initiateGetProfile(user.profile_name));
-      history.push('/profile');
+      history.push('/car_ui');
     }
     catch (error)
     {

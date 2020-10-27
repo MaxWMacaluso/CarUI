@@ -7,6 +7,8 @@ import { Form, Button } from 'react-bootstrap';
 import { registerNewUser } from '../actions/auth';
 import { resetErrors } from '../actions/errors';
 import { validateFields } from '../utils/common';
+import { initiateLogin } from '../actions/auth';
+
 import { Link } from 'react-router-dom';
 
 class Register extends React.Component {
@@ -19,46 +21,47 @@ class Register extends React.Component {
         is_submitted: false
     };
 
-    componentDidUpdate(prevProps) 
+    componentDidUpdate(prevProps)
     {
-        if (!_.isEqual(prevProps.errors, this.props.errors)) 
+        if (!_.isEqual(prevProps.errors, this.props.errors))
         {
           this.setState({ error_msg: this.props.errors });
         }
       }
-    
-      componentWillUnmount() 
+
+      componentWillUnmount()
       {
         this.props.dispatch(resetErrors());
       }
 
     registerUser = (event) => {
         event.preventDefault();
-        
+
         const {profile_name, password, confirm_password} = this.state;
         const fieldsToValidate = [{profile_name}, {password}, {confirm_password}];
         const allFieldsEntered = validateFields(fieldsToValidate);
-        
-        if (!allFieldsEntered) 
+
+        if (!allFieldsEntered)
         {
             this.setState({error_msg: {signup_error: 'Please enter all the fields'}});
-        } 
+        }
         //If all fields are entered
-        else 
+        else
         {
             //If password not entered correctly
-            if (password !== confirm_password) 
+            if (password !== confirm_password)
             {
                 this.setState({error_msg: {signup_error: 'Password and confirm password does not match'}});
-            } 
+            }
             //Everything correct, so accept it
-            else 
+            else
             {
                 this.setState({is_submitted: true});
                 this.props.dispatch(registerNewUser({profile_name, password})).then((response) => {
-                if (response.success) 
+                if (response.success)
                 {
                     this.setState({success_msg: 'User registered successfully.', error_msg: ''});
+                    this.props.dispatch(initiateLogin(profile_name, password));
                 }
                 });
             }
@@ -121,5 +124,5 @@ class Register extends React.Component {
 }
 
 const mapStateToProps = (state) => ({errors: state.errors});
-  
+
 export default connect(mapStateToProps)(Register);

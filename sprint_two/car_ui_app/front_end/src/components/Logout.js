@@ -1,6 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { initiateLogout } from '../actions/auth';
+import Loading from '../components/Loading'
+
 
 class Logout extends React.Component
 {
@@ -15,7 +17,7 @@ class Logout extends React.Component
 
   render()
   {
-    return null;
+    return <Loading/>;
   }
 }
 

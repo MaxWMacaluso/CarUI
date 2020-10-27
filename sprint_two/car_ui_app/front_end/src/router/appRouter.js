@@ -19,11 +19,15 @@ import Header from '../components/Header';
 import Profile from '../components/Profile';
 import Login from '../components/Login';
 import Logout from '../components/Logout';
+import Loading from '../components/Loading';
+
+
 
 export const history = createBrowserHistory();
 
 const AppRouter = ({ auth }) => {
-  const user_token = localStorage.getItem('user_token');;
+  // const user_token = localStorage.getItem('user_token');;
+
   // if (_.isEmpty(auth.token) && !_.isEmpty(localStorage.getItem('user_token'))) {
   //   auth.token = localStorage.getItem('user_token');
   // }
@@ -31,10 +35,11 @@ const AppRouter = ({ auth }) => {
   return (
     <Router history={history}>
       <div>
-      {!_.isEmpty(auth.token) && <Header />}
+      {!_.isEmpty(auth.token) &&  <Header/>}
 
         <div className="container">
         <Switch>
+
             <Route exact path="/" component={Login}/>
             <Route path="/register_user" component={createProfilePage}/>
             <Route path="/profile" component={Profile} />
@@ -52,6 +57,10 @@ const AppRouter = ({ auth }) => {
     </Router>
   );
 };
+
+// const mapStateToProps = (state) => ({
+//   auth: state.auth
+// })
 
 const mapStateToProps = (state) => {
   if (_.isEmpty(state.auth.token) && !_.isEmpty(localStorage.getItem('user_token'))) {
