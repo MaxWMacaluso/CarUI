@@ -51,6 +51,33 @@ html {
   font-size: 62.5%;
 }
 
+ul.images {
+   margin: 0;
+   padding: 0;
+   white-space: nowrap;
+   width: 900px;
+   overflow-x: auto;
+   background-color: #ddd;
+ }
+ ul.images li {
+   list-style: none;
+   display: inline;
+   display: inline;
+   width: 10px;
+   height: 10px;
+ }
+ ul.images img {
+   display: block;
+   float: left;
+   margin: 5px;
+   width: 70px;
+   height: 70px;
+ }
+
+ .modal-dialog {
+    max-width: 50%;
+}
+
 body {
 
   @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@900&display=swap');

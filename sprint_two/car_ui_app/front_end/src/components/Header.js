@@ -20,8 +20,6 @@ const Header = () => {
   //       this.props.dispatch(initiateGetProfile());
   const [tick, setTick] = useState(false);
 
-
-
   useEffect(() => {
     if (tick == 0) {
       getProfile().then(res => {

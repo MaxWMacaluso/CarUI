@@ -4,8 +4,10 @@ import ReactDOM from 'react-dom'
 import { Link, useLocation, BrowserRouter as Router } from "react-router-dom";
 import CarUIMoveable from '../components/CarUIMoveable'; //'./' is current folder
 import FileUpload from '../components/FileUpload';
+import ImageSelector from '../components/ImageSelector';
+
 import Loading from '../components/Loading';
-import { Form, Button } from 'react-bootstrap';
+import { Form, Modal, Button } from 'react-bootstrap';
 
 import { useParams, RouteComponentProps } from "react-router";
 
@@ -28,6 +30,12 @@ function CarUIPage () {
   const [begin, setBegin] = useState(null);
   const [end, setEnd] =  useState(null);
 
+  //Handle Modal
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+  //Image variables
   const [imgs, setImgs] = useState(false);
   const [loaded, setLoaded] = useState(false);
 
@@ -120,8 +128,8 @@ function CarUIPage () {
     });
   }
 
-  function addImage () {
-    let img_source = prompt('Enter image source');
+  function addImage (img_source) {
+    // let img_source = prompt('Enter image source');
     let img_transform = `translate(0px, 0px)`+  ` rotate(0deg)`+ ` scale(1, 1)`
     let img_transform_origin = "50% 50%";
     // let profile_id = queryParams.profile_id;
@@ -138,7 +146,8 @@ function CarUIPage () {
             return response.text();
     })
     .then(data => {
-            alert(data);
+            // alert(data);
+            console.log(data);
             getImg();
     });
   }
@@ -172,6 +181,12 @@ function CarUIPage () {
     }
   }
 
+  function onImageChosen(imageUrl){
+    console.log(imageUrl)
+    handleClose();
+    addImage (imageUrl)
+  }
+
   if (loaded == false) {
     return <Loading/>
   }
@@ -183,12 +198,52 @@ function CarUIPage () {
             <CarUIMoveable id = "carUIMoveable" ref = {moveableComponentReference} moveableTarget="target" />
             <img src="http://localhost:3001/uploads/tesla_model_3_int.png" id = "backgroundImage"/>
             {imgs ? imgs : "No iamges here!"}
-            <Button onClick = {addImage}>Add Image by URL </Button>
+            {/*<Button onClick = {addImage}>Add Image by URL </Button>*/}
             {/*<img id = "placedImage" className="moveable_koala3" src="https://www.treehugger.com/thmb/pzsLSvqKfyLxIvqIogiWba54u3c=/768x0/filters:no_upscale():max_bytes(150000):strip_icc()/__opt__aboutcom__coeus__resources__content_migration__mnn__images__2019__05__koala-0f87652acc244db2ba7d2e231c868f16.jpg"/>
             <img id = "placedImage" className="moveable_koala4" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Cutest_Koala.jpg/1117px-Cutest_Koala.jpg"/>*/}
 
                   <br/><br/><br/>
-                  <FileUpload/>
+                  <Button variant="primary" onClick={handleShow}>
+        Add an image
+      </Button>
+
+      <Modal show={show} onHide={handleClose} style={{opacity:1}}>
+        <Modal.Header closeButton>
+          <Modal.Title>Modal heading</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <ImageSelector imageChosen = {onImageChosen}/>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
+                  {/*<ImageSelector imageChosen = {onImageChosen}/>*/}
+
+                  {/*<Button variant="primary" onClick={handleShow}>
+                    Open Modal
+                  </Button>
+                  <Modal show={show} onHide={handleClose}>
+                  <ImageSelector imageChosen = {onImageChosen}/>
+
+                    <Modal.Header closeButton>
+                      <Modal.Title>Modal heading</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>ee
+                    <ImageSelector imageChosen = {onImageChosen}/>
+                    </Modal.Body>
+                      <Modal.Footer>
+                      <Button variant="secondary" onClick={handleClose}>
+                      Close
+                      </Button>
+                      <Button variant="primary" onClick={handleClose}>
+                      Save Changes
+                      </Button>
+                      </Modal.Footer>
+                   </Modal>*/}
 
 
 

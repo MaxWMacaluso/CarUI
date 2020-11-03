@@ -4,7 +4,7 @@
 import React, {useState} from 'react';
 import axios from '../../node_modules/axios'
 
-const FileUpload = () => {
+const FileUpload = (props) => {
   const [file, setFile] = useState('')
   const [filename, setFilename] = useState('Choose File')
   const [uploadedFile, setUploadedFile] = useState({});
@@ -28,7 +28,9 @@ const FileUpload = () => {
       console.log(res);
       const { fileName, filePath } = res.data
       setUploadedFile({fileName, filePath});
+      props.onSuccessfulUpload();
     } catch(err) {
+      console.log(err);
       if(err.response.status === 500) {
         console.log('There was a problem with the server');
       } else {

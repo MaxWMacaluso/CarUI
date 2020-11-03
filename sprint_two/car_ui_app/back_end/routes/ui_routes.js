@@ -12,12 +12,22 @@ const authMiddleware = require('../middleware/auth');
 //-------------------------------------------------------------
 Router.use(fileUpload());
 
-//Upload Endpoint
-Router.post('/upload', (req, res) => {
+function getUserImageUploadPath(profileId) {
+  var route = getGeneralImageUploadPath();
+  var profileFolderName = `profile_${profileId}/`
+  var fullFolderPath = route+profileFolderName;
+  return fullFolderPath;
+}
+
+function getGeneralImageUploadPath() {
   var route = `${__dirname}`
   route = route.substring(0, route.lastIndexOf("\\")) + '/public/uploads/';
   console.log (route);
+  return route;
+}
 
+//Upload Endpoint
+Router.post('/upload', (req, res) => {
   if (req.files == null) {
     return res.status(400).json({msg: 'No file uploaded' });
   }
@@ -27,9 +37,7 @@ Router.post('/upload', (req, res) => {
   ui_sql.getProfile(userToken)
   .then(profileId => {
     console.log(profileId);
-    var profileFolderName = `profile_${profileId}/`
-    var fullFolderPath = route+profileFolderName;
-    console.log(fullFolderPath);
+    var fullFolderPath = getUserImageUploadPath(profileId);
     if (!fs.existsSync(fullFolderPath)){
         fs.mkdirSync(fullFolderPath);
     }
@@ -149,12 +157,38 @@ Router.delete('/image/:img_id', (req, res) => {
 })
 
 //Images export
-Router.get('/defaultImages', (req, res) => {
+function returnFilenamesInPath(filePath){
+  var list = [];
+  fs.readdirSync(filePath).forEach(function(filename) {
+      const fname = filename.toString();
+      if (fname.includes(".") > 0)
+        list.push(fname);
+    });
+    // console.log(list);
+  return list;
+  // console.log(list);
 
+}
+Router.get('/defaultImages', (req, res) => {
+  var fullFolderPath = getGeneralImageUploadPath();
+  var list = returnFilenamesInPath(fullFolderPath);
+  res.status(200).send(list);
 })
 
 Router.get('/userUploadedImages', (req, res) => {
+  const userToken = req.query.access_token;
+  console.log("User token below!")
+  console.log(userToken);
+  ui_sql.getProfile(userToken).then(profile_id => {
+    var fullFolderPath = getUserImageUploadPath(profile_id);
+    var list = returnFilenamesInPath(fullFolderPath);
+    console.log(list);
 
+    res.status(200).send(list);
+  })
+  .catch(error => {
+    res.status(500).send(error);
+  })
 })
 
 module.exports = Router;
