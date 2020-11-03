@@ -18,6 +18,7 @@ const FileUpload = () => {
     e.preventDefault();
     const formData = new FormData();
     formData.append('file', file)
+    formData.append('userToken',  localStorage.getItem('user_token'));
     try {
       const res = await axios.post('/upload', formData, {
         headers: {

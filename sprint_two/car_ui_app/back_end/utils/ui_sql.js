@@ -70,9 +70,24 @@ const getImg = (body) => {
     })
   }
 
+  const getProfile = (user_token) => {
+    return new Promise(function(resolve, reject) {
+      pool.query('SELECT * FROM tokens WHERE access_token = $1', [user_token], (error, results) => {
+        if (error) {
+          reject(error)
+        }
+        // console.log(results.rows[0].profile_id);
+        // console.log(typeof results)
+        resolve(results.rows[0].profile_id)
+        // resolve(results.rows).profile_id;
+      })
+    })
+  }
+
   module.exports = {
     getImg,
     createImg,
     deleteImg,
-    updateImageTransforms
+    updateImageTransforms,
+    getProfile
   }
