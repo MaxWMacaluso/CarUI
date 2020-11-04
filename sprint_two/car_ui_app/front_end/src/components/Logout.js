@@ -8,17 +8,15 @@ class Logout extends React.Component
 {
   async componentDidMount()
   {
-    const { history, dispatch } = this.props;
+    const { dispatch } = this.props;
     dispatch(initiateLogout())
     await initiateLogout()
-    history.push('/')
-    // dispatch(initiateLogout()).then(() => history.push('/'));
   }
 
   render()
   {
     return <Loading/>;
   }
-}
+};
 
 export default connect()(Logout);

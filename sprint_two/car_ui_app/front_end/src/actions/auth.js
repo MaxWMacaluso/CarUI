@@ -36,18 +36,12 @@ export const initiateLogout = () => {
     {
       setAuthHeader();
       await post(`${BASE_API_URL}/logout`, true, true)
-      // Begin Peter edit
-      // await post(`${BASE_API_URL}/logout2`, {
-      //   method: 'POST',
-      //   headers: {
-      //     'Content-Type': 'application/json'
-      //   },
-      //   body: {access_token: localStorage.getItem('user_token')}
-      //
-      // })
-      // End Peter edit
       removeAuthHeader();
       localStorage.removeItem('user_token');
+      
+      //Bring client back to login_page
+      history.push('/')
+      
       return dispatch(signOut());
     }
     catch (error)

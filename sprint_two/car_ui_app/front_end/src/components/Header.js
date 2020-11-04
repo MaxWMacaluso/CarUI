@@ -1,9 +1,11 @@
 import React, {useState, useEffect} from 'react';
 import { Link } from 'react-router-dom';
-import { initiateGetProfile } from '../actions/profile';
 import { getProfile } from '../actions/profile';
 import Loading from '../components/Loading'
 import { Navbar, Nav } from 'react-bootstrap';
+
+//TODO: Don't need?
+//import { initiateGetProfile } from '../actions/profile';
 
 import { useDispatch } from 'react-redux'
 

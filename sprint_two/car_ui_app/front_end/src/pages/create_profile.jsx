@@ -1,8 +1,8 @@
 import React from "react";
 import Register from '../components/Register'
 
-const createProfilesPage = () => {
+const CreateProfilesPage = () => {
     return (<Register />);
 };
 
-export default createProfilesPage; 
+export default CreateProfilesPage; 

@@ -15,7 +15,7 @@ class Login extends React.Component {
         profile_name: '',
         password: '',
         error_msg: ''
-};
+    };
 
 componentDidUpdate(prevProps)
 {

@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+import { BASE_API_URL } from '../utils/constants';
 import FileUpload from '../components/FileUpload';
 import { getProfile } from '../actions/profile';
 
@@ -13,12 +14,12 @@ const ImageSelector = (props) => {
   function fetchImages() {
     getProfile().then(res => {
       const profile_id = res.profile_id;
-      fetch(`http://localhost:3001/userUploadedImages?access_token=${user_token}`).then(response => {
+      fetch(`${BASE_API_URL}/userUploadedImages?access_token=${user_token}`).then(response => {
               return response.text();
       })
       .then(data => {
-        try {
-          setUserImages(JSON.parse(data).map((d) => <div><li><img onClick={() => props.imageChosen("http://localhost:3001/uploads/profile_"+profile_id+"/"+d)} src={"http://localhost:3001/uploads/profile_"+profile_id+"/"+d}/></li></div>));
+        try {                                                                             
+          setUserImages(JSON.parse(data).map((d) => <div><li><img onClick={() => props.imageChosen(`${BASE_API_URL}/uploads/profile_`+profile_id+"/"+d)} src={`${BASE_API_URL}/uploads/profile_`+profile_id+"/"+d}/></li></div>));
         } catch(e) {
           console.log(e);
         }
@@ -32,14 +33,13 @@ const ImageSelector = (props) => {
     //   console.log(err);
     // })
 
-
-    fetch(`http://localhost:3001/defaultImages`).then(response => {
+    fetch(`${BASE_API_URL}/defaultImages`).then(response => {
             return response.text();
     })
     .then(data => {
       try 
-      {
-        setDefaultImages(JSON.parse(data).map((d) => <div><li><img onClick={() => props.imageChosen("http://localhost:3001/uploads/"+d)} src={"http://localhost:3001/uploads/"+d} /></li></div>));
+      {                                                                                             
+        setDefaultImages(JSON.parse(data).map((d) => <div><li><img onClick={() => props.imageChosen(`${BASE_API_URL}/uploads/`+d)} src={`${BASE_API_URL}/uploads/`+d} /></li></div>));
       } 
       catch(e) 
       {
