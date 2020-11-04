@@ -21,8 +21,15 @@ function getUserImageUploadPath(profileId) {
 
 function getGeneralImageUploadPath() {
   var route = `${__dirname}`
-  route = route.substring(0, route.lastIndexOf("\\")) + '/public/uploads/';
-  console.log (route);
+
+  //Below line to make compatible with Unix Sytstems and PC
+  route = route.replace("\\", "/")
+
+  route = route.substring(0, route.lastIndexOf("/")) + '/public/uploads/';
+  
+  // console.log("This is the route to which we are exporting to:")
+  // console.log (route);
+  
   return route;
 }
 
@@ -54,10 +61,6 @@ Router.post('/upload', (req, res) => {
   }).catch(error => {
     console.log(error);
   })
-
-
-
-
 })
 
 var path = require('path');

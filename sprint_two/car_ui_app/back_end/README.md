@@ -12,12 +12,15 @@
 * Choose DB: ‘\c database_name'
 * Display tables in current schema: '\dt'
 * **Connect to remote server and access DB:** 'heroku pg:psql postgresql-fluffy-77284 --app team-matrix-db'
+* **If NPM start/install fails** 
+	1. Rename 'node-modules' to 'tode-modules' and rename 'package-lock.json' to 'ackache-lock.json'
+	2. Run 'npm install'
+	3. Try 'npm start'
 
 # To run using node and express:
 * cd 'car_ui_app/back_end'
 	* 'npm start'
 		* 'http://localhost:3001" 
-* **If doesn't work, first try 'npm install'**
 
 # Documenation:
 * https://blog.logrocket.com/getting-started-with-postgres-in-your-react-app/

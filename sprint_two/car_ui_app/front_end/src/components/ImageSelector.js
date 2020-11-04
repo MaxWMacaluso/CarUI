@@ -37,16 +37,18 @@ const ImageSelector = (props) => {
             return response.text();
     })
     .then(data => {
-
-      // console.log(typeof data);
-      setDefaultImages(JSON.parse(data).map((d) => <div><li><img onClick={() => props.imageChosen("http://localhost:3001/uploads/"+d)} src={"http://localhost:3001/uploads/"+d} /></li></div>));
-
-      // setDefaultImages(data);
-      console.log(defaultImages);
+      try 
+      {
+        setDefaultImages(JSON.parse(data).map((d) => <div><li><img onClick={() => props.imageChosen("http://localhost:3001/uploads/"+d)} src={"http://localhost:3001/uploads/"+d} /></li></div>));
+      } 
+      catch(e) 
+      {
+        console.log(e);
+      }
     });
 
-    // console.log(defaultImages);
-    // console.log(userImages);
+      //setDefaultImages(data);
+      console.log(defaultImages);
   }
 
   function onSuccessfulImageUpload () {

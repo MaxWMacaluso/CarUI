@@ -182,7 +182,7 @@ function CarUIPage () {
   }
 
   function onImageChosen(imageUrl){
-    console.log(imageUrl)
+    console.log("IMG:", imageUrl)
     handleClose();
     addImage (imageUrl)
   }
