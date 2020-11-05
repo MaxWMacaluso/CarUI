@@ -25,15 +25,12 @@ const Header = () => {
   useEffect(() => {
     if (tick == 0) {
       getProfile().then(res => {
-        console.log("heee")
-        console.log(res);
+        // console.log("heee")
+        // console.log(res);
         setProfile(res)
-        console.log(profile)
+        // console.log(profile)
       })
-
-
       // dispatch()
-      ;
     }
     setTick(1)
   });
@@ -43,7 +40,7 @@ const Header = () => {
   }
 
   return (
-    <Navbar class = "navbar">
+    <Navbar className = "navbar">
     <Nav.Item><strong>{profile.profile_name}</strong></Nav.Item>
     <Nav.Item className="ml-auto"><Link to="/logout" className="link">Logout</Link></Nav.Item>
     </Navbar>

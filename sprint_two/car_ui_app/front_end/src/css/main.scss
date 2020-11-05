@@ -22,20 +22,18 @@
   }
   #backgroundImage {
     position: absolute;
-    top: 300px;
-    left: 350px;
+    top: 30%;
+    left: 15%;
     width: 800px;
   }
 
   #canvas {
     height: 780px;
     width: 1080px;
-    background-image : url('ghttp://localhost:3001/uploads/tesla_model_3_int.png');
+    //background-image : url('http://localhost:3001/uploads/tesla_model_3_int.png');
     background-size: 800px;
     background-repeat: no-repeat;
     background-position: 10% 30%;
-
-    /*  */
   }
 
   $background: #ccc;

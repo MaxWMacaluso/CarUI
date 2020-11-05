@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import { Form, Modal, Button } from 'react-bootstrap';
 import { Link, useLocation, BrowserRouter as Router } from "react-router-dom";
 
-import { BASE_API_URL, TESTLA_BG } from '../utils/constants';
+import { BASE_API_URL, TESLA_BG } from '../utils/constants';
 import CarUIMoveable from './CarUIMoveable'; //'./' is current folder
 import ImageSelector from './ImageSelector';
 import Loading from './Loading';
@@ -189,7 +189,7 @@ const CarUI = () => {
 
         <div id = "canvas"></div>
             <CarUIMoveable id = "carUIMoveable" ref = {moveableComponentReference} moveableTarget="target" />
-            <img src={TESTLA_BG} id = "backgroundImage"/>
+            <img src={TESLA_BG} id = "backgroundImage"/>
             
             {/*Ternary operator */}
             {imgs ? imgs : "No images here!"}
@@ -241,7 +241,7 @@ const CarUI = () => {
 
 
 
-            <Link to="/">Back to Profile Page</Link>
+        <Button href="/" variant="primary">Login Page</Button>
         </div>
     );
 
