@@ -43,7 +43,7 @@ const FileUpload = (props) => {
     <div>
       <form onSubmit={onSubmit}>
         <input type='file' className = 'fileUploadInput' id = 'customFile' onChange={onChange}/>
-        <label className = 'fileUploadInput' for = 'customFile'>
+        <label className = 'fileUploadInput' htmlFor='customFile'>
           {filename}
         </label>
 

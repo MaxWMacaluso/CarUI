@@ -161,6 +161,14 @@ header {
   justify-content: space-between;
 }
 
+#CarUI_buttons {
+  color: red;
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  top: 600px;
+}
+
 .btn {
   margin: 1rem 0;
 }

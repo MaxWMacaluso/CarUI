@@ -80,12 +80,10 @@ render() {
               />
             </Form.Group>
             <div className="action-items">
-              <Button variant="primary" type="submit">
-                Login
-              </Button>
-              <Link to="/register_user" className="btn btn-secondary">
-                Create account
-              </Link>
+              {/* {When button is pressed, form is submitted and handleLogin() exectutes} */}
+              <Button variant="primary" type="submit">Login</Button>
+              
+              <Link to="/register_user" className="btn btn-secondary">Create account</Link>
             </div>
           </Form>
         </div>

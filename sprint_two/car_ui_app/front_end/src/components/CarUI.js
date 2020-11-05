@@ -187,7 +187,7 @@ const CarUI = () => {
   }
     return (
         <div onMouseDown = {handleClick} onClick = {finishClick}>
-        <Button variant="primary" type="submit" onClick = {save}> save </Button>
+        {/* <Button variant="primary" type="submit" onClick = {save}> save </Button> */}
 
             {/* <div id = "canvas"></div> */}
             <CarUIMoveable id = "carUIMoveable" ref = {moveableComponentReference} moveableTarget="target" />
@@ -200,8 +200,12 @@ const CarUI = () => {
             {/*<img id = "placedImage" className="moveable_koala3" src="https://www.treehugger.com/thmb/pzsLSvqKfyLxIvqIogiWba54u3c=/768x0/filters:no_upscale():max_bytes(150000):strip_icc()/__opt__aboutcom__coeus__resources__content_migration__mnn__images__2019__05__koala-0f87652acc244db2ba7d2e231c868f16.jpg"/>
             <img id = "placedImage" className="moveable_koala4" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Cutest_Koala.jpg/1117px-Cutest_Koala.jpg"/>*/}
 
-                  <br/><br/><br/>
-                  <Button variant="primary" onClick={handleShow}> Add an image</Button>
+                  
+                  <div id="CarUI_buttons">
+                    <Button variant="primary" onClick={handleShow}>Add an image</Button>
+                    <Button href="/" variant="primary">Login Page</Button>
+                    <Button variant="primary" type="submit" onClick = {save}>Save</Button>
+                  </div>
 
       <Modal show={show} onHide={handleClose} style={{opacity:1}}>
         <Modal.Header closeButton>
@@ -240,10 +244,6 @@ const CarUI = () => {
                       </Button>
                       </Modal.Footer>
                    </Modal>*/}
-
-
-
-        <Button href="/" variant="primary">Login Page</Button>
         </div>
     );
 
