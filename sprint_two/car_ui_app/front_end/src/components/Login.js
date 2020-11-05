@@ -57,7 +57,7 @@ render() {
     const {error_msg} = this.state;
     return (
       <div className="login-page">
-        <h1>Login or Create Create an Account!</h1>
+        <h1>Login or Create an Account!</h1>
         <div className="login-form">
           <Form onSubmit={this.handleLogin}>
             {error_msg && error_msg.signin_error && (<p className="error_msg centered-message">{error_msg.signin_error}</p>)}

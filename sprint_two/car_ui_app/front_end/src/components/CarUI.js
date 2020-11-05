@@ -94,7 +94,9 @@ const CarUI = () => {
             console.log(typeof data);
             setLocalCopy(data);
             setLoaded(true);
-            setImgs(data.map((d) => <div><li key={d.img_source}>{d.img_source}</li><img id = "placedImage" className={"moveable"+d.img_id} src = {d.img_source} alt="Set Image" style = {{transform: d.img_transform, transformOrigin: d.img_transform_origin}} /></div>));
+
+            //Changed to console.log instead to keep UI clean
+            setImgs(data.map((d) => <div>{console.log(<li key={d.img_source}>{d.img_source}</li>)}<img id = "placedImage" className={"moveable"+d.img_id} src = {d.img_source} alt="Set Image" style = {{transform: d.img_transform, transformOrigin: d.img_transform_origin}} /></div>));
 
             // setImgs(<div><div dangerouslySetInnerHTML={{__html: newImageLines}} ></div><h2>Here</h2></div>);
           });
@@ -187,7 +189,7 @@ const CarUI = () => {
         <div onMouseDown = {handleClick} onClick = {finishClick}>
         <Button variant="primary" type="submit" onClick = {save}> save </Button>
 
-        <div id = "canvas"></div>
+            {/* <div id = "canvas"></div> */}
             <CarUIMoveable id = "carUIMoveable" ref = {moveableComponentReference} moveableTarget="target" />
             <img src={TESLA_BG} alt="Tesla console background" id="backgroundImage"/>
             

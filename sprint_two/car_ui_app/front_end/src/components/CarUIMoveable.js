@@ -76,13 +76,13 @@ export default class CarUIMoveable extends Component { //<h1>{moveableTarget}</h
       if (transform == NaN || transform == ""){
         throw 'Style.transform does not exist!'
       }
-      console.log("What is transform?")
-      console.log(transform)
+      // console.log("What is transform?")
+      // console.log(transform)
 
       var transformValues = this.extract(transform, "translate(${translateX}px, ${translateY}px)"
           +  " rotate(${rotate}deg)"+ " scale(${scaleX}, ${scaleY})")
-      console.log('Results of transform values');
-      console.log(transformValues)
+      // console.log('Results of transform values');
+      // console.log(transformValues)
       frame = {
         translate: [parseInt(transformValues["translateX"]), parseInt(transformValues["translateY"])],
         scale: [parseFloat(transformValues["scaleX"]), parseFloat(transformValues["scaleY"])],
@@ -91,9 +91,11 @@ export default class CarUIMoveable extends Component { //<h1>{moveableTarget}</h
       }
       console.log('New frame: ')
       console.log(frame)
-      // throw 'ee'
-    } catch(e) {
-      console.log(`Caught ${e}`)
+      //throw 'ee'
+    } 
+    catch(e) 
+    {
+      //console.log(`Caught ${e}`)
       frame = {
         translate: [0,0],
         scale: [1,1],
