@@ -82,6 +82,7 @@ Router.post('/logout', authMiddleware, async (req, res) => {
   }
 });
 
+//Don't know the point of?
 Router.post('/logout2', async (req, res) => {
   try
   {

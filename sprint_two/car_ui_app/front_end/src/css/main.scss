@@ -20,11 +20,13 @@
     top: 30px;
     left: 30px;
   }
+
   #backgroundImage {
-    position: absolute;
-    top: 30%;
-    left: 15%;
-    width: 800px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10%;
+    width: 85%;
   }
 
   #canvas {
@@ -161,14 +163,6 @@ header {
   justify-content: space-between;
 }
 
-#CarUI_buttons {
-  color: red;
-  display: flex;
-  justify-content: space-between;
-  position: relative;
-  top: 600px;
-}
-
 .btn {
   margin: 1rem 0;
 }
@@ -234,6 +228,14 @@ header {
 .navbar {
   padding-left: 20%;
   padding-right: 20%;
+}
+
+#carUI_button {
+  width: 33%;
+  padding: 10px;
+  border: 1px solid black;
+  position: relative;
+  top: 225px;
 }
 
 button,

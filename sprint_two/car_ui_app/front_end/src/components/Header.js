@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import { Link } from 'react-router-dom';
+
 import { getProfile } from '../actions/profile';
 import Loading from '../components/Loading'
 import { Navbar, Nav } from 'react-bootstrap';
@@ -41,8 +42,11 @@ const Header = () => {
 
   return (
     <Navbar className = "navbar">
-    <Nav.Item><strong>{profile.profile_name}</strong></Nav.Item>
-    <Nav.Item className="ml-auto"><Link to="/logout" className="link">Logout</Link></Nav.Item>
+    <Nav.Item><strong>Logged in as: {profile.profile_name}</strong></Nav.Item>
+
+    {/* Added button to perform same function. TODO: Determine if need? */}
+    {/* <Nav.Item className="ml-auto"><Link to="/logout" className="link">Logout</Link></Nav.Item> */}
+    
     </Navbar>
   );
 };
