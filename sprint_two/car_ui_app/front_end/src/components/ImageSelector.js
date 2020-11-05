@@ -68,11 +68,11 @@ const ImageSelector = (props) => {
   return (
     <div>
       <h3>Default Images</h3>
-      <ul class="images">
+      <ul className="images">
       {defaultImages ? defaultImages : "No images here!"}
       </ul>
       <h3>User Images</h3>
-      <ul class="images">
+      <ul className="images">
       {userImages ? userImages : "No images here!"}
       </ul>
       <FileUpload onSuccessfulUpload = {onSuccessfulImageUpload}/>

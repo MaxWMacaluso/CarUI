@@ -94,7 +94,7 @@ const CarUI = () => {
             console.log(typeof data);
             setLocalCopy(data);
             setLoaded(true);
-            setImgs(data.map((d) => <div><li key={d.img_source}>{d.img_source}</li><img id = "placedImage" className={"moveable"+d.img_id} src = {d.img_source} style = {{transform: d.img_transform, transformOrigin: d.img_transform_origin}} /></div>));
+            setImgs(data.map((d) => <div><li key={d.img_source}>{d.img_source}</li><img id = "placedImage" className={"moveable"+d.img_id} src = {d.img_source} alt="Set Image" style = {{transform: d.img_transform, transformOrigin: d.img_transform_origin}} /></div>));
 
             // setImgs(<div><div dangerouslySetInnerHTML={{__html: newImageLines}} ></div><h2>Here</h2></div>);
           });
@@ -175,7 +175,7 @@ const CarUI = () => {
   }
 
   function onImageChosen(imageUrl){
-    console.log("IMG:", imageUrl)
+    //console.log("IMG:", imageUrl)
     handleClose();
     addImage (imageUrl)
   }

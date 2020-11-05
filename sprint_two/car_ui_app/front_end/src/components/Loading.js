@@ -6,7 +6,7 @@ import React from 'react';
 const Loading = () => {
   return (
     <div>
-    <img className = "center" src = {process.env.PUBLIC_URL + '/loading.gif'}/>
+    <img className = "center" src = {process.env.PUBLIC_URL + '/loading.gif'} alt="Loading Gif"/>
     <div id = "overlay">Testing</div>
     </div>
   );
