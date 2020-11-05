@@ -86,7 +86,7 @@ const CarUI = () => {
             var newImageLines = <div></div>
             for (var row of data) {
               var className = `moveable_${row.img_id}`;
-              newImageLines += <img id = "placedImage" className={className} src = {row.img_source} style = ""/>
+              newImageLines += <img id = "placedImage" className={className} src = {row.img_source} alt="User's Image" style = ""/>
             }
 
             data = JSON.parse(data)
@@ -189,7 +189,7 @@ const CarUI = () => {
 
         <div id = "canvas"></div>
             <CarUIMoveable id = "carUIMoveable" ref = {moveableComponentReference} moveableTarget="target" />
-            <img src={TESLA_BG} id = "backgroundImage"/>
+            <img src={TESLA_BG} alt="Tesla console background" id="backgroundImage"/>
             
             {/*Ternary operator */}
             {imgs ? imgs : "No images here!"}

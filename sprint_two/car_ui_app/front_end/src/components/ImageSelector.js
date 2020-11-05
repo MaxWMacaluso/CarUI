@@ -19,7 +19,7 @@ const ImageSelector = (props) => {
       })
       .then(data => {
         try {                                                                             
-          setUserImages(JSON.parse(data).map((d) => <div><li><img onClick={() => props.imageChosen(`${BASE_API_URL}/uploads/profile_`+profile_id+"/"+d)} src={`${BASE_API_URL}/uploads/profile_`+profile_id+"/"+d}/></li></div>));
+          setUserImages(JSON.parse(data).map((d) => <div><li><img onClick={() => props.imageChosen(`${BASE_API_URL}/uploads/profile_`+profile_id+"/"+d)} src={`${BASE_API_URL}/uploads/profile_`+profile_id+"/"+d} alt="Set user images"/></li></div>));
         } catch(e) {
           console.log(e);
         }
@@ -39,7 +39,7 @@ const ImageSelector = (props) => {
     .then(data => {
       try 
       {                                                                                             
-        setDefaultImages(JSON.parse(data).map((d) => <div><li><img onClick={() => props.imageChosen(`${BASE_API_URL}/uploads/`+d)} src={`${BASE_API_URL}/uploads/`+d} /></li></div>));
+        setDefaultImages(JSON.parse(data).map((d) => <div><li><img onClick={() => props.imageChosen(`${BASE_API_URL}/uploads/`+d)} src={`${BASE_API_URL}/uploads/`+d} alt="Set default images" /></li></div>));
       } 
       catch(e) 
       {
@@ -48,21 +48,20 @@ const ImageSelector = (props) => {
     });
 
       //setDefaultImages(data);
-      console.log(defaultImages);
+      //console.log(defaultImages);
   }
 
   function onSuccessfulImageUpload () {
-    console.log("he")
+    //console.log("he")
     fetchImages()
   }
 
   useEffect(() => {
-    if (tock == 0) {
+    if (tock == 0) 
+    {
       fetchImages()
     }
     setTock(1)
-
-
   });
 
 
@@ -70,11 +69,11 @@ const ImageSelector = (props) => {
     <div>
       <h3>Default Images</h3>
       <ul class="images">
-      {defaultImages ? defaultImages : "No iamges here!"}
+      {defaultImages ? defaultImages : "No images here!"}
       </ul>
       <h3>User Images</h3>
       <ul class="images">
-      {userImages ? userImages : "No iamges here!"}
+      {userImages ? userImages : "No images here!"}
       </ul>
       <FileUpload onSuccessfulUpload = {onSuccessfulImageUpload}/>
       <div style={{'color': props.skinColour}}></div>
