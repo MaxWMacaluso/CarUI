@@ -106,27 +106,27 @@ Router.get('/image', (req, res) => {
   })
 })
 
-//TODO: MAYBE DELTE
-Router.post('/profile', (req, res) => {
-  ui_sql.createProfile(req.body)
-  .then(response => {
-    res.status(200).send(response);
-  })
-  .catch(error => {
-    res.status(500).send(error);
-  })
-})
+//TODO: DELTE ?
+// Router.post('/profile', (req, res) => {
+//   ui_sql.createProfile(req.body)
+//   .then(response => {
+//     res.status(200).send(response);
+//   })
+//   .catch(error => {
+//     res.status(500).send(error);
+//   })
+// })
 
-//TODO: MAYBE DELTE
-Router.get('/profile', (req, res) => {
-  ui_sql.getProfile(req.body)
-  .then(response => {
-    res.status(200).send(response);
-  })
-  .catch(error => {
-    res.status(500).send(error);
-  })
-})
+//TODO: DELTE ?
+// Router.get('/profile', (req, res) => {
+//   ui_sql.getProfile(req.body)
+//   .then(response => {
+//     res.status(200).send(response);
+//   })
+//   .catch(error => {
+//     res.status(500).send(error);
+//   })
+// })
 
 Router.post('/image', (req, res) => {
   console.log(req);

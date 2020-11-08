@@ -26,7 +26,7 @@ Router.post('/signup', async (req, res) => {
     const count = result.rows[0].count;
     if (count > 0)
     {
-      return res.status(400).send({signup_error: 'User with this profile name already exists'});
+      return res.status(400).send({signup_error: 'User with this Profile Name already exists'});
     }
 
     const hashedPassword = await bcrypt.hash(password, 8);
@@ -35,7 +35,7 @@ Router.post('/signup', async (req, res) => {
   }
   catch (error)
   {
-    res.status(400).send({signup_error: 'Error while signing up.. Try again later'});
+    res.status(400).send({signup_error: 'Error while signing up; please try again later'});
   }
 });
 
@@ -48,7 +48,7 @@ Router.post('/signin', async (req, res) => {
 
     if (!user)
     {
-      res.status(400).send({sigin_error: 'Profile name and password do not match'});
+      res.status(400).send({sigin_error: 'Invalid Profile Name or Password'});
     }
 
     const token = await generateAuthToken(user);
@@ -56,7 +56,7 @@ Router.post('/signin', async (req, res) => {
 
     if (!result.rows[0])
     {
-      return res.status(400).send({signin_error: 'Error while signing in..Try again later.'});
+      return res.status(400).send({signin_error: 'Error while signing in; please try again later'});
     }
 
     user.token = result.rows[0].access_token;
@@ -64,7 +64,7 @@ Router.post('/signin', async (req, res) => {
   }
   catch (error)
   {
-    res.status(400).send({signin_error: 'Profile Name and password dont match'});
+    res.status(400).send({signin_error: 'Invalid Profile Name or Password'});
   }
 });
 
@@ -78,7 +78,7 @@ Router.post('/logout', authMiddleware, async (req, res) => {
   }
   catch (error)
   {
-    res.status(400).send({logout_error: 'Error while logging out..Try again later.'});
+    res.status(400).send({logout_error: 'Error while logging out; please try again later'});
   }
 });
 
@@ -92,7 +92,7 @@ Router.post('/logout2', async (req, res) => {
   }
   catch (error)
   {
-    res.status(400).send({logout_error: 'Error while logging out..Try again later.'});
+    res.status(400).send({logout_error: 'Error while logging out; please try again later'});
   }
 });
 
