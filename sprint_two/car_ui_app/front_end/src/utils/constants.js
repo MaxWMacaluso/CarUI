@@ -1,7 +1,9 @@
 export const BASE_API_URL = 'http://localhost:3001';
 
 //Background Images
-export const TESLA_BG = BASE_API_URL + '/uploads/tesla_model_3_int.png';
+export const BG_WITH_SCREEN = '/uploads/background_images/tesla_with_screen.png';
+export const BG_SCREEN = '/uploads/background_images/tesla_screen.png';
+export const BG_GENERIC = '/uploads/background_images/generic.png'
 
 export const SIGN_IN = 'SIGN_IN';
 export const SIGN_OUT = 'SIGN_OUT';
