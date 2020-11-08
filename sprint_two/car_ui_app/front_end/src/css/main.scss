@@ -51,27 +51,32 @@ html {
   font-size: 62.5%;
 }
 
+  //Image in Image Gallery
+  ul.images img {
+    display: block;
+    float: left;
+    margin: 5px;
+    width: 70px;
+    height: 70px;
+    border: 2px solid black;
+  }
+
+//Background for images in Image Gallery
 ul.images {
    margin: 0;
    padding: 0;
    white-space: nowrap;
-   width: 900px;
+   width: 100%;
    overflow-x: auto;
    background-color: #ddd;
  }
+
+ //TODO: Not sure what this styling does
  ul.images li {
    list-style: none;
    display: inline;
-   display: inline;
    width: 10px;
    height: 10px;
- }
- ul.images img {
-   display: block;
-   float: left;
-   margin: 5px;
-   width: 70px;
-   height: 70px;
  }
 
  .modal-dialog {

@@ -25,15 +25,20 @@ const FileUpload = (props) => {
           'Content-Type': 'multipart/form-data'
         }
       })
-      console.log(res);
+      //console.log(res);
       const { fileName, filePath } = res.data
       setUploadedFile({fileName, filePath});
       props.onSuccessfulUpload();
-    } catch(err) {
+    } 
+    catch(err) 
+    {
       console.log(err);
-      if(err.response.status === 500) {
+      if (err.response.status === 500) 
+      {
         console.log('There was a problem with the server');
-      } else {
+      } 
+      else 
+      {
         console.log(err.response.data.msg);
       }
     }

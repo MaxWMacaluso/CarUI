@@ -14,11 +14,14 @@ const ImageSelector = (props) => {
   function fetchImages() {
     getProfile().then(res => {
       const profile_id = res.profile_id;
+      
+      //USER IMAGES
       fetch(`${BASE_API_URL}/userUploadedImages?access_token=${user_token}`).then(response => {
               return response.text();
       })
       .then(data => {
-        try {                                                                             
+        try 
+        {                                                                             
           setUserImages(JSON.parse(data).map((d) => <div><li><img onClick={() => props.imageChosen(`${BASE_API_URL}/uploads/profile_`+profile_id+"/"+d)} src={`${BASE_API_URL}/uploads/profile_`+profile_id+"/"+d} alt="Set user images"/></li></div>));
         } catch(e) {
           console.log(e);
@@ -27,12 +30,14 @@ const ImageSelector = (props) => {
         console.log(userImages);
       });
     })
+
     // fetch(`http://localhost:3001/userUploadedImages?access_token=${user_token}`).then(res => {
     //   setUserImages(res);
     // }).catch(err => {
     //   console.log(err);
     // })
 
+    //SYSTEM DEFAULT IMAGES
     fetch(`${BASE_API_URL}/defaultImages`).then(response => {
             return response.text();
     })
@@ -69,16 +74,15 @@ const ImageSelector = (props) => {
     <div>
       <h3>Default Images</h3>
       <ul className="images">
-      {defaultImages ? defaultImages : "No images here!"}
+        {defaultImages ? defaultImages : "No images here!"}
       </ul>
       <h3>User Images</h3>
-      <ul className="images">
-      {userImages ? userImages : "No images here!"}
-      </ul>
+        <ul className="images">
+          {userImages ? userImages : "No images here!"}
+        </ul>
       <FileUpload onSuccessfulUpload = {onSuccessfulImageUpload}/>
       <div style={{'color': props.skinColour}}></div>
       {/*<button onClick={props.imageChosen('hello')}>Click ME </button>*/}
-
     </div>
   )
 }
