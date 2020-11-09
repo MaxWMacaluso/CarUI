@@ -176,7 +176,8 @@ const CarUI = () => {
     }
   }
 
-  function onImageChosen(imageUrl){
+  function onImageChosen(imageUrl)
+  {
     //console.log("IMG:", imageUrl)
     handleClose();
     addImage (imageUrl)

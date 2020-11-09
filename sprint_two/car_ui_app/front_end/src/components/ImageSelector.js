@@ -22,7 +22,7 @@ const ImageSelector = (props) => {
       .then(data => {
         try 
         {                                                                             
-          setUserImages(JSON.parse(data).map((d) => <div><li><img onClick={() => props.imageChosen(`${BASE_API_URL}/uploads/profile_`+profile_id+"/"+d)} src={`${BASE_API_URL}/uploads/profile_`+profile_id+"/"+d} alt="Set user images"/></li></div>));
+          setUserImages(JSON.parse(data).map((d) => <div><li><img onClick={() => props.imageChosen(`${BASE_API_URL}/uploads/user_profiles/profile_`+profile_id+"/"+d)} src={`${BASE_API_URL}/uploads/user_profiles/profile_`+profile_id+"/"+d} alt="Set user images"/></li></div>));
         } catch(e) {
           console.log(e);
         }
@@ -44,7 +44,7 @@ const ImageSelector = (props) => {
     .then(data => {
       try 
       {                                                                                             
-        setDefaultImages(JSON.parse(data).map((d) => <div><li><img onClick={() => props.imageChosen(`${BASE_API_URL}/uploads/`+d)} src={`${BASE_API_URL}/uploads/`+d} alt="Set default images" /></li></div>));
+        setDefaultImages(JSON.parse(data).map((value) => <div><li><img onClick={() => props.imageChosen(`${BASE_API_URL}/uploads/default_images/` + value)} src={`${BASE_API_URL}/uploads/default_images/` + value} alt="Set default images" /></li></div>));
       } 
       catch(e) 
       {

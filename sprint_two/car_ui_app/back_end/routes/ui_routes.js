@@ -13,13 +13,14 @@ const authMiddleware = require('../middleware/auth');
 Router.use(fileUpload());
 
 function getUserImageUploadPath(profileId) {
-  var route = getGeneralImageUploadPath();
+  var route = getGeneralImageUploadPath() + 'user_profiles/';
   var profileFolderName = `profile_${profileId}/`
   var fullFolderPath = route+profileFolderName;
   return fullFolderPath;
 }
 
-function getGeneralImageUploadPath() {
+function getGeneralImageUploadPath() 
+{
   var route = `${__dirname}`
 
   //Below line to make compatible with Unix Sytstems and PC
@@ -94,11 +95,11 @@ Router.get('/images-by-profile', (req, res) => {
 
 Router.get('/image', (req, res) => {
   // console.log(req);
-  console.log("Request.profileId = ")
-  console.log(req.query.profile_id)
+  //console.log("Request.profileId = ")
+  //console.log(req.query.profile_id)
   ui_sql.getImg({profile_id : req.query.profile_id})
   .then(response => {
-    console.log('hi')
+    //console.log('hi')
     res.status(200).send(response);
   })
   .catch(error => {
@@ -173,15 +174,15 @@ function returnFilenamesInPath(filePath){
 
 }
 Router.get('/defaultImages', (req, res) => {
-  var fullFolderPath = getGeneralImageUploadPath();
+  var fullFolderPath = getGeneralImageUploadPath() + "default_images/";
   var list = returnFilenamesInPath(fullFolderPath);
   res.status(200).send(list);
 })
 
 Router.get('/userUploadedImages', (req, res) => {
   const userToken = req.query.access_token;
-  console.log("User token below!")
-  console.log(userToken);
+  //console.log("User token below!")
+  //console.log(userToken);
   ui_sql.getProfile(userToken).then(profile_id => {
     var fullFolderPath = getUserImageUploadPath(profile_id);
     var list = returnFilenamesInPath(fullFolderPath);
