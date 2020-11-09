@@ -23,11 +23,13 @@ const ImageSelector = (props) => {
         try 
         {                                                                             
           setUserImages(JSON.parse(data).map((d) => <div><li><img onClick={() => props.imageChosen(`${BASE_API_URL}/uploads/user_profiles/profile_`+profile_id+"/"+d)} src={`${BASE_API_URL}/uploads/user_profiles/profile_`+profile_id+"/"+d} alt="Set user images"/></li></div>));
-        } catch(e) {
+        } 
+        catch(e) 
+        {
           console.log(e);
         }
-        // setUserImages(data);
-        console.log(userImages);
+        //setUserImages(data);
+        //console.log(userImages);
       });
     })
 

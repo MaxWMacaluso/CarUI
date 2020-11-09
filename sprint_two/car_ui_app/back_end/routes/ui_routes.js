@@ -36,26 +36,29 @@ function getGeneralImageUploadPath()
 
 //Upload Endpoint
 Router.post('/upload', (req, res) => {
-  if (req.files == null) {
+  if (req.files == null) 
+  {
     return res.status(400).json({msg: 'No file uploaded' });
   }
   const file = req.files.file;
   const userToken = req.body.userToken;
-  console.log(userToken)
+  //console.log(userToken)
   ui_sql.getProfile(userToken)
   .then(profileId => {
-    console.log(profileId);
+    //console.log(profileId);
     var fullFolderPath = getUserImageUploadPath(profileId);
-    if (!fs.existsSync(fullFolderPath)){
+    if (!fs.existsSync(fullFolderPath))
+    {
         fs.mkdirSync(fullFolderPath);
     }
     var outputPath = fullFolderPath+file.name;
     file.mv(outputPath, err => {
-      if(err) {
-        console.log(err)
+      if(err) 
+      {
+        //console.log(err)
         return res.status(500).send(err);
       }
-      console.log(outputPath);
+      //console.log(outputPath);
 
       res.json({fileName: file.name, filePath: outputPath})
     })
@@ -84,7 +87,7 @@ Router.get('/images-by-profile', (req, res) => {
   console.log(req.query.access_token)
   ui_sql.getImg({access_token : req.query.access_token})
   .then(response => {
-    console.log('hi')
+    //console.log('hi')
     res.status(200).send(response);
   })
   .catch(error => {
