@@ -71,6 +71,7 @@ const CarUI = () => {
     setTick(1)
   });
 
+  
   function getImg() {
     console.log(location);
     // console.log(`http://localhost:3001/images-by-profile?access_token=${user_token}`)
@@ -102,7 +103,8 @@ const CarUI = () => {
           });
   }
 
-  function save() {
+  //Corresponds to "Delete Image" button on the car_ui_page
+  function saveImgFun() {
     if (localCopy == null) {
       return;
     }
@@ -123,9 +125,53 @@ const CarUI = () => {
             return response.text();
     })
     .then(data => {
-            alert(data);
+            alert("Save Successful!");
             getImg();
     });
+  }
+
+//Example of localCopy object:
+// 0:
+//   access_token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcm9maWxlX2lkIjoiMTIiLCJwcm9maWxlX25hbWUiOiJtYXgiLCJpYXQiOjE2MDUwNTQ3NTN9.0BuaQj2GJExeEM9ots_FRqCs7SAbtuYYRg6ed128mA8"
+//   id: "194"
+//   img_id: "83"
+//   img_source: "http://localhost:3001/uploads/default_images/HMI-Widgets_1A.png"
+//   img_transform: "translate(331px, 92px) rotate(0deg) scale(0.077193, 0.0535714)"
+//   img_transform_origin: "50% 50%"
+//   profile_id: "12"
+
+  //Corresponds to "Delete Image" button on the car_ui_page
+  function deleteImgFun() 
+  {
+    if (localCopy == null) 
+    {
+      return;
+    }
+    for (var i = 0; i < localCopy.length; i++) 
+    {
+      localCopy[i].img_transform = document.querySelector(".moveable" + localCopy[i].img_id + "").style.transform;
+      localCopy[i].img_transform_origin = document.querySelector(".moveable" + localCopy[i].img_id + "").style.transformOrigin;
+    }
+    console.log("-------------------------->", localCopy)
+    fetch(`${BASE_API_URL}/update-image-transforms`, 
+    {
+      method: 'POST',
+      headers: 
+      {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(localCopy)
+
+    })
+    .then(response => 
+      {
+        return response.text()
+      })
+        .then(data => 
+          {
+            alert("Delete Successful!")
+            getImg()
+          })
   }
 
   function addImage (img_source) {
@@ -141,7 +187,7 @@ const CarUI = () => {
             return response.text();
     })
     .then(data => {
-            // alert(data);
+            //alert("Add Image Successful!");
             console.log(data);
             getImg();
     });
@@ -204,10 +250,8 @@ const CarUI = () => {
 
             
             <Button variant="primary" id="carUI_button" onClick={handleShow}>Add an image</Button>
-            <Button variant="primary" id="carUI_button" onClick = {save}>Save</Button>
-
-            {/* TODO: FINISH */}
-            <Button variant="primary" id="carUI_button" onClick = {save}>Delete</Button>
+            <Button variant="primary" id="carUI_button" onClick = {saveImgFun}>Save</Button>
+            <Button variant="primary" id="carUI_button" onClick = {deleteImgFun}>Delete</Button>
             <Button variant="primary" id="carUI_button" href="/logout">Logout</Button>
 
             <Modal show={show} onHide={handleClose} style={{opacity:1}}>
