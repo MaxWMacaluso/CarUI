@@ -5,6 +5,18 @@
     padding: 10;
   }
 
+  //TODO: PUT SOMEWHERE
+    // /* The image used */
+    // background-image: url('./car_ui_bg.jpg');
+
+    // /* Full height */
+    // height: 100%;
+  
+    // /* Center and scale the image nicely */
+    // background-position: center;
+    // background-repeat: no-repeat;
+    // background-size: cover;
+
   body {
     font-family: Arial, Helvetica, sans-serif;
     line-height: 1.4;
@@ -32,6 +44,7 @@
   #canvas {
     height: 780px;
     width: 1080px;
+    //background-image : url('http://localhost:3001/uploads/tesla_model_3_int.png');
     background-size: 800px;
     background-repeat: no-repeat;
     background-position: 10% 30%;
@@ -235,7 +248,7 @@ header {
 }
 
 #carUI_button {
-  width: 33%;
+  width: 25%;
   padding: 10px;
   border: 1px solid black;
   position: relative;

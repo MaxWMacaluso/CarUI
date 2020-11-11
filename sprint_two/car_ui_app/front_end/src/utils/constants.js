@@ -1,6 +1,8 @@
 export const BASE_API_URL = 'http://localhost:3001';
 
-//Background Images
+//TODO: Not sure why BASE_API_URL is being added to all images in the web app, regardless of the fact it works without it?
+
+//Background Console Images
 export const BG_WITH_SCREEN = BASE_API_URL + '/uploads/background_images/tesla_with_screen.png';
 export const BG_SCREEN = BASE_API_URL + '/uploads/background_images/tesla_screen.png';
 export const BG_GENERIC = BASE_API_URL + '/uploads/background_images/generic.png'

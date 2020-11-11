@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import { Form, Modal, Button } from 'react-bootstrap';
 import { Link, useLocation, BrowserRouter as Router } from "react-router-dom";
 
-import { BASE_API_URL, BG_WITH_SCREEN } from '../utils/constants';
+import { BASE_API_URL, BG_WITH_SCREEN, BG_GENERIC } from '../utils/constants';
 import CarUIMoveable from './CarUIMoveable'; //'./' is current folder
 import ImageSelector from './ImageSelector';
 import Loading from './Loading';
@@ -193,7 +193,7 @@ const CarUI = () => {
             <CarUIMoveable id = "carUIMoveable" ref = {moveableComponentReference} moveableTarget="target" />
 
             {/* BACKGROUND IMAGE */}
-            <img src={BG_WITH_SCREEN} alt="Tesla console background" id="backgroundImage"/>
+            <img src={BG_GENERIC} alt="Tesla console background" id="backgroundImage"/>
             
             {/*Ternary operator */}
             {imgs ? imgs : "No images here!"}
@@ -205,6 +205,9 @@ const CarUI = () => {
             
             <Button variant="primary" id="carUI_button" onClick={handleShow}>Add an image</Button>
             <Button variant="primary" id="carUI_button" onClick = {save}>Save</Button>
+
+            {/* TODO: FINISH */}
+            <Button variant="primary" id="carUI_button" onClick = {save}>Delete</Button>
             <Button variant="primary" id="carUI_button" href="/logout">Logout</Button>
 
             <Modal show={show} onHide={handleClose} style={{opacity:1}}>
