@@ -33,14 +33,6 @@
     left: 30px;
   }
 
-  #backgroundImage {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 10%;
-    width: 85%;
-  }
-
   #canvas {
     height: 780px;
     width: 1080px;
@@ -61,6 +53,14 @@
 
 html {
   font-size: 62.5%;
+}
+
+#carUIBg {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 5%;
+  width: 100%;
 }
 
   //Image in Image Gallery

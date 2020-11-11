@@ -193,7 +193,7 @@ const CarUI = () => {
             <CarUIMoveable id = "carUIMoveable" ref = {moveableComponentReference} moveableTarget="target" />
 
             {/* BACKGROUND IMAGE */}
-            <img src={BG_GENERIC} alt="Tesla console background" id="backgroundImage"/>
+            <img src={BG_GENERIC} alt="Tesla console background" id="carUIBg"/>
             
             {/*Ternary operator */}
             {imgs ? imgs : "No images here!"}
