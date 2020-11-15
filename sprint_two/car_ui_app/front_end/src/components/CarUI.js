@@ -54,12 +54,17 @@ const CarUI = () => {
   }
 
   var queryParams = null;
-  try {
+  try 
+  {
     queryParams = getQueryParams();
-  }catch (e) {
+  }
+  catch (e) 
+  {
 
   }
-  console.log(queryParams)
+
+  console.log("Query Params: ", queryParams)
+  console.log("------------------------------")
   const [tick, setTick] = useState(false);
   const user_token = localStorage.getItem('user_token');
 
@@ -73,15 +78,18 @@ const CarUI = () => {
 
   
   function getImg() {
-    console.log(location);
+    
+    console.log("getImg() || Location:", location);
+    console.log("------------------------------")
     // console.log(`http://localhost:3001/images-by-profile?access_token=${user_token}`)
         fetch(`${BASE_API_URL}/images-by-profile?access_token=${user_token}`)
           .then(response => {
             return response.text();
           })
           .then(data => {
-            console.log("Data Retrieved:")
-            console.log(data);
+            console.log("getImg() || Data Retrieved: ", data)
+            console.log("------------------------------")
+
             setImgs("ee")
 
             var newImageLines = <div></div>
@@ -92,11 +100,15 @@ const CarUI = () => {
 
             data = JSON.parse(data)
             // data =[{"name":"test1"},{"name":"test2"}];
-            console.log(typeof data);
+            
+            console.log("getImg() || Type of Data: ", typeof data);
+            console.log("------------------------------")
+            
             setLocalCopy(data);
             setLoaded(true);
 
             //Changed to console.log instead to keep UI clean
+              //Was populating screen with image sources before change
             setImgs(data.map((d) => <div>{console.log(<li key={d.img_source}>{d.img_source}</li>)}<img id = "placedImage" className={"moveable"+d.img_id} src = {d.img_source} alt="Set Image" style = {{transform: d.img_transform, transformOrigin: d.img_transform_origin}} /></div>));
 
             // setImgs(<div><div dangerouslySetInnerHTML={{__html: newImageLines}} ></div><h2>Here</h2></div>);
@@ -112,7 +124,10 @@ const CarUI = () => {
       localCopy[i].img_transform = document.querySelector(".moveable" + localCopy[i].img_id + "").style.transform;
       localCopy[i].img_transform_origin = document.querySelector(".moveable" + localCopy[i].img_id + "").style.transformOrigin;
     }
-    console.log(localCopy)
+
+    console.log("getImg() || Local Copy: ", localCopy)
+    console.log("------------------------------")
+
     fetch(`${BASE_API_URL}/update-image-transforms`, {
       method: 'POST',
       headers: {
@@ -152,7 +167,9 @@ const CarUI = () => {
       localCopy[i].img_transform = document.querySelector(".moveable" + localCopy[i].img_id + "").style.transform;
       localCopy[i].img_transform_origin = document.querySelector(".moveable" + localCopy[i].img_id + "").style.transformOrigin;
     }
-    console.log("-------------------------->", localCopy)
+    console.log("deleteImgFun() || Local Copy", localCopy)
+    console.log("------------------------------")
+
     fetch(`${BASE_API_URL}/update-image-transforms`, 
     {
       method: 'POST',
@@ -180,6 +197,8 @@ const CarUI = () => {
     let img_transform_origin = "50% 50%";
     // let profile_id = queryParams.profile_id;
     console.log({img_source, img_transform, img_transform_origin, user_token})
+    console.log("------------------------------")
+
     if (img_source != null) 
     {
     fetch(`${BASE_API_URL}/image`, {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({img_source, img_transform, img_transform_origin, user_token})})
@@ -188,33 +207,46 @@ const CarUI = () => {
     })
     .then(data => {
             //alert("Add Image Successful!");
-            console.log(data);
+            console.log("addImage() || Data: ", data);
+            console.log("------------------------------")
+
             getImg();
     });
   }
   }
 
-  function changeTarget(newTarget, delay = 0) {
+  function changeTarget(newTarget, delay = 0) 
+  {
+    console.log("changeTarget() || IMAGE CHOSEN")
+    console.log("------------------------------")
+
     if (newTarget == null || newTarget == "" || !newTarget.startsWith('moveable')){
       newTarget ="none"
     }
-    if (moveableComponentReference.current == null) {
-      console.log('null')
-
+    if (moveableComponentReference.current == null) 
+    {
+      //console.log('null')
     }
-    else {
-      console.log('resettingstates')
+    else 
+    {
+      //console.log('resettingstates')
       moveableComponentReference.current.resetStates(newTarget);
     }
   }
 
-  function handleClick(e){
-    console.log("mouse is down!")
+  function handleClick(e)
+  {
+    console.log("getImg() || Mouse down")
+    console.log("------------------------------")
+
     setBegin(new Date());
   }
 
-  function finishClick(e){
-    console.log("mouse is up!")
+  function finishClick(e)
+  {
+    console.log("Mouse up")
+    console.log("------------------------------")
+
     setEnd(new Date());
 
     if ((end - begin) < 200) {
@@ -222,6 +254,7 @@ const CarUI = () => {
     }
   }
 
+  //Function gets called when a user selects an image from the image gallery on the Car_ui page
   function onImageChosen(imageUrl)
   {
     //console.log("IMG:", imageUrl)
