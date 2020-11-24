@@ -10,6 +10,7 @@
     "bootstrap": "^4.4.1",
     "express": "^4.17.1",
     "jwt-decode": "^3.0.0",
+    "lodash": "^4.17.20",
     "moveable": "^0.19.3",
     "node-sass": "^4.14.1",
     "react": "^16.13.1",

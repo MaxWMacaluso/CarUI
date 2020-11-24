@@ -7,6 +7,7 @@ import CarUIMoveable from './CarUIMoveable'; //'./' is current folder
 import ImageSelector from './ImageSelector';
 import Loading from './Loading';
 
+import _ from 'lodash';
 //TODO: Don't need?
 //import FileUpload from '../components/FileUpload';
 //import ReactDOM from 'react-dom'
@@ -42,6 +43,9 @@ const CarUI = () => {
   const [localCopy, setLocalCopy] = useState(null);
   const location = useLocation();
 
+  const [undoStack, setUndoStack] = useState([]);
+  var undoStack2 = [];
+
   function getQueryParams() {
     var temp = location.search;
     temp = temp.split("?")[1]
@@ -54,11 +58,11 @@ const CarUI = () => {
   }
 
   var queryParams = null;
-  try 
+  try
   {
     queryParams = getQueryParams();
   }
-  catch (e) 
+  catch (e)
   {
 
   }
@@ -76,9 +80,12 @@ const CarUI = () => {
     setTick(1)
   });
 
-  
+  function setImagesFromJSON(data){
+    setImgs(data.map((d) => <div>{console.log(<li key={d.img_source}>{d.img_source}</li>)}<img id = "placedImage" className={"moveable"+d.img_id} src = {d.img_source} alt="Set Image" style = {{transform: d.img_transform, transformOrigin: d.img_transform_origin}} /></div>));
+  }
+
   function getImg() {
-    
+    //saveImgFun()
     console.log("getImg() || Location:", location);
     console.log("------------------------------")
     // console.log(`http://localhost:3001/images-by-profile?access_token=${user_token}`)
@@ -100,22 +107,39 @@ const CarUI = () => {
 
             data = JSON.parse(data)
             // data =[{"name":"test1"},{"name":"test2"}];
-            
+
             console.log("getImg() || Type of Data: ", typeof data);
             console.log("------------------------------")
-            
-            setLocalCopy(data);
-            setLoaded(true);
 
+            setLoaded(true);
             //Changed to console.log instead to keep UI clean
               //Was populating screen with image sources before change
-            setImgs(data.map((d) => <div>{console.log(<li key={d.img_source}>{d.img_source}</li>)}<img id = "placedImage" className={"moveable"+d.img_id} src = {d.img_source} alt="Set Image" style = {{transform: d.img_transform, transformOrigin: d.img_transform_origin}} /></div>));
+            setImagesFromJSON(data)
+            // setLocalCopy(data);
+            setLocalCopyWithUndo(data)
 
+            console.log("logging undo stack");
+            console.log(undoStack);
             // setImgs(<div><div dangerouslySetInnerHTML={{__html: newImageLines}} ></div><h2>Here</h2></div>);
           });
   }
 
   //Corresponds to "Delete Image" button on the car_ui_page
+  function getPageData() {
+    // Copying Local copy to temp variable
+    var temp = JSON.parse(JSON.stringify(localCopy));
+    if (temp == null) {
+      console.log("WHOOPS SOMETHING IS NULL")
+
+      return null;
+    }
+    for (var i = 0; i < temp.length; i++) {
+      temp[i].img_transform = document.querySelector(".moveable" + temp[i].img_id + "").style.transform;
+      temp[i].img_transform_origin = document.querySelector(".moveable" + temp[i].img_id + "").style.transformOrigin;
+    }
+    return temp;
+  }
+
   function saveImgFun() {
     if (localCopy == null) {
       return;
@@ -156,13 +180,13 @@ const CarUI = () => {
 //   profile_id: "12"
 
   //Corresponds to "Delete Image" button on the car_ui_page
-  function deleteImgFun() 
+  function deleteImgFun()
   {
-    if (localCopy == null) 
+    if (localCopy == null)
     {
       return;
     }
-    for (var i = 0; i < localCopy.length; i++) 
+    for (var i = 0; i < localCopy.length; i++)
     {
       localCopy[i].img_transform = document.querySelector(".moveable" + localCopy[i].img_id + "").style.transform;
       localCopy[i].img_transform_origin = document.querySelector(".moveable" + localCopy[i].img_id + "").style.transformOrigin;
@@ -170,21 +194,21 @@ const CarUI = () => {
     console.log("deleteImgFun() || Local Copy", localCopy)
     console.log("------------------------------")
 
-    fetch(`${BASE_API_URL}/update-image-transforms`, 
+    fetch(`${BASE_API_URL}/update-image-transforms`,
     {
       method: 'POST',
-      headers: 
+      headers:
       {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(localCopy)
 
     })
-    .then(response => 
+    .then(response =>
       {
         return response.text()
       })
-        .then(data => 
+        .then(data =>
           {
             alert("Delete Successful!")
             getImg()
@@ -193,13 +217,13 @@ const CarUI = () => {
 
   function addImage (img_source) {
     // let img_source = prompt('Enter image source');
-    let img_transform = `translate(0px, 0px)`+  ` rotate(0deg)`+ ` scale(1, 1)`
+    let img_transform = `translate(0px, 0px)`+  ` rotate(0deg)`+ ` scale(0.3, 0.3)`
     let img_transform_origin = "50% 50%";
     // let profile_id = queryParams.profile_id;
     console.log({img_source, img_transform, img_transform_origin, user_token})
     console.log("------------------------------")
 
-    if (img_source != null) 
+    if (img_source != null)
     {
     fetch(`${BASE_API_URL}/image`, {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({img_source, img_transform, img_transform_origin, user_token})})
     .then(response => {
@@ -215,7 +239,7 @@ const CarUI = () => {
   }
   }
 
-  function changeTarget(newTarget, delay = 0) 
+  function changeTarget(newTarget, delay = 0)
   {
     console.log("changeTarget() || IMAGE CHOSEN")
     console.log("------------------------------")
@@ -223,11 +247,11 @@ const CarUI = () => {
     if (newTarget == null || newTarget == "" || !newTarget.startsWith('moveable')){
       newTarget ="none"
     }
-    if (moveableComponentReference.current == null) 
+    if (moveableComponentReference.current == null)
     {
       //console.log('null')
     }
-    else 
+    else
     {
       //console.log('resettingstates')
       moveableComponentReference.current.resetStates(newTarget);
@@ -240,6 +264,13 @@ const CarUI = () => {
     console.log("------------------------------")
 
     setBegin(new Date());
+    var pageData = getPageData();
+    if (JSON.stringify(pageData) != undoStack[undoStack.length-1]){
+      undoStack.push(JSON.stringify(pageData));
+      console.log("UNDO STACK UPDATED");
+      console.log(undoStack.length);
+      console.log(undoStack);
+    }
   }
 
   function finishClick(e)
@@ -252,6 +283,41 @@ const CarUI = () => {
     if ((end - begin) < 200) {
       changeTarget(e.target.className)
     }
+    var pageData = getPageData();
+    console.log("Page data");
+    console.log(pageData);
+    console.log(undoStack.length);
+  }
+
+  function setLocalCopyWithUndo(data)
+  {
+    setLocalCopy(data);
+
+    undoStack.push(JSON.stringify(data))
+  }
+
+  function undo(){
+    console.log(undoStack);
+    changeTarget('')
+    if (undoStack.length == 0){
+      // Never Should be here
+      return;
+    }
+    setImgs(false)
+    console.log("Made here");
+    var temp = undoStack.pop();
+    if (undoStack.length == 0) {
+      // This fixes a bug. Still running into a bug that you cannot undo from first operation.
+      undoStack.push(temp);
+    }
+    console.log(temp)
+    var temp = JSON.parse(temp)
+
+    setImagesFromJSON(temp)
+    setLocalCopy(temp);
+    console.log(undoStack.length);
+    console.log(temp);
+
   }
 
   //Function gets called when a user selects an image from the image gallery on the Car_ui page
@@ -266,6 +332,7 @@ const CarUI = () => {
     return <Loading/>
   }
     return (
+      <div>
         <div onMouseDown = {handleClick} onClick = {finishClick}>
 
             {/* <div id = "canvas"></div> */}
@@ -273,16 +340,17 @@ const CarUI = () => {
 
             {/* BACKGROUND IMAGE */}
             <img src={BG_GENERIC} alt="Tesla console background" id="carUIBg"/>
-            
+
             {/*Ternary operator */}
             {imgs ? imgs : "No images here!"}
-            
+
             {/*<Button onClick = {addImage}>Add Image by URL </Button>*/}
             {/*<img id = "placedImage" className="moveable_koala3" src="https://www.treehugger.com/thmb/pzsLSvqKfyLxIvqIogiWba54u3c=/768x0/filters:no_upscale():max_bytes(150000):strip_icc()/__opt__aboutcom__coeus__resources__content_migration__mnn__images__2019__05__koala-0f87652acc244db2ba7d2e231c868f16.jpg"/>
             <img id = "placedImage" className="moveable_koala4" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Cutest_Koala.jpg/1117px-Cutest_Koala.jpg"/>*/}
 
-            
+        </div>
             <Button variant="primary" id="carUI_button" onClick={handleShow}>Add an image</Button>
+            <Button variant="primary" id="carUI_button" onClick = {undo}>Undo</Button>
             <Button variant="primary" id="carUI_button" onClick = {saveImgFun}>Save</Button>
             <Button variant="primary" id="carUI_button" onClick = {deleteImgFun}>Delete</Button>
             <Button variant="primary" id="carUI_button" href="/logout">Logout</Button>

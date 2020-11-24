@@ -19,24 +19,25 @@ function getUserImageUploadPath(profileId) {
   return fullFolderPath;
 }
 
-function getGeneralImageUploadPath() 
+function getGeneralImageUploadPath()
 {
   var route = `${__dirname}`
 
   //Below line to make compatible with Unix Sytstems and PC
-  route = route.replace("\\", "/")
+  route = route.replace(/\\/g, "/")
+  console.log(route);
 
   route = route.substring(0, route.lastIndexOf("/")) + '/public/uploads/';
-  
+
   // console.log("This is the route to which we are exporting to:")
   // console.log (route);
-  
+
   return route;
 }
 
 //Upload Endpoint
 Router.post('/upload', (req, res) => {
-  if (req.files == null) 
+  if (req.files == null)
   {
     return res.status(400).json({msg: 'No file uploaded' });
   }
@@ -53,7 +54,7 @@ Router.post('/upload', (req, res) => {
     }
     var outputPath = fullFolderPath+file.name;
     file.mv(outputPath, err => {
-      if(err) 
+      if(err)
       {
         //console.log(err)
         return res.status(500).send(err);
