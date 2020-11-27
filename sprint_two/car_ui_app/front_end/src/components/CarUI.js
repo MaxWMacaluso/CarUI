@@ -159,7 +159,8 @@ const CarUI = () => {
     return temp;
   }
 
-  function saveImgFun() {
+  function saveImgFun() 
+  {
     if (localCopy == null) 
     {
       return;
@@ -202,40 +203,17 @@ const CarUI = () => {
   //Corresponds to "Delete Image" button on the car_ui_page
   function deleteImgFun()
   {
-    if (localCopy == null)
+    //If the State Variable is not null (meaning no img selected) 
+    if (selectedImg == null)
     {
       return;
     }
-    for (var i = 0; i < localCopy.length; i++)
-    {
-      localCopy[i].img_transform = document.querySelector(".moveable" + localCopy[i].img_id + "").style.transform;
-      localCopy[i].img_transform_origin = document.querySelector(".moveable" + localCopy[i].img_id + "").style.transformOrigin;
-    }
-     console.log("deleteImgFun() || Local Copy", localCopy)
-     console.log("------------------------------")
 
-    fetch(`${BASE_API_URL}/update-image-transforms`,
-    {
-      method: 'POST',
-      headers:
-      {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(localCopy)
 
-    })
-    .then(response =>
-      {
-        return response.text()
-      })
-        .then(data =>
-          {
-            alert("Delete Successful!")
-            getImg()
-          })
   }
 
-  function addImage (img_source) {
+  function addImgFun(img_source) 
+  {
     // let img_source = prompt('Enter image source');
     let img_transform = `translate(0px, 0px)`+  ` rotate(0deg)`+ ` scale(0.3, 0.3)`
     let img_transform_origin = "50% 50%";
@@ -251,7 +229,7 @@ const CarUI = () => {
     })
     .then(data => {
             //alert("Add Image Successful!");
-            console.log("addImage() || Data: ", data);
+            console.log("addImgFun() || Data: ", data);
             console.log("------------------------------")
 
             getImg();
@@ -289,6 +267,8 @@ const CarUI = () => {
     if (current_target.className.startsWith('moveable'))
     {
       console.log("handleClick() || current_target source: ", current_target.src)
+      
+      //Update state of the State Variable (utilizing React Hook function useState())
       setSelectedImg(current_target.src)
     }
     //Else, set it to null because no image is selected
@@ -367,7 +347,7 @@ const CarUI = () => {
     console.log("onImageChosen() || IMG URL: ", imageUrl)
     console.log("------------------------------")
     handleClose();
-    addImage(imageUrl)
+    addImgFun(imageUrl)
   }
 
   if (loaded == false) {
@@ -386,7 +366,7 @@ const CarUI = () => {
             {/*Ternary operator */}
             {imgs ? imgs : "No images here!"}
 
-            {/*<Button onClick = {addImage}>Add Image by URL </Button>*/}
+            {/*<Button onClick = {addImgFun}>Add Image by URL </Button>*/}
             {/*<img id = "placedImage" className="moveable_koala3" src="https://www.treehugger.com/thmb/pzsLSvqKfyLxIvqIogiWba54u3c=/768x0/filters:no_upscale():max_bytes(150000):strip_icc()/__opt__aboutcom__coeus__resources__content_migration__mnn__images__2019__05__koala-0f87652acc244db2ba7d2e231c868f16.jpg"/>
             <img id = "placedImage" className="moveable_koala4" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Cutest_Koala.jpg/1117px-Cutest_Koala.jpg"/>*/}
 
