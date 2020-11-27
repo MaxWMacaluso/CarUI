@@ -34,8 +34,8 @@ export default class CarUIMoveable extends Component { //<h1>{moveableTarget}</h
     });
   }
   resetStates(tempTarget) {
-    console.log('Old frame: ');
-    console.log(this.state.frame);
+    //  console.log('Old frame: ');
+    //  console.log(this.state.frame);
     this.setState({
       target: document.querySelector("." + tempTarget + ""),
       frame: this.frameFromStyle(tempTarget)
@@ -49,10 +49,10 @@ export default class CarUIMoveable extends Component { //<h1>{moveableTarget}</h
     for (var i = 0; i < variables.length; i++) {
       variables[i] = variables[i].replace("${", "").replace("}", "")
     }
-    console.log(inputString)
+    //  console.log(inputString)
 
     for (var i = 0; i < split.length; i++) {
-      console.log()
+      //  console.log()
       var beginIndex = inputString.indexOf(split[i])+split[i].length;
       inputString = inputString.substring(beginIndex);
       var endIndex = 0;
@@ -70,7 +70,7 @@ export default class CarUIMoveable extends Component { //<h1>{moveableTarget}</h
   frameFromStyle(tempTarget) {
     var frame = null;
     try {
-      console.log('Trying')
+      //  console.log('Trying')
       var transformOrigin = document.querySelector("." + tempTarget + "").style.transformOrigin;
       var transform = document.querySelector("." + tempTarget + "").style.transform;
       if (transform == NaN || transform == ""){
@@ -89,8 +89,8 @@ export default class CarUIMoveable extends Component { //<h1>{moveableTarget}</h
         rotate: parseFloat(transformValues["rotate"]),
         transformOrigin: transformOrigin
       }
-      console.log('New frame: ')
-      console.log(frame)
+      //  console.log('New frame: ')
+      //  console.log(frame)
       //throw 'ee'
     } 
     catch(e) 
@@ -112,7 +112,7 @@ export default class CarUIMoveable extends Component { //<h1>{moveableTarget}</h
 
   componentDidUpdate(prevProps){
     // this.target = document.querySelector(".jim")
-    console.log("updating!")
+    // console.log("updating!")
   }
 
   render() {

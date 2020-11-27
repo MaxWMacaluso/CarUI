@@ -1,4 +1,7 @@
+//Import Hook from React
+//A Hook is a special function that lets you “hook into” React features. For example, useState is a Hook that lets you add React state to function components
 import React, {useState, useEffect} from 'react';
+
 import { Form, Modal, Button } from 'react-bootstrap';
 import { Link, useLocation, BrowserRouter as Router } from "react-router-dom";
 
@@ -26,25 +29,34 @@ import _ from 'lodash';
 // }
 
 const CarUI = () => {
-  // Variables for Moveable
+  //Variables for Moveable-------------------------------
   const [moveableComponentReference, setMoveableCommponentReference] = useState(React.createRef());
   const [begin, setBegin] = useState(null);
   const [end, setEnd] =  useState(null);
+  //-----------------------------------------------------
 
-  //Handle Modal
+  //Handle Modal-----------------------------------------
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  //-----------------------------------------------------
 
-  //Image variables
+  //Image variables--------------------------------------
   const [imgs, setImgs] = useState(false);
   const [loaded, setLoaded] = useState(false);
+  //Null if no image currently clicked, else stores current selected image URL. DeleteImgFun() utilizes this
+    //Preserves the value of variable selectedImg inbetween function calls (preserved by React)
+    //useState returns a pair of values; current state and a function that updates it
+  const [selectedImg, setSelectedImg] = useState(null);
+  //-----------------------------------------------------
 
   const [localCopy, setLocalCopy] = useState(null);
   const location = useLocation();
 
+  //Stack variables (For Undo functionality)------------
   const [undoStack, setUndoStack] = useState([]);
   var undoStack2 = [];
+  //-----------------------------------------------------
 
   function getQueryParams() {
     var temp = location.search;
@@ -67,24 +79,27 @@ const CarUI = () => {
 
   }
 
-  console.log("Query Params: ", queryParams)
-  console.log("------------------------------")
+   console.log("Query Params: ", queryParams)
+   console.log("------------------------------")
   const [tick, setTick] = useState(false);
   const user_token = localStorage.getItem('user_token');
 
 
   useEffect(() => {
-    if (tick == 0) {
+    if (tick == 0) 
+    {
       getImg();
     }
     setTick(1)
   });
 
-  function setImagesFromJSON(data){
+  function setImagesFromJSON(data)
+  {
     setImgs(data.map((d) => <div>{console.log(<li key={d.img_source}>{d.img_source}</li>)}<img id = "placedImage" className={"moveable"+d.img_id} src = {d.img_source} alt="Set Image" style = {{transform: d.img_transform, transformOrigin: d.img_transform_origin}} /></div>));
   }
 
-  function getImg() {
+  function getImg() 
+  {
     //saveImgFun()
     console.log("getImg() || Location:", location);
     console.log("------------------------------")
@@ -94,13 +109,14 @@ const CarUI = () => {
             return response.text();
           })
           .then(data => {
-            console.log("getImg() || Data Retrieved: ", data)
-            console.log("------------------------------")
+             console.log("getImg() || Data Retrieved: ", data)
+             console.log("------------------------------")
 
             setImgs("ee")
 
             var newImageLines = <div></div>
-            for (var row of data) {
+            for (var row of data) 
+            {
               var className = `moveable_${row.img_id}`;
               newImageLines += <img id = "placedImage" className={className} src = {row.img_source} alt="User's Image" style = ""/>
             }
@@ -108,8 +124,8 @@ const CarUI = () => {
             data = JSON.parse(data)
             // data =[{"name":"test1"},{"name":"test2"}];
 
-            console.log("getImg() || Type of Data: ", typeof data);
-            console.log("------------------------------")
+             console.log("getImg() || Type of Data: ", typeof data);
+             console.log("------------------------------")
 
             setLoaded(true);
             //Changed to console.log instead to keep UI clean
@@ -118,22 +134,25 @@ const CarUI = () => {
             // setLocalCopy(data);
             setLocalCopyWithUndo(data)
 
-            console.log("logging undo stack");
+            console.log("getImg() || Logging undo stack: ")
             console.log(undoStack);
+            console.log("------------------------------")
             // setImgs(<div><div dangerouslySetInnerHTML={{__html: newImageLines}} ></div><h2>Here</h2></div>);
           });
   }
 
   //Corresponds to "Delete Image" button on the car_ui_page
-  function getPageData() {
+  function getPageData() 
+  {
     // Copying Local copy to temp variable
     var temp = JSON.parse(JSON.stringify(localCopy));
-    if (temp == null) {
-      console.log("WHOOPS SOMETHING IS NULL")
-
+    if (temp == null) 
+    {
+      console.log("getPageData() || localCopy IS NULL")
       return null;
     }
-    for (var i = 0; i < temp.length; i++) {
+    for (var i = 0; i < temp.length; i++) 
+    {
       temp[i].img_transform = document.querySelector(".moveable" + temp[i].img_id + "").style.transform;
       temp[i].img_transform_origin = document.querySelector(".moveable" + temp[i].img_id + "").style.transformOrigin;
     }
@@ -141,7 +160,8 @@ const CarUI = () => {
   }
 
   function saveImgFun() {
-    if (localCopy == null) {
+    if (localCopy == null) 
+    {
       return;
     }
     for (var i = 0; i < localCopy.length; i++) {
@@ -149,8 +169,8 @@ const CarUI = () => {
       localCopy[i].img_transform_origin = document.querySelector(".moveable" + localCopy[i].img_id + "").style.transformOrigin;
     }
 
-    console.log("getImg() || Local Copy: ", localCopy)
-    console.log("------------------------------")
+     console.log("getImg() || Local Copy: ", localCopy)
+     console.log("------------------------------")
 
     fetch(`${BASE_API_URL}/update-image-transforms`, {
       method: 'POST',
@@ -191,8 +211,8 @@ const CarUI = () => {
       localCopy[i].img_transform = document.querySelector(".moveable" + localCopy[i].img_id + "").style.transform;
       localCopy[i].img_transform_origin = document.querySelector(".moveable" + localCopy[i].img_id + "").style.transformOrigin;
     }
-    console.log("deleteImgFun() || Local Copy", localCopy)
-    console.log("------------------------------")
+     console.log("deleteImgFun() || Local Copy", localCopy)
+     console.log("------------------------------")
 
     fetch(`${BASE_API_URL}/update-image-transforms`,
     {
@@ -220,8 +240,8 @@ const CarUI = () => {
     let img_transform = `translate(0px, 0px)`+  ` rotate(0deg)`+ ` scale(0.3, 0.3)`
     let img_transform_origin = "50% 50%";
     // let profile_id = queryParams.profile_id;
-    console.log({img_source, img_transform, img_transform_origin, user_token})
-    console.log("------------------------------")
+     console.log({img_source, img_transform, img_transform_origin, user_token})
+     console.log("------------------------------")
 
     if (img_source != null)
     {
@@ -242,51 +262,69 @@ const CarUI = () => {
   function changeTarget(newTarget, delay = 0)
   {
     console.log("changeTarget() || IMAGE CHOSEN")
-    console.log("------------------------------")
 
-    if (newTarget == null || newTarget == "" || !newTarget.startsWith('moveable')){
-      newTarget ="none"
+    if (newTarget == null || newTarget == "" || !newTarget.startsWith('moveable'))
+    {
+      newTarget = "none"
     }
     if (moveableComponentReference.current == null)
     {
-      //console.log('null')
+      console.log('changeTarget() || NULL')
     }
     else
     {
-      //console.log('resettingstates')
+      console.log('changeTarget() || Resetting States')
+      console.log("------------------------------")
       moveableComponentReference.current.resetStates(newTarget);
     }
   }
 
   function handleClick(e)
   {
-    console.log("getImg() || Mouse down")
-    console.log("------------------------------")
+    console.log("handleClick() || Mouse down")
+
+    //Update the value of selectedImg----------------------
+    var current_target = e.target
+    //If clicked an image, set selectedImg to that
+    if (current_target.className.startsWith('moveable'))
+    {
+      console.log("handleClick() || current_target source: ", current_target.src)
+      setSelectedImg(current_target.src)
+    }
+    //Else, set it to null because no image is selected
+    else
+    {
+      setSelectedImg(null)
+    }
+    //-----------------------------------------------------
 
     setBegin(new Date());
+
     var pageData = getPageData();
-    if (JSON.stringify(pageData) != undoStack[undoStack.length-1]){
+    if (JSON.stringify(pageData) != undoStack[undoStack.length-1])
+    {
       undoStack.push(JSON.stringify(pageData));
-      console.log("UNDO STACK UPDATED");
-      console.log(undoStack.length);
-      console.log(undoStack);
+      console.log("handleClick() || UNDO STACK UPDATED");
+      console.log("Length: ", undoStack.length);
+      console.log("UndoStack: ", undoStack);
+      console.log("------------------------------")
     }
   }
 
   function finishClick(e)
   {
-    console.log("Mouse up")
-    console.log("------------------------------")
+     console.log("finishClick() || Mouse up")
 
     setEnd(new Date());
 
-    if ((end - begin) < 200) {
+    if ((end - begin) < 200) 
+    {
       changeTarget(e.target.className)
     }
     var pageData = getPageData();
-    console.log("Page data");
-    console.log(pageData);
-    console.log(undoStack.length);
+    console.log("finishClick() || Page data: ", pageData);
+    console.log("finishClick() || Length: ", undoStack.length);
+    console.log("------------------------------")
   }
 
   function setLocalCopyWithUndo(data)
@@ -296,36 +334,40 @@ const CarUI = () => {
     undoStack.push(JSON.stringify(data))
   }
 
-  function undo(){
-    console.log(undoStack);
+  function undo()
+  {
+    console.log("Undo() || undoStack: ", undoStack);
     changeTarget('')
-    if (undoStack.length == 0){
+    if (undoStack.length == 0)
+    {
       // Never Should be here
       return;
     }
     setImgs(false)
-    console.log("Made here");
+    //  console.log("Made here");
     var temp = undoStack.pop();
-    if (undoStack.length == 0) {
+    if (undoStack.length == 0) 
+    {
       // This fixes a bug. Still running into a bug that you cannot undo from first operation.
       undoStack.push(temp);
     }
-    console.log(temp)
+    //  console.log(temp)
     var temp = JSON.parse(temp)
 
     setImagesFromJSON(temp)
     setLocalCopy(temp);
-    console.log(undoStack.length);
-    console.log(temp);
+    //  console.log(undoStack.length);
+    //  console.log(temp);
 
   }
 
   //Function gets called when a user selects an image from the image gallery on the Car_ui page
   function onImageChosen(imageUrl)
   {
-    //console.log("IMG:", imageUrl)
+    console.log("onImageChosen() || IMG URL: ", imageUrl)
+    console.log("------------------------------")
     handleClose();
-    addImage (imageUrl)
+    addImage(imageUrl)
   }
 
   if (loaded == false) {
