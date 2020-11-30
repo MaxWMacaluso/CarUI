@@ -80,6 +80,11 @@ Router.use(function (req, res, next) {
   res.setHeader('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Access-Control-Allow-Headers');
   next();
+
+  //TODO: DELETE
+  // res.header('Access-Control-Allow-Origin', "*");
+  // res.header('Access-Control-Allow-Headers', "*");
+  // next();
 });
 
 Router.get('/images-by-profile', (req, res) => {
@@ -154,8 +159,9 @@ Router.post('/update-image-transforms', (req, res) => {
   })
 })
 
-Router.delete('/image/:img_id', (req, res) => {
-  ui_sql.deleteImg(req.params.id)
+//TODO: Change from post to delete as this is the technically preffered method
+Router.post('/delete-image', (req, res) => {
+  ui_sql.deleteImg(req.body)
   .then(response => {
     res.status(200).send(response);
   })

@@ -44,7 +44,8 @@ const CarUI = () => {
   //Image variables--------------------------------------
   const [imgs, setImgs] = useState(false);
   const [loaded, setLoaded] = useState(false);
-  //Null if no image currently clicked, else stores current selected image URL. DeleteImgFun() utilizes this
+
+  //Null if no image currently clicked, else stores current selected image img_id. DeleteImgFun() utilizes this
     //Preserves the value of variable selectedImg inbetween function calls (preserved by React)
     //useState returns a pair of values; current state and a function that updates it
   const [selectedImg, setSelectedImg] = useState(null);
@@ -58,7 +59,8 @@ const CarUI = () => {
   var undoStack2 = [];
   //-----------------------------------------------------
 
-  function getQueryParams() {
+  function getQueryParams() 
+  {
     var temp = location.search;
     temp = temp.split("?")[1]
     temp = temp.split(/=|\&/g);
@@ -79,8 +81,8 @@ const CarUI = () => {
 
   }
 
-   console.log("Query Params: ", queryParams)
-   console.log("------------------------------")
+  console.log("Query Params: ", queryParams)
+  console.log("------------------------------")
   const [tick, setTick] = useState(false);
   const user_token = localStorage.getItem('user_token');
 
@@ -104,41 +106,42 @@ const CarUI = () => {
     console.log("getImg() || Location:", location);
     console.log("------------------------------")
     // console.log(`http://localhost:3001/images-by-profile?access_token=${user_token}`)
-        fetch(`${BASE_API_URL}/images-by-profile?access_token=${user_token}`)
-          .then(response => {
-            return response.text();
-          })
-          .then(data => {
-             console.log("getImg() || Data Retrieved: ", data)
-             console.log("------------------------------")
+    fetch(`${BASE_API_URL}/images-by-profile?access_token=${user_token}`)
+      .then(response => {
+        return response.text();
+      })
+      .then(data => {
+          console.log("getImg() || Data Retrieved: ", data)
+          console.log("------------------------------")
 
-            setImgs("ee")
+        setImgs("ee")
 
-            var newImageLines = <div></div>
-            for (var row of data) 
-            {
-              var className = `moveable_${row.img_id}`;
-              newImageLines += <img id = "placedImage" className={className} src = {row.img_source} alt="User's Image" style = ""/>
-            }
+        var newImageLines = <div></div>
+        for (var row of data) 
+        {
+          //CHANGED 'moveable_' -> 'moveable' FOR CONSITENCY
+          var className = `moveable${row.img_id}`;
+          newImageLines += <img id = "placedImage" className={className} src = {row.img_source} alt="User's Image" style = ""/>
+        }
 
-            data = JSON.parse(data)
-            // data =[{"name":"test1"},{"name":"test2"}];
+        data = JSON.parse(data)
+        // data =[{"name":"test1"},{"name":"test2"}];
 
-             console.log("getImg() || Type of Data: ", typeof data);
-             console.log("------------------------------")
+          console.log("getImg() || Data: ", data);
+          console.log("------------------------------")
 
-            setLoaded(true);
-            //Changed to console.log instead to keep UI clean
-              //Was populating screen with image sources before change
-            setImagesFromJSON(data)
-            // setLocalCopy(data);
-            setLocalCopyWithUndo(data)
+        setLoaded(true);
+        //Changed to console.log instead to keep UI clean
+          //Was populating screen with image sources before change
+        setImagesFromJSON(data)
+        // setLocalCopy(data);
+        setLocalCopyWithUndo(data)
 
-            console.log("getImg() || Logging undo stack: ")
-            console.log(undoStack);
-            console.log("------------------------------")
-            // setImgs(<div><div dangerouslySetInnerHTML={{__html: newImageLines}} ></div><h2>Here</h2></div>);
-          });
+        console.log("getImg() || Logging undo stack: ")
+        console.log(undoStack);
+        console.log("------------------------------")
+        // setImgs(<div><div dangerouslySetInnerHTML={{__html: newImageLines}} ></div><h2>Here</h2></div>);
+      });
   }
 
   //Corresponds to "Delete Image" button on the car_ui_page
@@ -165,7 +168,8 @@ const CarUI = () => {
     {
       return;
     }
-    for (var i = 0; i < localCopy.length; i++) {
+    for (var i = 0; i < localCopy.length; i++) 
+    {
       localCopy[i].img_transform = document.querySelector(".moveable" + localCopy[i].img_id + "").style.transform;
       localCopy[i].img_transform_origin = document.querySelector(".moveable" + localCopy[i].img_id + "").style.transformOrigin;
     }
@@ -203,12 +207,34 @@ const CarUI = () => {
   //Corresponds to "Delete Image" button on the car_ui_page
   function deleteImgFun()
   {
-    //If the State Variable is not null (meaning no img selected) 
+
+    console.log("deleteImgFun() || selectedImg: ", selectedImg)
+    console.log("------------------------------")
+
+    //If the State Variable is null (meaning no img selected) 
     if (selectedImg == null)
     {
       return;
     }
 
+    fetch(`${BASE_API_URL}/delete-image`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json' //Keep it as this since this is what we specified in server.js
+      },
+      body: JSON.stringify({selected_img: selectedImg})
+
+    })
+    .then(response => {
+            return response.text();
+    })
+    .then(data => {
+            //Comment out if you do not want
+            alert("Delete Successful!");
+
+            //Updates the carUI page to only have the images that should actually be there
+            getImg();
+    });
 
   }
 
@@ -266,10 +292,12 @@ const CarUI = () => {
     //If clicked an image, set selectedImg to that
     if (current_target.className.startsWith('moveable'))
     {
-      console.log("handleClick() || current_target source: ", current_target.src)
+      //Do not want 'moveable' + img_id; only want img_id
+      var img_id = current_target.className.substring(8)
+      console.log("handleClick() || current_target class name: ", img_id)
       
       //Update state of the State Variable (utilizing React Hook function useState())
-      setSelectedImg(current_target.src)
+      setSelectedImg(img_id)
     }
     //Else, set it to null because no image is selected
     else
