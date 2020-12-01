@@ -43,7 +43,7 @@ const getImg = (body) => {
       // updateString +=     "ALTER TABLE image ALTER COLUMN img_transform TYPE varchar(500);"
 
       for (var i = 0; i < images.length; i++) {
-        updateString += `UPDATE image SET img_transform = '${images[i].img_transform}', img_transform_origin = '${images[i].img_transform_origin}' WHERE img_id = ${images[i].img_id};`
+        updateString += `UPDATE image SET img_transform = '${images[i].img_transform}', img_transform_origin = '${images[i].img_transform_origin}', img_z_index = '${images[i].img_z_index}' WHERE img_id = ${images[i].img_id};`
       }
 
       console.log(updateString)

@@ -40,13 +40,17 @@ const Header = () => {
     return <Loading/>
   }
 
+  console.log(window.location.pathname);
+  if (window.location.pathname == '/')
+    window.location.pathname = '/car_ui'
+    
   return (
     <Navbar className = "navbar">
     <Nav.Item><strong>Logged in as: {profile.profile_name}</strong></Nav.Item>
 
     {/* Added button to perform same function. TODO: Determine if need? */}
     {/* <Nav.Item className="ml-auto"><Link to="/logout" className="link">Logout</Link></Nav.Item> */}
-    
+
     </Navbar>
   );
 };

@@ -145,13 +145,9 @@ const CarUI = () => {
     if (localCopy == null) {
       return;
     }
-    for (var i = 0; i < localCopy.length; i++) {
-      localCopy[i].img_transform = document.querySelector(".moveable" + localCopy[i].img_id + "").style.transform;
-      localCopy[i].img_transform_origin = document.querySelector(".moveable" + localCopy[i].img_id + "").style.transformOrigin;
-      localCopy[i].img_z_index = document.querySelector(".moveable" + localCopy[i].img_id + "").style.zIndex;
+    setLocalCopyFromPageData()
 
-    }
-
+    console.log('begin save attempt')
     console.log("getImg() || Local Copy: ", localCopy)
     console.log("------------------------------")
 
@@ -189,12 +185,8 @@ const CarUI = () => {
     {
       return;
     }
-    for (var i = 0; i < localCopy.length; i++)
-    {
-      localCopy[i].img_transform = document.querySelector(".moveable" + localCopy[i].img_id + "").style.transform;
-      localCopy[i].img_transform_origin = document.querySelector(".moveable" + localCopy[i].img_id + "").style.transformOrigin;
-      localCopy[i].img_z_index = document.querySelector(".moveable" + localCopy[i].img_id + "").style.zIndex;
-    }
+    setLocalCopyFromPageData()
+
     console.log("deleteImgFun() || Local Copy", localCopy)
     console.log("------------------------------")
 
@@ -239,6 +231,7 @@ const CarUI = () => {
             console.log("------------------------------")
 
             getImg();
+            normalizeZOrders();
     });
   }
   }
@@ -300,6 +293,17 @@ const CarUI = () => {
     undoStack.push(JSON.stringify(data))
   }
 
+  function setLocalCopyFromPageData() {
+    if (localCopy == null) {
+      return;
+    }
+    for (var i = 0; i < localCopy.length; i++) {
+      localCopy[i].img_transform = document.querySelector(".moveable" + localCopy[i].img_id + "").style.transform;
+      localCopy[i].img_transform_origin = document.querySelector(".moveable" + localCopy[i].img_id + "").style.transformOrigin;
+      localCopy[i].img_z_index = document.querySelector(".moveable" + localCopy[i].img_id + "").style.zIndex;
+    }
+  }
+
   function undo(){
     console.log(undoStack);
     changeTarget('')
@@ -322,6 +326,69 @@ const CarUI = () => {
     console.log(undoStack.length);
     console.log(temp);
 
+  }
+
+  function normalizeZOrders() {
+    localCopy.sort(function(a, b) {
+      return parseInt(a.img_z_index) - parseInt(b.img_z_index);
+    });
+    console.log(localCopy);
+    for (let local in localCopy) {
+      localCopy[local].img_z_index = local;
+      document.querySelector(".moveable" + localCopy[local].img_id + "").style.zIndex = local;
+    }
+  }
+
+  function moveToFront() {
+    if (moveableComponentReference.current.state.target) {
+      var max = -999;
+      var numOccurences = 0;
+      var indexOfTarget = -1;
+      for (let local in localCopy) {
+        console.log(localCopy[local])
+        var num = parseInt(localCopy[local].img_z_index)
+        if (num > max) {
+          max = num;
+          numOccurences = 1
+        }
+        else if (num == max) {
+          numOccurences += 1;
+        }
+      }
+      if (moveableComponentReference.current.state.target.style.zIndex != max || numOccurences > 1)
+      {
+        moveableComponentReference.current.state.target.style.zIndex = max+1;
+        setLocalCopyFromPageData();
+        normalizeZOrders();
+      }
+      // console.log(moveableComponentReference.current.state.target.style.zIndex)
+    }
+  }
+
+  function moveToBack() {
+    if (moveableComponentReference.current.state.target) {
+      var min = 999;
+      var numOccurences = 0;
+      var indexOfTarget = -1;
+      for (let local in localCopy) {
+        console.log(localCopy[local])
+        var num = parseInt(localCopy[local].img_z_index)
+        if (num < min) {
+          min = num;
+          numOccurences = 1
+        }
+        else if (num == min) {
+          numOccurences += 1;
+        }
+      }
+      if (moveableComponentReference.current.state.target.style.zIndex != min || numOccurences > 1)
+      {
+        moveableComponentReference.current.state.target.style.zIndex = min-1;
+        setLocalCopyFromPageData();
+        normalizeZOrders();
+      }
+      // console.log(moveableComponentReference.current.state.target.style.zIndex)
+    }
   }
 
   //Function gets called when a user selects an image from the image gallery on the Car_ui page
@@ -357,6 +424,9 @@ const CarUI = () => {
             <Button variant="primary" id="carUI_button" onClick = {undo}>Undo</Button>
             <Button variant="primary" id="carUI_button" onClick = {saveImgFun}>Save</Button>
             <Button variant="primary" id="carUI_button" onClick = {deleteImgFun}>Delete</Button>
+            <Button variant="primary" id="carUI_button" onClick = {moveToFront}>Move to Front</Button>
+            <Button variant="primary" id="carUI_button" onClick = {moveToBack}>Move to Back</Button>
+
             <Button variant="primary" id="carUI_button" href="/logout">Logout</Button>
 
             <Modal show={show} onHide={handleClose} style={{opacity:1}}>
