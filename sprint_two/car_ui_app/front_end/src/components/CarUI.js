@@ -81,7 +81,7 @@ const CarUI = () => {
   });
 
   function setImagesFromJSON(data){
-    setImgs(data.map((d) => <div>{console.log(<li key={d.img_source}>{d.img_source}</li>)}<img id = "placedImage" className={"moveable"+d.img_id} src = {d.img_source} alt="Set Image" style = {{transform: d.img_transform, transformOrigin: d.img_transform_origin}} /></div>));
+    setImgs(data.map((d) => <div>{console.log(<li key={d.img_source}>{d.img_source}</li>)}<img id = "placedImage" className={"moveable"+d.img_id} src = {d.img_source} alt="Set Image" style = {{transform: d.img_transform, transformOrigin: d.img_transform_origin, zIndex: d.img_z_index}} /></div>));
   }
 
   function getImg() {
@@ -136,6 +136,7 @@ const CarUI = () => {
     for (var i = 0; i < temp.length; i++) {
       temp[i].img_transform = document.querySelector(".moveable" + temp[i].img_id + "").style.transform;
       temp[i].img_transform_origin = document.querySelector(".moveable" + temp[i].img_id + "").style.transformOrigin;
+      temp[i].img_z_index = document.querySelector(".moveable" + temp[i].img_id + "").style.zIndex;
     }
     return temp;
   }
@@ -147,6 +148,8 @@ const CarUI = () => {
     for (var i = 0; i < localCopy.length; i++) {
       localCopy[i].img_transform = document.querySelector(".moveable" + localCopy[i].img_id + "").style.transform;
       localCopy[i].img_transform_origin = document.querySelector(".moveable" + localCopy[i].img_id + "").style.transformOrigin;
+      localCopy[i].img_z_index = document.querySelector(".moveable" + localCopy[i].img_id + "").style.zIndex;
+
     }
 
     console.log("getImg() || Local Copy: ", localCopy)
@@ -190,6 +193,7 @@ const CarUI = () => {
     {
       localCopy[i].img_transform = document.querySelector(".moveable" + localCopy[i].img_id + "").style.transform;
       localCopy[i].img_transform_origin = document.querySelector(".moveable" + localCopy[i].img_id + "").style.transformOrigin;
+      localCopy[i].img_z_index = document.querySelector(".moveable" + localCopy[i].img_id + "").style.zIndex;
     }
     console.log("deleteImgFun() || Local Copy", localCopy)
     console.log("------------------------------")
