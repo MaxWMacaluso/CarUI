@@ -292,7 +292,7 @@ const CarUI = () => {
     {
       //Do not want 'moveable' + img_id; only want img_id
       var img_id = current_target.className.substring(8)
-      console.log("handleClick() || current_target class name: ", img_id)
+      console.log("handleClick() || current_target image id: ", img_id)
 
       //Update state of the State Variable (utilizing React Hook function useState())
       setSelectedImg(img_id)
