@@ -1,0 +1,5 @@
+#Robot. txt are text files that tell web robots (most often search engines) which pages on your site to crawl and which pages not to crawl. These files are very easy to setup using express-robots-txt.
+
+# https://www.robotstxt.org/robotstxt.html
+User-agent: *
+Disallow:
