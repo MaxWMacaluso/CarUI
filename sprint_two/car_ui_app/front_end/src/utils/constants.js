@@ -1,4 +1,4 @@
-export const BASE_API_URL = 'http://localhost:3001';
+export const BASE_API_URL = 'http://178.128.128.171:3001';
 
 //TODO: Not sure why BASE_API_URL is being added to all images in the web app, regardless of the fact it works without it?
 

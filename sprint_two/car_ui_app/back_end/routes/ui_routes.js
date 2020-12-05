@@ -76,7 +76,7 @@ Router.use(express.static('./public'));
 //Prevents Cross Origin Resource error in Browser. We ended up using proxy in package.json for this
 Router.use(function (req, res, next) {
   //res.setHeader('Access-Control-Allow-Origin', '*'); //Allows all connections
-  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000'); //Maybe don't need
+  res.setHeader('Access-Control-Allow-Origin', 'http://178.128.128.171:3000'); //Maybe don't need
   res.setHeader('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Access-Control-Allow-Headers');
   next();
