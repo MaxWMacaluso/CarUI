@@ -17,7 +17,7 @@
     "babel-loader": "^8.0.6",
     "http-server": "^0.12.1",
     "leapjs": "^0.6.4",
-    "mathjs": "^6.2.1",
+    "mathjs": "^7.5.1",
     "ramda": "^0.26.1",
     "socket.io-client": "^2.2.0",
     "webpack": "^4.39.1",
